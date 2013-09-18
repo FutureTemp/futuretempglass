@@ -35,6 +35,11 @@ public class Item{
 		this.quantity = quantity;
 	}
 
+	public void addProductionStep(ProductionSteps productionStep)
+	{
+		productionSteps.add(productionStep);
+	}
+	
 	public List<ProductionSteps> getProductionSteps()
 	{
 		return productionSteps;

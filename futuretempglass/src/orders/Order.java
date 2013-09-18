@@ -4,9 +4,15 @@ import items.Item;
 
 import java.util.List;
 
+import sun.util.calendar.LocalGregorianCalendar.Date;
+
 public class Order{
 
 	private String orderNumber;
+	
+	private String customer;
+	
+	private Date dueDate;
 
 	private List<Item> items;
 
