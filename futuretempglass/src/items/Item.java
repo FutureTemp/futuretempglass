@@ -16,6 +16,8 @@ public class Item{
 	private int quantity;
 
 	private List<ProductionSteps> productionSteps;
+	
+	private int testIntField;
 
 	private Hashtable<String, String> attributes;
 
