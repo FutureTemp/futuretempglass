@@ -3,10 +3,14 @@ package items;
 import java.util.Hashtable;
 import java.util.List;
 
+import orders.Order;
+
 import enums.ProductionSteps;
 
 public class Item{
 
+	private Order order;
+	
 	private String itemName;
 
 	private int quantity;
@@ -15,6 +19,11 @@ public class Item{
 
 	private Hashtable<String, String> attributes;
 
+	public Item(Order order)
+	{
+		this.order = order;
+	}
+	
 	public String getItemName()
 	{
 		return itemName;
