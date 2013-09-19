@@ -10,22 +10,20 @@ import enums.ProductionSteps;
 public class Item{
 
 	private Order order;
-	
+
 	private String itemName;
 
 	private int quantity;
 
 	private List<ProductionSteps> productionSteps;
-	
-	private int testIntField;
 
 	private Hashtable<String, String> attributes;
 
 	public Item(Order order)
 	{
-		this.order = order;
+		this.setOrder(order);
 	}
-	
+
 	public String getItemName()
 	{
 		return itemName;
@@ -50,7 +48,7 @@ public class Item{
 	{
 		productionSteps.add(productionStep);
 	}
-	
+
 	public List<ProductionSteps> getProductionSteps()
 	{
 		return productionSteps;
@@ -69,6 +67,16 @@ public class Item{
 	public void setAttributes(Hashtable<String, String> attributes)
 	{
 		this.attributes = attributes;
+	}
+
+	public Order getOrder()
+	{
+		return order;
+	}
+
+	public void setOrder(Order order)
+	{
+		this.order = order;
 	}
 
 }
