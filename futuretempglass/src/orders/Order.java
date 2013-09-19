@@ -2,17 +2,16 @@ package orders;
 
 import items.Item;
 
+import java.util.Calendar;
 import java.util.List;
-
-import sun.util.calendar.LocalGregorianCalendar.Date;
 
 public class Order{
 
 	private String orderNumber;
-	
+
 	private String customer;
-	
-	private Date dueDate;
+
+	private Calendar dueDate;
 
 	private List<Item> items;
 
@@ -46,6 +45,26 @@ public class Order{
 	public void setRush(boolean rush)
 	{
 		this.rush = rush;
+	}
+
+	public Calendar getDueDate()
+	{
+		return dueDate;
+	}
+
+	public void setDueDate(Calendar dueDate)
+	{
+		this.dueDate = dueDate;
+	}
+
+	public String getCustomer()
+	{
+		return customer;
+	}
+
+	public void setCustomer(String customer)
+	{
+		this.customer = customer;
 	}
 
 }
