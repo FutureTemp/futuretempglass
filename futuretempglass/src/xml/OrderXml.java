@@ -22,12 +22,13 @@ public class OrderXml{
 
 	public boolean saveOrder()
 	{
-		return JAXBHelper.writeToXmlFile(this, ORDERS_PATH + orderNumber);
+		return JAXBHelper.writeToXmlFile(this, ORDERS_PATH + orderNumber
+				+ ".xml");
 	}
 
 	public static OrderXml loadOrder(String orderNumber)
 	{
-		return (OrderXml)JAXBHelper.readFromXmlFile(ORDERS_PATH + orderNumber,
-				OrderXml.class);
+		return (OrderXml) JAXBHelper.readFromXmlFile(ORDERS_PATH + orderNumber
+				+ ".xml", OrderXml.class);
 	}
 }

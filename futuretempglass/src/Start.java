@@ -20,6 +20,7 @@ public class Start{
 		ItemAttributeXml attribute = new ItemAttributeXml();
 
 		item.name = "glass";
+		item.quantity = 5;
 
 		attribute.name = "width";
 		attribute.value = "5";
@@ -32,8 +33,10 @@ public class Start{
 
 		order.items.add(item);
 
+		item = new ItemXml();
 		item.name = "crate";
 
+		attribute = new ItemAttributeXml();
 		attribute.name = "material";
 		attribute.value = "wood";
 

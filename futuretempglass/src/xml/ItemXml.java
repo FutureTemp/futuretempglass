@@ -1,5 +1,6 @@
 package xml;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -16,5 +17,5 @@ public class ItemXml{
 	public int quantity = 1;
 
 	@XmlElement(name = "attribute")
-	public List<ItemAttributeXml> attributes;
+	public List<ItemAttributeXml> attributes = new ArrayList<ItemAttributeXml>();
 }
