@@ -10,5 +10,5 @@ import enums.ProductionSteps;
 public class WorkFlow{
 
 	private Hashtable<ProductionSteps, List<Item>> workFlow;
-	
+
 }
