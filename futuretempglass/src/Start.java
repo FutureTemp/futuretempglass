@@ -1,4 +1,9 @@
+import framework.Application;
+import implementation.FutureTempApplication;
+
 import java.util.ArrayList;
+
+import screens.NewOrderScreen;
 
 import xml.ItemAttributeXml;
 import xml.ItemXml;
@@ -58,6 +63,8 @@ public class Start{
 				System.out.println("\tItem " + att.name + ": " + att.value);
 			}
 		}
+		Application application = new FutureTempApplication();
+		application.startApplication(new NewOrderScreen(application));
 	}
 
 }

@@ -2,6 +2,8 @@ package implementation;
 
 
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,7 +12,7 @@ import framework.Application;
 import framework.Graphics;
 import framework.Screen;
 
-public abstract class ScreenImp implements Screen{
+public abstract class ScreenImp implements Screen, KeyListener{
 
 	private static final int MILLISECONDS_PER_FRAME = 16;
 	
@@ -18,6 +20,11 @@ public abstract class ScreenImp implements Screen{
 	private boolean paused;
 	
 	protected Application application;
+	
+	public ScreenImp(Application application)
+	{
+		this.application = application;
+	}
 	
 	@Override
 	public void init() {
@@ -31,7 +38,6 @@ public abstract class ScreenImp implements Screen{
 		{
 			init();
 			gameLoop();
-			cleanUp();
 		}
 		catch(Exception e)
 		{
@@ -136,6 +142,6 @@ public abstract class ScreenImp implements Screen{
 		g.setColor(0, 0, 0);
 		g.fillRect(0, 0, application.getScreenWidth(), application.getScreenHeight());
 	}
-
+	
 	protected abstract void update(long timePassed);
 }

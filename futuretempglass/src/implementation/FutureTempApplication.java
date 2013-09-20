@@ -30,8 +30,8 @@ public class FutureTempApplication implements Application, KeyListener{
 		Window w = screenManager.getFullScreenWindow();
 		w.addKeyListener(this);
 		w.setFont(new Font("Arial", Font.PLAIN, 20));
-		w.setBackground(Color.BLACK);
-		w.setForeground(Color.WHITE);
+		w.setBackground(Color.WHITE);
+		w.setForeground(Color.BLACK);
 		
 		goToScreen(startScreen);
 	}
