@@ -5,7 +5,7 @@ import java.util.List;
 
 import orders.Order;
 
-import enums.ProductionSteps;
+import enums.ProductionStep;
 
 public class Item{
 
@@ -15,7 +15,7 @@ public class Item{
 
 	private int quantity;
 
-	private List<ProductionSteps> productionSteps;
+	private List<ProductionStep> productionSteps;
 
 	private Hashtable<String, String> attributes;
 
@@ -29,7 +29,7 @@ public class Item{
 		return itemName;
 	}
 
-	public void setItemName(String itemName)
+	public void setName(String itemName)
 	{
 		this.itemName = itemName;
 	}
@@ -44,17 +44,17 @@ public class Item{
 		this.quantity = quantity;
 	}
 
-	public void addProductionStep(ProductionSteps productionStep)
+	public void addProductionStep(ProductionStep productionStep)
 	{
 		productionSteps.add(productionStep);
 	}
 
-	public List<ProductionSteps> getProductionSteps()
+	public List<ProductionStep> getProductionSteps()
 	{
 		return productionSteps;
 	}
 
-	public void setProductionSteps(List<ProductionSteps> productionSteps)
+	public void setProductionSteps(List<ProductionStep> productionSteps)
 	{
 		this.productionSteps = productionSteps;
 	}

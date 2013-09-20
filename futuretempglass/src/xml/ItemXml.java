@@ -1,6 +1,9 @@
 package xml;
 
+import items.Item;
+
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -18,4 +21,20 @@ public class ItemXml{
 
 	@XmlElement(name = "attribute")
 	public List<ItemAttributeXml> attributes = new ArrayList<ItemAttributeXml>();
+
+	public Item getItem()
+	{
+		Item item = new Item(null);
+		item.setName(name);
+		item.setQuantity(quantity);
+		Hashtable<String, String> attributes = new Hashtable<String, String>();
+		if(this.attributes != null)
+		{
+			for(ItemAttributeXml attribute: this.attributes)
+			{
+				attributes.put(attribute.name, attribute.value);
+			}
+		}
+		return item;
+	}
 }
