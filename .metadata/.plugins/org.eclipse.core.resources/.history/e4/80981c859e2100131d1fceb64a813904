@@ -1,0 +1,11 @@
+package xml;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class ProductionStepsXml {
+
+	public List<String> productionSteps = new ArrayList<String>();
+	
+}

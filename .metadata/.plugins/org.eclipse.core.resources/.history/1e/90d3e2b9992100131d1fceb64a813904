@@ -1,0 +1,8 @@
+package xml;
+
+
+public class ProductionStepsXml {
+
+	public List<String> productionSteps = new ArrayList<String>();
+	
+}
