@@ -13,4 +13,5 @@ public interface Screen{
 	public void resume();
 	
 	public void clear(Graphics g);
+	
 }
