@@ -1,7 +1,0 @@
-package WorkFlow;
-
-public class WorkFlow{
-
-	private Hashtable<ProductionSteps, Item> workFlow;
-	
-}
