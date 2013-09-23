@@ -1,4 +1,4 @@
-package screens;
+package ui.views;
 
 import java.awt.event.KeyEvent;
 

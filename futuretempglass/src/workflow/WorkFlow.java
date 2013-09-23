@@ -1,4 +1,4 @@
-package WorkFlow;
+package workflow;
 
 import items.Item;
 
