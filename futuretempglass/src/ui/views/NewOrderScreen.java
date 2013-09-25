@@ -2,15 +2,26 @@ package ui.views;
 
 import java.awt.event.KeyEvent;
 
+import ui.elements.Button;
+
 import framework.Application;
 import framework.Graphics;
 import implementation.ScreenImp;
 
 public class NewOrderScreen extends ScreenImp{
 
+	private Button newOrderButton = new Button("New Order");
+	
 	public NewOrderScreen(Application application)
 	{
 		super(application);
+	}
+	
+	@Override
+	public void init()
+	{
+		super.init();
+		newOrderButton.setPosition(100, 100);
 	}
 
 	@Override
@@ -37,8 +48,7 @@ public class NewOrderScreen extends ScreenImp{
 	@Override
 	public void draw(Graphics g)
 	{
-		// TODO Auto-generated method stub
-		
+		newOrderButton.draw(g);
 	}
 
 	@Override

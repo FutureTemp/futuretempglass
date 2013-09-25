@@ -98,7 +98,7 @@ public abstract class ScreenImp implements Screen, KeyListener{
 			Graphics g = application.getGraphics();
 			clear(g);
 			draw(g);
-			g.setColor(255,255,255);
+			g.setColor(0,0,0);
 			g.drawString(""+ ((timePassed == 0 ? "Too Fast" : 1000000000/timePassed)) +" FPS : Time Passed Per Frame: "+timePassed/1000000, application.getScreenWidth()/2, 50);
 			g.dispose();
 			((FutureTempApplication) application).getScreenManager().update();
@@ -139,7 +139,7 @@ public abstract class ScreenImp implements Screen, KeyListener{
 	
 	public void clear(Graphics g)
 	{
-		g.setColor(0, 0, 0);
+		g.setColor(255, 255, 255);
 		g.fillRect(0, 0, application.getScreenWidth(), application.getScreenHeight());
 	}
 	
