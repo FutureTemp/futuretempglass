@@ -10,11 +10,21 @@ import implementation.ScreenImp;
 
 public class NewOrderScreen extends ScreenImp{
 
-	private Button newOrderButton = new Button("New Order");
-	
+	private Button newOrderButton = new Button("New Order"){
+		public void onPress()
+		{
+			newOrder();
+		};
+	};
+
 	public NewOrderScreen(Application application)
 	{
 		super(application);
+	}
+
+	private void newOrder()
+	{
+		
 	}
 	
 	@Override
@@ -28,21 +38,21 @@ public class NewOrderScreen extends ScreenImp{
 	public void keyPressed(KeyEvent e)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -55,7 +65,7 @@ public class NewOrderScreen extends ScreenImp{
 	protected void update(long timePassed)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
