@@ -36,4 +36,9 @@ public class Button extends Sprite{
 				+ height + VERTICAL_SPACE / 2);
 	}
 
+	public void onPress()
+	{
+
+	}
+
 }
