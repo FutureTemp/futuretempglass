@@ -1,13 +1,11 @@
 package framework;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
 
 
-public class Sprite implements Serializable{
+public class Sprite{
 	
-	private static final long serialVersionUID = 1L;
 	private double x, y, vx, vy;
 	private long lastCheck;
 	private String animationType;
