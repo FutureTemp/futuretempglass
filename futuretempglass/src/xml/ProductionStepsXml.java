@@ -15,7 +15,7 @@ public class ProductionStepsXml{
 	private static final String PRODUCTION_STEPS_PATH = "factory/production-steps.xml";
 
 	@XmlElement(name = "productionStep")
-	public List<String> productionSteps = new ArrayList<String>();
+	public List<ProductionStep> productionSteps = new ArrayList<ProductionStep>();
 
 	public static List<ProductionStep> getProductionSteps()
 	{
@@ -25,11 +25,18 @@ public class ProductionStepsXml{
 		ArrayList<ProductionStep> steps = new ArrayList<ProductionStep>();
 		if(stepsXml != null)
 		{
-			for(String step: stepsXml.productionSteps)
+			for(ProductionStep step: stepsXml.productionSteps)
 			{
-				steps.add(ProductionStep.getProductionStep(step));
+				steps.add(step);
 			}
 		}
 		return steps;
+	}
+	
+	public static void setProductionSteps(List<ProductionStep> productionSteps)
+	{
+		ProductionStepsXml stepsXml = new ProductionStepsXml();
+		stepsXml.productionSteps = productionSteps;
+		
 	}
 }
