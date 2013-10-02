@@ -1,13 +1,12 @@
-import framework.Application;
 import implementation.FutureTempApplication;
 
 import java.util.ArrayList;
 
-import ui.views.NewOrderScreen;
-
+import ui.views.NewOrderWindow;
 import xml.ItemAttributeXml;
 import xml.ItemXml;
 import xml.OrderXml;
+import framework.Application;
 
 public class Start{
 
@@ -64,7 +63,8 @@ public class Start{
 			}
 		}
 		Application application = new FutureTempApplication();
-		application.startApplication(new NewOrderScreen(application));
+		NewOrderWindow window = new NewOrderWindow();
+		window.main(new String[0]);
 	}
 
 }
