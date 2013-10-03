@@ -2,6 +2,7 @@ import implementation.FutureTempApplication;
 
 import java.util.ArrayList;
 
+import ui.views.NewOrderWindow;
 import xml.ItemAttributeXml;
 import xml.ItemXml;
 import xml.OrderXml;
@@ -62,8 +63,7 @@ public class Start{
 			}
 		}
 		Application application = new FutureTempApplication();
-		//NewOrderWindow window = new NewOrderWindow();
-		//window.main(new String[0]);
+		NewOrderWindow window = new NewOrderWindow();
 	}
 
 }

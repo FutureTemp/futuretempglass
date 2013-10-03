@@ -1,81 +1,178 @@
 package ui.views;
 
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 
 import orders.Order;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
+
 import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
+import com.sun.corba.se.impl.encoding.CodeSetConversion.BTCConverter;
 
-public class NewOrderWindow extends JFrame{
+import javax.swing.JTable;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JPanel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.BoxLayout;
 
+import ui.components.InputQuestion;
+
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+public class NewOrderWindow extends JFrame implements MouseListener{
+
+	JButton btnNewButton;
+	
 	/**
 	 * Create the frame.
 	 */
-	public NewOrderWindow(Order order)
+	public NewOrderWindow()
 	{
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(98dlu;default)"),},
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(139dlu;default):grow"),},
 			new RowSpec[] {
 				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
+				RowSpec.decode("max(164dlu;default):grow"),}));
 		
-		InputQuestion inputQuestion_9 = new InputQuestion((String) null, (String) null);
-		getContentPane().add(inputQuestion_9, "2, 2");
+		btnNewButton = new JButton("New button");
+		btnNewButton.addMouseListener(this);
+		getContentPane().add(btnNewButton, "2, 2, default, bottom");
 		
-		InputQuestion inputQuestion_8 = new InputQuestion((String) null, (String) null);
-		getContentPane().add(inputQuestion_8, "2, 4");
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		getContentPane().add(scrollPane, "4, 2, fill, fill");
 		
-		InputQuestion inputQuestion_7 = new InputQuestion((String) null, (String) null);
-		getContentPane().add(inputQuestion_7, "2, 6");
-		
-		InputQuestion inputQuestion_6 = new InputQuestion((String) null, (String) null);
-		getContentPane().add(inputQuestion_6, "2, 8");
-		
-		InputQuestion inputQuestion_5 = new InputQuestion((String) null, (String) null);
-		getContentPane().add(inputQuestion_5, "2, 10");
-		
-		InputQuestion inputQuestion_4 = new InputQuestion((String) null, (String) null);
-		getContentPane().add(inputQuestion_4, "2, 12");
-		
-		InputQuestion inputQuestion_3 = new InputQuestion((String) null, (String) null);
-		getContentPane().add(inputQuestion_3, "2, 14");
-		
-		InputQuestion inputQuestion_2 = new InputQuestion((String) null, (String) null);
-		getContentPane().add(inputQuestion_2, "2, 16");
-		
-		InputQuestion inputQuestion_1 = new InputQuestion((String) null, (String) null);
-		getContentPane().add(inputQuestion_1, "2, 18");
+		JPanel panel = new JPanel();
+		scrollPane.setViewportView(panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
 		
 		InputQuestion inputQuestion = new InputQuestion((String) null, (String) null);
-		getContentPane().add(inputQuestion, "2, 20");
+		GridBagConstraints gbc_inputQuestion = new GridBagConstraints();
+		gbc_inputQuestion.insets = new Insets(0, 0, 5, 0);
+		gbc_inputQuestion.gridx = 0;
+		gbc_inputQuestion.gridy = 0;
+		panel.add(inputQuestion, gbc_inputQuestion);
+		
+		InputQuestion inputQuestion_1 = new InputQuestion((String) null, (String) null);
+		GridBagConstraints gbc_inputQuestion_1 = new GridBagConstraints();
+		gbc_inputQuestion_1.insets = new Insets(0, 0, 5, 0);
+		gbc_inputQuestion_1.gridx = 0;
+		gbc_inputQuestion_1.gridy = 1;
+		panel.add(inputQuestion_1, gbc_inputQuestion_1);
+		
+		InputQuestion inputQuestion_3 = new InputQuestion((String) null, (String) null);
+		GridBagConstraints gbc_inputQuestion_3 = new GridBagConstraints();
+		gbc_inputQuestion_3.insets = new Insets(0, 0, 5, 0);
+		gbc_inputQuestion_3.gridx = 0;
+		gbc_inputQuestion_3.gridy = 2;
+		panel.add(inputQuestion_3, gbc_inputQuestion_3);
+		
+		InputQuestion inputQuestion_2 = new InputQuestion((String) null, (String) null);
+		GridBagConstraints gbc_inputQuestion_2 = new GridBagConstraints();
+		gbc_inputQuestion_2.insets = new Insets(0, 0, 5, 0);
+		gbc_inputQuestion_2.gridx = 0;
+		gbc_inputQuestion_2.gridy = 3;
+		panel.add(inputQuestion_2, gbc_inputQuestion_2);
+		
+		InputQuestion inputQuestion_4 = new InputQuestion((String) null, (String) null);
+		GridBagConstraints gbc_inputQuestion_4 = new GridBagConstraints();
+		gbc_inputQuestion_4.insets = new Insets(0, 0, 5, 0);
+		gbc_inputQuestion_4.gridx = 0;
+		gbc_inputQuestion_4.gridy = 4;
+		panel.add(inputQuestion_4, gbc_inputQuestion_4);
+		
+		InputQuestion inputQuestion_5 = new InputQuestion((String) null, (String) null);
+		GridBagConstraints gbc_inputQuestion_5 = new GridBagConstraints();
+		gbc_inputQuestion_5.insets = new Insets(0, 0, 5, 0);
+		gbc_inputQuestion_5.gridx = 0;
+		gbc_inputQuestion_5.gridy = 5;
+		panel.add(inputQuestion_5, gbc_inputQuestion_5);
+		
+		InputQuestion inputQuestion_9 = new InputQuestion((String) null, (String) null);
+		GridBagConstraints gbc_inputQuestion_9 = new GridBagConstraints();
+		gbc_inputQuestion_9.insets = new Insets(0, 0, 5, 0);
+		gbc_inputQuestion_9.gridx = 0;
+		gbc_inputQuestion_9.gridy = 6;
+		panel.add(inputQuestion_9, gbc_inputQuestion_9);
+		
+		InputQuestion inputQuestion_6 = new InputQuestion((String) null, (String) null);
+		GridBagConstraints gbc_inputQuestion_6 = new GridBagConstraints();
+		gbc_inputQuestion_6.insets = new Insets(0, 0, 5, 0);
+		gbc_inputQuestion_6.gridx = 0;
+		gbc_inputQuestion_6.gridy = 7;
+		panel.add(inputQuestion_6, gbc_inputQuestion_6);
+		
+		InputQuestion inputQuestion_8 = new InputQuestion((String) null, (String) null);
+		GridBagConstraints gbc_inputQuestion_8 = new GridBagConstraints();
+		gbc_inputQuestion_8.insets = new Insets(0, 0, 5, 0);
+		gbc_inputQuestion_8.gridx = 0;
+		gbc_inputQuestion_8.gridy = 8;
+		panel.add(inputQuestion_8, gbc_inputQuestion_8);
+		
+		InputQuestion inputQuestion_7 = new InputQuestion((String) null, (String) null);
+		GridBagConstraints gbc_inputQuestion_7 = new GridBagConstraints();
+		gbc_inputQuestion_7.gridx = 0;
+		gbc_inputQuestion_7.gridy = 9;
+		panel.add(inputQuestion_7, gbc_inputQuestion_7);
 
 		setVisible(true);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e)
+	{
+		if(e.getSource().equals(btnNewButton))
+		{
+			ItemsListWindow itemListWindow = new ItemsListWindow();
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }
