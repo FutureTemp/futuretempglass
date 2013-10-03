@@ -1,61 +1,28 @@
 package ui.views;
 
-import java.awt.EventQueue;
+import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+
+import orders.Order;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
 
-public class NewOrderWindow{
-
-	private JFrame frame;
+public class NewOrderWindow extends JFrame{
 
 	/**
-	 * Launch the application.
+	 * Create the frame.
 	 */
-	public static void main(String[] args)
+	public NewOrderWindow(Order order)
 	{
-		EventQueue.invokeLater(new Runnable(){
-			public void run()
-			{
-				try
-				{
-					NewOrderWindow window = new NewOrderWindow();
-					window.frame.setVisible(true);
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public NewOrderWindow()
-	{
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize()
-	{
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
+		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),},
+				ColumnSpec.decode("max(98dlu;default)"),},
 			new RowSpec[] {
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -66,7 +33,7 @@ public class NewOrderWindow{
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
+				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
@@ -78,11 +45,37 @@ public class NewOrderWindow{
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,}));
 		
-		JScrollPane scrollPane = new JScrollPane();
-		frame.getContentPane().add(scrollPane, "4, 2, 1, 19, fill, fill");
+		InputQuestion inputQuestion_9 = new InputQuestion((String) null, (String) null);
+		getContentPane().add(inputQuestion_9, "2, 2");
 		
-		JButton btnNewOrder = new JButton("New Order");
-		frame.getContentPane().add(btnNewOrder, "2, 20");
+		InputQuestion inputQuestion_8 = new InputQuestion((String) null, (String) null);
+		getContentPane().add(inputQuestion_8, "2, 4");
+		
+		InputQuestion inputQuestion_7 = new InputQuestion((String) null, (String) null);
+		getContentPane().add(inputQuestion_7, "2, 6");
+		
+		InputQuestion inputQuestion_6 = new InputQuestion((String) null, (String) null);
+		getContentPane().add(inputQuestion_6, "2, 8");
+		
+		InputQuestion inputQuestion_5 = new InputQuestion((String) null, (String) null);
+		getContentPane().add(inputQuestion_5, "2, 10");
+		
+		InputQuestion inputQuestion_4 = new InputQuestion((String) null, (String) null);
+		getContentPane().add(inputQuestion_4, "2, 12");
+		
+		InputQuestion inputQuestion_3 = new InputQuestion((String) null, (String) null);
+		getContentPane().add(inputQuestion_3, "2, 14");
+		
+		InputQuestion inputQuestion_2 = new InputQuestion((String) null, (String) null);
+		getContentPane().add(inputQuestion_2, "2, 16");
+		
+		InputQuestion inputQuestion_1 = new InputQuestion((String) null, (String) null);
+		getContentPane().add(inputQuestion_1, "2, 18");
+		
+		InputQuestion inputQuestion = new InputQuestion((String) null, (String) null);
+		getContentPane().add(inputQuestion, "2, 20");
+
+		setVisible(true);
 	}
 
 }
