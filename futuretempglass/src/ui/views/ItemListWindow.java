@@ -92,6 +92,7 @@ public class ItemListWindow extends JFrame implements MouseListener{
 				itemNames.add(this.itemList.getModel().getElementAt(index));
 			}
 			parentWindow.sendMessage(this, itemNames);
+			dispose();
 		}
 	}
 
