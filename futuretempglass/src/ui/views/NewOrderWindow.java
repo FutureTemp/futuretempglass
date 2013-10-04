@@ -140,6 +140,7 @@ public class NewOrderWindow extends JFrame implements Window, MouseListener{
 		gbc_inputQuestion_7.gridy = 9;
 		panel.add(inputQuestion_7, gbc_inputQuestion_7);
 
+		pack();
 		setVisible(true);
 	}
 
