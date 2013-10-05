@@ -5,10 +5,10 @@ import items.Item;
 import java.util.Hashtable;
 import java.util.List;
 
-import enums.ProductionStep;
+import xml.ProductionStepXml;
 
 public class WorkFlow{
 
-	private Hashtable<ProductionStep, List<Item>> workFlow;
+	private Hashtable<ProductionStepXml, List<Item>> workFlow;
 
 }

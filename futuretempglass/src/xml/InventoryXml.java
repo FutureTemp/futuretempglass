@@ -12,7 +12,9 @@ import storage.JAXBHelper;
 
 @XmlRootElement(name = "inventory")
 public class InventoryXml{
+
 	private static final String INVENTORY_PATH = "factory/inventory.xml";
+
 	@XmlElement(name = "item")
 	public List<ItemXml> items;
 

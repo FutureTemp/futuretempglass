@@ -1,10 +1,13 @@
 package ui.views;
 
+import items.Item;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -20,10 +23,10 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-public class NewOrderWindow extends JFrame implements Window, MouseListener{
+public class NewOrderWindow extends Window implements MouseListener{
 
 	ItemListWindow itemListWindow;
-	
+
 	JButton btnNewButton;
 
 	/**
@@ -154,6 +157,16 @@ public class NewOrderWindow extends JFrame implements Window, MouseListener{
 			{
 				new EditItemWindow(this, itemName);
 			}
+		}
+		else if(source instanceof EditItemWindow)
+		{
+			Item item = (Item)object;
+			System.out.println(item.getItemName());
+			for (String attributeName: item.getAttributeNames())
+			{
+				System.out.println(attributeName + " : " + item.getAttribute(attributeName));
+			}
+			System.out.println();
 		}
 
 	}

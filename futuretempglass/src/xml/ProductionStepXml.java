@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType(name = "productionStep")
-public class ProductionStep{
+public class ProductionStepXml{
 
 	@XmlAttribute(name = "name")
 	public String name;

@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inventory>
-	<item name="Clear Glass">
+	<item name="Clear Glass1">
 		<attribute name="thickness" value="num" />
 		<attribute name="width" value="num" />
 		<attribute name="height" value="num" />
+		<attribute name="thickness1" value="num" />
+		<attribute name="width1" value="num" />
+		<attribute name="height1" value="num" />
+		<attribute name="thickness2" value="num" />
+		<attribute name="width2" value="num" />
+		<attribute name="height2" value="num" />
+		<attribute name="thickness3" value="num" />
+		<attribute name="width3" value="num" />
+		<attribute name="height3" value="num" />
+		<attribute name="thickness4" value="num" />
+		<attribute name="width4" value="num" />
+		<attribute name="height4" value="num" />
+		<attribute name="thickness5" value="num" />
+		<attribute name="width5" value="num" />
+		<attribute name="height5" value="num" />
+		<attribute name="thickness6" value="num" />
+		<attribute name="width6" value="num" />
+		<attribute name="height6" value="num" />
+		<attribute name="thickness7" value="num" />
+		<attribute name="width7" value="num" />
+		<attribute name="height7" value="num" />
 	</item>
 	<item name="Starfire">
 		<attribute name="thickness" value="num" />

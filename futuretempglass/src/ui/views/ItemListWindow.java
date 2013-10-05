@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 
 import xml.InventoryXml;
 
-public class ItemListWindow extends JFrame implements MouseListener{
+public class ItemListWindow extends Window implements MouseListener{
 
 	private Window parentWindow;
 	

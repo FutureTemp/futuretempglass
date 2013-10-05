@@ -27,13 +27,10 @@ public class ItemXml{
 		Item item = new Item(null);
 		item.setName(name);
 		item.setQuantity(quantity);
-		Hashtable<String, String> attributes = new Hashtable<String, String>();
-		if(this.attributes != null)
+		List<String> attributeNames = new ArrayList<String>();
+		for(ItemAttributeXml itemAttribute: attributes)
 		{
-			for(ItemAttributeXml attribute: this.attributes)
-			{
-				attributes.put(attribute.name, attribute.value);
-			}
+			item.setAttribute(itemAttribute.name, itemAttribute.value);
 		}
 		return item;
 	}
