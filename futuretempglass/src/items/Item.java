@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import orders.Order;
+import workflow.ProductionStep;
 import xml.ProductionStepXml;
 
 public class Item{
@@ -15,17 +16,21 @@ public class Item{
 
 	private int quantity;
 
-	private List<ProductionStepXml> productionSteps;
+	private List<ProductionStep> productionSteps;
+
+	private List<ProductionStep> doneSteps;
+
+	private ProductionStep currentStep;
 
 	private List<String> attributeNames;
-	
+
 	private Hashtable<String, Object> attributes;
 
 	public Item()
 	{
 		this(null);
 	}
-	
+
 	public Item(Order order)
 	{
 		this.setOrder(order);
@@ -53,17 +58,17 @@ public class Item{
 		this.quantity = quantity;
 	}
 
-	public void addProductionStep(ProductionStepXml productionStep)
+	public void addProductionStep(ProductionStep productionStep)
 	{
 		productionSteps.add(productionStep);
 	}
 
-	public List<ProductionStepXml> getProductionSteps()
+	public List<ProductionStep> getProductionSteps()
 	{
 		return productionSteps;
 	}
 
-	public void setProductionSteps(List<ProductionStepXml> productionSteps)
+	public void setProductionSteps(List<ProductionStep> productionSteps)
 	{
 		this.productionSteps = productionSteps;
 	}
@@ -77,12 +82,12 @@ public class Item{
 	{
 		this.attributeNames = attributeNames;
 	}
-	
+
 	public Object getAttribute(String attributeName)
 	{
 		return attributes.get(attributeName);
 	}
-	
+
 	public void setAttribute(String attributeName, Object value)
 	{
 		attributes.put(attributeName, value);
@@ -100,6 +105,51 @@ public class Item{
 	public void setOrder(Order order)
 	{
 		this.order = order;
+	}
+
+	public void startStep(ProductionStep step) throws Exception
+	{
+		if(!productionSteps.contains(step))
+		{
+			throw new Exception("This item does not call for " + step.getName());
+		}
+		if(doneSteps.contains(step))
+		{
+			throw new Exception(step.getName() + " has already been completed");
+		}
+		if(currentStep != null)
+		{
+			throw new Exception(currentStep + " is already in progress");
+		}
+		List<ProductionStep> notDoneSteps = new ArrayList<ProductionStep>();
+		for(ProductionStep dependency: step.getDependency())
+		{
+			if(!doneSteps.contains(dependency))
+			{
+				notDoneSteps.add(dependency);
+			}
+		}
+		if(notDoneSteps.size() != 0)
+		{
+			throw new Exception("Cannot start " + step + ", before completing " + doneSteps);
+		}
+		currentStep = step;
+	}
+
+	public void finishCurrentStep()
+	{
+		doneSteps.add(currentStep);
+		currentStep = null;
+	}
+
+	public boolean isDone(ProductionStep step)
+	{
+		return doneSteps.contains(step);
+	}
+
+	public ProductionStep getCurrentStep()
+	{
+		return currentStep;
 	}
 
 }
