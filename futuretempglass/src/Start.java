@@ -1,23 +1,18 @@
-import storage.ItemLibrary;
+import core.Application;
+import storage.client.ClientItemLibrary;
+import storage.server.ServerItemLibrary;
 import ui.views.NewOrderWindow;
 
 public class Start{
 
-	
-	private static void initLibraries()
-	{
-		ItemLibrary.init();
-	}
-	
 	/**
 	 * @param args
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		initLibraries();
+		Application.itemLibrary = new ClientItemLibrary();
 		
-		//Application application = new FutureTempApplication();
 		new NewOrderWindow();
 	}
 

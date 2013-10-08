@@ -20,13 +20,15 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-import storage.ItemLibrary;
+import storage.server.ServerItemLibrary;
 import ui.components.InputQuestion;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
+
+import core.Application;
 
 public class EditItemWindow extends Window implements MouseListener{
 
@@ -58,7 +60,7 @@ public class EditItemWindow extends Window implements MouseListener{
 
 		attributeQuestions = new ArrayList<InputQuestion>();
 
-		item = ItemLibrary.getItem(itemName);
+		item = Application.getItemLibrary().getItem(itemName);
 		for (String attributeName: item.getAttributeNames())
 		{
 			attributeQuestions.add(new InputQuestion(attributeName, item.getAttribute(attributeName)));

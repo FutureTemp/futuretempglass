@@ -2,28 +2,13 @@ package storage;
 
 import items.Item;
 
-import java.util.HashMap;
 import java.util.List;
 
-import xml.InventoryXml;
+public abstract class ItemLibrary{
 
-public class ItemLibrary{
-
-	private static HashMap<String, Item> items;
+	public abstract Item getItem(String itemName);
 	
-	public static void init()
-	{
-		items = new HashMap<String, Item>();
-		List<Item> itemList = InventoryXml.getItems();
-		for(Item item: itemList)
-		{
-			items.put(item.getItemName(), item);
-		}
-	}
+	public abstract List<Item> getItems();
 	
-	public static Item getItem(String itemName)
-	{
-		return items.get(itemName);
-	}
-	
+	public abstract List<String> getItemNames();
 }

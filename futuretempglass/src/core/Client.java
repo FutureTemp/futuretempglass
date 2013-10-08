@@ -1,20 +1,17 @@
-package communication;
+package core;
 
 import items.Item;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
-import storage.server.ServerItemLibrary;
+public class Client{
 
-import core.Application;
+	public static String serverIp = "192.168.1.14";
 
-class Server{
-
-	private static boolean stop = false;
-	
 	public static void sendString(String string, InetAddress address, int port)
 	{
 		byte[] bytes = string.getBytes();
@@ -37,7 +34,7 @@ class Server{
 		}
 	}
 
-	public Server()
+	public Client()
 	{
 		DatagramSocket ds = null;
 		try
@@ -55,14 +52,14 @@ class Server{
 				ds.close();
 			}
 		}
-		while (!stop)
+		while (true)
 		{
 			try
 			{
 				byte[] buffer = new byte[1024];
 				DatagramPacket p = new DatagramPacket(buffer, buffer.length);
 				ds.receive(p);
-				Server.execute(p);
+				Client.execute(p);
 			}
 			catch(Exception e)
 			{
@@ -75,11 +72,36 @@ class Server{
 		}
 	}
 
+	public static String receiveMessage()
+	{
+		DatagramSocket ds = null;
+		try
+		{
+			ds = new DatagramSocket(1110);
+			byte[] buffer = new byte[32768];
+			DatagramPacket p = new DatagramPacket(buffer, buffer.length);
+			ds.receive(p);
+			return new String(buffer, 0, buffer.length);
+		}
+		catch(Exception e)
+		{
+
+		}
+		finally
+		{
+			if(ds != null)
+			{
+				ds.close();
+			}
+		}
+		return null;
+	}
+
 	public static void execute(DatagramPacket packet)
 	{
 		String command = new String(packet.getData(), 0, packet.getLength());
 
-		if("get item names".equalsIgnoreCase(command))
+		if("get items".equalsIgnoreCase(command))
 		{
 			StringBuilder builder = new StringBuilder();
 			List<Item> items = Application.getItemLibrary().getItems();
@@ -88,7 +110,6 @@ class Server{
 				builder.append(item.getItemName());
 				builder.append('|');
 			}
-			builder.deleteCharAt(builder.length() - 1);
 			sendString(builder.toString(), packet.getAddress(),
 					packet.getPort());
 		}
@@ -96,9 +117,20 @@ class Server{
 
 	public static void main(String[] args)
 	{
-		Application.itemLibrary = new ServerItemLibrary();
-		
-		new Server();
+		new Client();
 	}
 
+	public static String sendMessageToServer(String string)
+	{
+		try
+		{
+			sendString(string, InetAddress.getByName(serverIp), 1110);
+		}
+		catch(UnknownHostException e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 }
