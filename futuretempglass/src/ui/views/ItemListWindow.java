@@ -1,7 +1,5 @@
 package ui.views;
 
-import items.Item;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import xml.InventoryXml;
+import core.Application;
 
 public class ItemListWindow extends Window implements MouseListener{
 
@@ -36,11 +34,11 @@ public class ItemListWindow extends Window implements MouseListener{
 	{
 		this.parentWindow = parentWindow;
 		
-		List<Item> items = InventoryXml.getItems();
+		List<String> items = Application.getItemLibrary().getItemNames();
 		String[] itemNames = new String[items.size()];
 		for(int i = 0; i < items.size(); i++)
 		{
-			itemNames[i] = items.get(i).getItemName();
+			itemNames[i] = items.get(i);
 		}
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

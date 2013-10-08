@@ -125,12 +125,15 @@ public class Client{
 		try
 		{
 			sendString(string, InetAddress.getByName(serverIp), 1110);
+			return receiveMessage();
 		}
 		catch(UnknownHostException e)
 		{
 			e.printStackTrace();
 		}
 
+		
+		
 		return null;
 	}
 }

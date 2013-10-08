@@ -32,7 +32,7 @@ public class ClientItemLibrary extends ItemLibrary{
 		{
 			return null;
 		}
-		String[] itemNames = response.split("|");
+		String[] itemNames = response.split(",");
 		return Arrays.asList(itemNames);
 	}
 
