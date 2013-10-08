@@ -20,7 +20,7 @@ class Server{
 		DatagramSocket ds = null;
 		try
 		{
-			ds = new DatagramSocket(1110);
+			ds = new DatagramSocket(1111);
 			ds.send(new DatagramPacket(bytes, bytes.length, address, port));
 		}
 		catch(Exception e)
@@ -58,6 +58,7 @@ class Server{
 		{
 			try
 			{
+				ds = new DatagramSocket(1110);
 				byte[] buffer = new byte[1024];
 				DatagramPacket p = new DatagramPacket(buffer, buffer.length);
 				ds.receive(p);
@@ -78,6 +79,8 @@ class Server{
 	{
 		String command = new String(packet.getData(), 0, packet.getLength());
 
+		System.out.println(command);
+		
 		if("get item names".equalsIgnoreCase(command))
 		{
 			StringBuilder builder = new StringBuilder();
@@ -85,7 +88,7 @@ class Server{
 			for(Item item: items)
 			{
 				builder.append(item.getItemName());
-				builder.append('|');
+				builder.append(",");
 			}
 			builder.deleteCharAt(builder.length() - 1);
 			sendString(builder.toString(), packet.getAddress(),
