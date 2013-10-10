@@ -1,13 +1,22 @@
 package core;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import storage.client.ClientItemLibrary;
+import storage.client.ClientProductionStepsLibrary;
+import ui.views.NewOrderWindow;
+import ui.views.ServerIpWindow;
+
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+
 public class Client{
 
-	public static String serverIp = "192.168.1.14";
+	public static String serverIp = null;
 
 	public static int TIMEOUT = 20000;
 
@@ -37,9 +46,11 @@ public class Client{
 		}
 	}
 
-	public static String receiveMessage()
+	public static Object receiveMessage()
 	{
 		DatagramSocket ds = null;
+		ByteInputStream bis = null;
+		ObjectInputStream ois = null;
 		try
 		{
 			ds = new DatagramSocket(IN_PORT);
@@ -47,7 +58,11 @@ public class Client{
 			byte[] buffer = new byte[32768];
 			DatagramPacket p = new DatagramPacket(buffer, buffer.length);
 			ds.receive(p);
-			return new String(buffer, 0, buffer.length);
+
+			bis = new ByteInputStream(p.getData(), p.getLength());
+			ois = new ObjectInputStream(bis);
+
+			return ois.readObject();
 		}
 		catch(Exception e)
 		{
@@ -59,11 +74,34 @@ public class Client{
 			{
 				ds.close();
 			}
+			if(ois != null)
+			{
+				try
+				{
+					ois.close();
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			if(bis != null)
+			{
+				try
+				{
+					bis.close();
+				}
+				catch(IOException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		return null;
 	}
 
-	public static String sendMessageToServer(String string)
+	public static Object sendMessageToServer(String string)
 	{
 		try
 		{
@@ -76,5 +114,17 @@ public class Client{
 		}
 
 		return null;
+	}
+	
+	/**
+	 * @param args
+	 * @throws Exception
+	 */
+	public static void main(String[] args) throws Exception
+	{
+		Application.itemLibrary = new ClientItemLibrary();
+		Application.productionStepsLibrary = new ClientProductionStepsLibrary();
+
+		new ServerIpWindow();
 	}
 }

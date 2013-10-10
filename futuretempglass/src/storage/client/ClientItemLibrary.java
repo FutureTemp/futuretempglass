@@ -2,7 +2,6 @@ package storage.client;
 
 import items.Item;
 
-import java.util.Arrays;
 import java.util.List;
 
 import storage.ItemLibrary;
@@ -13,27 +12,24 @@ public class ClientItemLibrary extends ItemLibrary{
 	@Override
 	public Item getItem(String itemName)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Object response = Client.sendMessageToServer("get item " + itemName);
+		return (Item)response;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Item> getItems()
 	{
-		//TODO IMPLEMENT
-		return null;
+		Object response = Client.sendMessageToServer("get items");
+		return (List<Item>)response;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> getItemNames()
 	{
-		String response = Client.sendMessageToServer("get item names");
-		if(response == null)
-		{
-			return null;
-		}
-		String[] itemNames = response.split(",");
-		return Arrays.asList(itemNames);
+		Object response = Client.sendMessageToServer("get item names");
+		return (List<String>)response;
 	}
 
 }

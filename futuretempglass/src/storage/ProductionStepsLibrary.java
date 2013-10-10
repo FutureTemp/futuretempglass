@@ -3,19 +3,9 @@ package storage;
 import java.util.List;
 
 import workflow.ProductionStep;
-import xml.WorkFlowXml;
 
-public class ProductionStepsLibrary{
+public abstract class ProductionStepsLibrary{
 
-	private static List<ProductionStep> steps;
+	public abstract List<ProductionStep> getProductionSteps();
 	
-	public static void init()
-	{
-		steps = WorkFlowXml.getProductionSteps();
-	}
-	
-	public static List<ProductionStep> getProductionSteps()
-	{
-		return steps;
-	}
 }

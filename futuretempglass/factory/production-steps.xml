@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<productionSteps>
+<workFlow>
 	<productionStep>Cutting</productionStep>
 	<productionStep>Polishing</productionStep>
 	<productionStep>Sandblasting</productionStep>
 	<productionStep>Cutting</productionStep>
-</productionSteps>
+</workFlow>
