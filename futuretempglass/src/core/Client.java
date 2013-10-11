@@ -20,9 +20,7 @@ public class Client{
 
 	public static int TIMEOUT = 20000;
 
-	public static int OUT_PORT = 1110;
-
-	public static int IN_PORT = 1111;
+	public static int PORT = 1110;
 
 	public static void sendString(String string, InetAddress address, int port)
 	{
@@ -30,7 +28,7 @@ public class Client{
 		DatagramSocket ds = null;
 		try
 		{
-			ds = new DatagramSocket(OUT_PORT);
+			ds = new DatagramSocket(PORT);
 			ds.send(new DatagramPacket(bytes, bytes.length, address, port));
 		}
 		catch(Exception e)
@@ -53,7 +51,7 @@ public class Client{
 		ObjectInputStream ois = null;
 		try
 		{
-			ds = new DatagramSocket(IN_PORT);
+			ds = new DatagramSocket(PORT);
 			ds.setSoTimeout(TIMEOUT);
 			byte[] buffer = new byte[32768];
 			DatagramPacket p = new DatagramPacket(buffer, buffer.length);
@@ -105,7 +103,7 @@ public class Client{
 	{
 		try
 		{
-			sendString(string, InetAddress.getByName(serverIp), OUT_PORT);
+			sendString(string, InetAddress.getByName(serverIp), PORT);
 			return receiveMessage();
 		}
 		catch(UnknownHostException e)
