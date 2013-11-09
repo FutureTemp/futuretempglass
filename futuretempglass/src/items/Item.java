@@ -7,7 +7,6 @@ import java.util.List;
 
 import orders.Order;
 import workflow.ProductionStep;
-import xml.ProductionStepXml;
 
 public class Item implements Serializable{
 
@@ -17,6 +16,8 @@ public class Item implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Order order;
+
+	private String id;
 
 	private String itemName;
 
@@ -137,7 +138,8 @@ public class Item implements Serializable{
 		}
 		if(notDoneSteps.size() != 0)
 		{
-			throw new Exception("Cannot start " + step + ", before completing " + doneSteps);
+			throw new Exception("Cannot start " + step + ", before completing "
+					+ doneSteps);
 		}
 		currentStep = step;
 	}
@@ -158,4 +160,28 @@ public class Item implements Serializable{
 		return currentStep;
 	}
 
+	public String getItemId()
+	{
+		return id;
+	}
+
+	public void setItemId(String id)
+	{
+		this.id = id;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(!(obj instanceof Item))
+		{
+			return false;
+		}
+		Item item = (Item)obj;
+		if(item.getItemId() == null || getItemId() == null)
+		{
+			return false;
+		}
+		return item.getItemId().equals(getItemId());
+	}
 }

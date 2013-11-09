@@ -1,6 +1,8 @@
+import storage.server.ServerInventoryLibrary;
 import storage.server.ServerItemLibrary;
+import storage.server.ServerOrderLibrary;
 import storage.server.ServerProductionStepsLibrary;
-import ui.views.NewOrderWindow;
+import ui.views.EditOrderWindow;
 import core.Application;
 
 public class LocalClient{
@@ -11,10 +13,12 @@ public class LocalClient{
 	 */
 	public static void main(String[] args) throws Exception
 	{
+		Application.orderLibrary = new ServerOrderLibrary();
 		Application.itemLibrary = new ServerItemLibrary();
 		Application.productionStepsLibrary = new ServerProductionStepsLibrary();
+		Application.inventoryLibrary = new ServerInventoryLibrary();
 
-		new NewOrderWindow();
+		new EditOrderWindow();
 	}
 
 }

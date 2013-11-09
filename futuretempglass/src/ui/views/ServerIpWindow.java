@@ -1,21 +1,18 @@
 package ui.views;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JTextField;
 import java.awt.GridBagConstraints;
-import javax.swing.JButton;
-
-import core.Client;
-
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import core.Client;
 
 public class ServerIpWindow extends JFrame implements MouseListener{
 
@@ -67,7 +64,7 @@ public class ServerIpWindow extends JFrame implements MouseListener{
 		{
 			Client.serverIp = textField.getText().trim();
 		}
-		new NewOrderWindow();
+		new EditOrderWindow();
 		dispose();
 	}
 

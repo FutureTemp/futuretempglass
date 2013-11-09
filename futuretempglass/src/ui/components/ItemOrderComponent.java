@@ -2,85 +2,121 @@ package ui.components;
 
 import items.Item;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+
+import ui.Mode;
+import ui.views.EditItemWindow;
+import ui.views.Window;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-public class ItemOrderComponent extends JPanel{
-	private JTextField txtItemName;
-	private JTextField attribute1;
-	private JTextField txtAttributeValue;
+public class ItemOrderComponent extends Component{
+
+	private JButton editButton;
+
+	private JButton deleteButton;
 
 	private Item item;
 
-	public ItemOrderComponent()
+	public ItemOrderComponent(Item item, Window parent)
 	{
-		this(new Item());
+		super(parent);
+
+		this.item = item;
+
+		refresh();
 	}
 
-	public ItemOrderComponent(Item item)
+	private void refresh()
 	{
-		this.item = item;
-		RowSpec[] rowSpec = new RowSpec[item.getAttributeNames().size() * 2 + 2];
-		for(int i = 0; i < item.getAttributeNames().size() * 2; i++)
+		setFocusable(true);
+		RowSpec[] rowSpec = new RowSpec[(item.getAttributeNames().size() + 1) * 2];
+		for(int i = 0; i < rowSpec.length; i++)
 		{
-			rowSpec[i++] = FormFactory.RELATED_GAP_ROWSPEC;
 			rowSpec[i] = FormFactory.DEFAULT_ROWSPEC;
 		}
-		rowSpec[rowSpec.length - 2] = FormFactory.RELATED_GAP_ROWSPEC;
-		rowSpec[rowSpec.length - 1] = RowSpec.decode("max(22dlu;default):grow");
 
-		setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"), }, rowSpec));
+		setBorder(BorderFactory.createLineBorder(Color.black));
+		setLayout(new FormLayout(
+				new ColumnSpec[] { FormFactory.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("default"), }, rowSpec));
 
-		JPanel itemNamePanel = new JPanel();
-		add(itemNamePanel, "2, 2, fill, fill");
-		GridBagLayout gbl_itemNamePanel = new GridBagLayout();
-		gbl_itemNamePanel.columnWidths = new int[] { 62, 0, 0 };
-		gbl_itemNamePanel.rowHeights = new int[] { 0, 0 };
-		gbl_itemNamePanel.columnWeights = new double[] { 1.0, 0.0,
+		JPanel panel = new JPanel();
+		add(panel, "2, 2, fill, fill");
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_panel.rowHeights = new int[] { 0, 0 };
+		gbl_panel.columnWeights = new double[] { 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
-		gbl_itemNamePanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
-		itemNamePanel.setLayout(gbl_itemNamePanel);
+		gbl_panel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
+		panel.setLayout(gbl_panel);
 
-		txtItemName = new JTextField();
-		txtItemName.setEditable(false);
-		txtItemName.setText(item.getItemName());
-		GridBagConstraints gbc_txtItemName = new GridBagConstraints();
-		gbc_txtItemName.insets = new Insets(0, 0, 0, 5);
-		gbc_txtItemName.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtItemName.gridx = 0;
-		gbc_txtItemName.gridy = 0;
-		itemNamePanel.add(txtItemName, gbc_txtItemName);
-		txtItemName.setColumns(10);
+		JLabel lblItemName = new JLabel(item.getItemName());
+		lblItemName.setFont(new Font("DejaVu Sans Light", Font.BOLD, 18));
+		GridBagConstraints gbc_lblItemName = new GridBagConstraints();
+		gbc_lblItemName.insets = new Insets(0, 0, 0, 5);
+		gbc_lblItemName.gridx = 0;
+		gbc_lblItemName.gridy = 0;
+		panel.add(lblItemName, gbc_lblItemName);
 
-		JButton editButton = new JButton("edit");
-		GridBagConstraints gbc_editButton = new GridBagConstraints();
-		gbc_editButton.gridx = 1;
-		gbc_editButton.gridy = 0;
-		itemNamePanel.add(editButton, gbc_editButton);
+		editButton = new JButton("edit");
+		editButton.setFocusable(true);
+		editButton.addMouseListener(getParent());
+		GridBagConstraints gbc_btnEdit = new GridBagConstraints();
+		gbc_btnEdit.insets = new Insets(0, 0, 0, 5);
+		gbc_btnEdit.gridx = 1;
+		gbc_btnEdit.gridy = 0;
+		panel.add(editButton, gbc_btnEdit);
 
-		for(int i = 0; i < item.getAttributeNames().size(); i++)
+		deleteButton = new JButton("del");
+		deleteButton.setFocusable(true);
+		deleteButton.addMouseListener(getParent());
+		GridBagConstraints gbc_btnDel = new GridBagConstraints();
+		gbc_btnDel.gridx = 2;
+		gbc_btnDel.gridy = 0;
+		panel.add(deleteButton, gbc_btnDel);
+
+		int row = 4;
+		for(String attributeName: item.getAttributeNames())
 		{
-			JTextField attributeText = new JTextField();
-			String display = item.getAttributeNames().get(i) + ": ";
-			display += item.getAttribute(item.getAttributeNames().get(i));
-			attributeText.setText(display);
-			attributeText.setEditable(false);
-			// attributeText.setColumns(10);
-			add(attributeText, "2, " + (i + 2) * 2 + ", fill, top");
+			JLabel attributeLabel = new JLabel(attributeName + ": "
+					+ item.getAttribute(attributeName));
+			attributeLabel
+					.setFont(new Font("DejaVu Sans Light", Font.BOLD, 12));
+			add(attributeLabel, "2 " + row++);
 		}
-		setVisible(true);
 	}
 
+	public Item getItem()
+	{
+		return item;
+	}
+
+	public void setItem(Item item)
+	{
+		this.item = item;
+		refresh();
+	}
+
+	public JButton getDeleteButton()
+	{
+		return deleteButton;
+	}
+
+	public JButton getEditButton()
+	{
+		return editButton;
+	}
 }

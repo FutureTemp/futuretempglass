@@ -9,10 +9,14 @@ import core.Client;
 
 public class ClientItemLibrary extends ItemLibrary{
 
+	private static String className = ClientItemLibrary.class.getPackage()
+			.toString() + ClientItemLibrary.class.getName();
+
 	@Override
-	public Item getItem(String itemName)
+	public Item getItem(String itemId)
 	{
-		Object response = Client.sendMessageToServer("get item " + itemName);
+		Object response = Client.sendMessageToServer(className + ",getItem,"
+				+ itemId);
 		return (Item)response;
 	}
 
@@ -23,13 +27,40 @@ public class ClientItemLibrary extends ItemLibrary{
 		Object response = Client.sendMessageToServer("get items");
 		return (List<Item>)response;
 	}
-	
-	@SuppressWarnings("unchecked")
+
 	@Override
-	public List<String> getItemNames()
+	public boolean addItem(Item item)
 	{
-		Object response = Client.sendMessageToServer("get item names");
-		return (List<String>)response;
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateItem(Item item)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteItem(Item item)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteItem(String itemId)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getAvailableId()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

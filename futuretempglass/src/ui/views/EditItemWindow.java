@@ -8,8 +8,6 @@ import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -20,15 +18,13 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-import storage.server.ServerItemLibrary;
+import ui.Mode;
 import ui.components.InputQuestion;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
-
-import core.Application;
 
 public class EditItemWindow extends Window implements MouseListener{
 
@@ -37,36 +33,39 @@ public class EditItemWindow extends Window implements MouseListener{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Window parentWindow;
-
 	private JPanel contentPane;
 
 	private JButton doneButton;
 
 	private JButton addStepsButton;
-	
+
 	private JButton cancelButton;
 
 	private List<InputQuestion> attributeQuestions;
 
 	private Item item;
 
+	private Mode mode;
+
 	/**
 	 * Create the frame.
 	 */
-	public EditItemWindow(Window parentWindow, String itemName)
+	public EditItemWindow(Window parentWindow, Item item, Mode mode)
 	{
-		this.parentWindow = parentWindow;
+		super(parentWindow);
 
 		attributeQuestions = new ArrayList<InputQuestion>();
 
-		item = Application.getItemLibrary().getItem(itemName);
-		for (String attributeName: item.getAttributeNames())
+		this.item = item;
+		this.mode = mode;
+
+		for(String attributeName: item.getAttributeNames())
 		{
-			attributeQuestions.add(new InputQuestion(attributeName, item.getAttribute(attributeName)));
+			attributeQuestions.add(new InputQuestion(attributeName, item
+					.getAttribute(attributeName)));
 		}
 
-		setTitle(itemName);
+		setTitle(item.getItemName());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 304, 379);
 		contentPane = new JPanel();
@@ -94,14 +93,14 @@ public class EditItemWindow extends Window implements MouseListener{
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		panel.add(scrollPane);
 
-		RowSpec[] rowSpec = new RowSpec[attributeQuestions.size()*2];
-		
-		for(int i = 0; i < attributeQuestions.size()*2; i+=2)
+		RowSpec[] rowSpec = new RowSpec[attributeQuestions.size() * 2];
+
+		for(int i = 0; i < attributeQuestions.size() * 2; i += 2)
 		{
 			rowSpec[i] = FormFactory.RELATED_GAP_ROWSPEC;
-			rowSpec[i+1] = FormFactory.DEFAULT_ROWSPEC;
+			rowSpec[i + 1] = FormFactory.DEFAULT_ROWSPEC;
 		}
-		
+
 		JPanel scrollPaneContent = new JPanel();
 		scrollPane.setViewportView(scrollPaneContent);
 		scrollPaneContent.setLayout(new FormLayout(
@@ -125,7 +124,7 @@ public class EditItemWindow extends Window implements MouseListener{
 		doneButton.addMouseListener(this);
 		cancelButton = new JButton("Cancel");
 		cancelButton.addMouseListener(this);
-		
+
 		addStepsButton = new JButton("Add Steps");
 		addStepsButton.addMouseListener(this);
 
@@ -137,12 +136,12 @@ public class EditItemWindow extends Window implements MouseListener{
 	}
 
 	@Override
-	public void sendMessage(JFrame source, Object object)
+	public void sendData(JFrame source, Object object)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
@@ -156,12 +155,12 @@ public class EditItemWindow extends Window implements MouseListener{
 			{
 				item.setAttribute(question.getField(), question.getValue());
 			}
-			parentWindow.sendMessage(this, item);
+			getParent().sendData(this, item);
 			dispose();
 		}
 		else if(e.getSource().equals(addStepsButton))
 		{
-			
+
 		}
 	}
 

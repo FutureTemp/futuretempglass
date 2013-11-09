@@ -4,14 +4,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 import javax.swing.JButton;
@@ -106,6 +106,7 @@ class Server extends Window implements MouseListener{
 
 	public Server()
 	{
+		super(null);
 		setTitle(getLocalIp());
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(
@@ -153,31 +154,50 @@ class Server extends Window implements MouseListener{
 		dispose();
 	}
 
-	public void execute(DatagramPacket packet)
+	public void execute(DatagramPacket packet) throws ClassNotFoundException,
+			IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException
 	{
-		String command = new String(packet.getData(), 0, packet.getLength());
+		String[] command = new String(packet.getData(), 0, packet.getLength())
+				.split(",");
 
 		textArea.insert(command + "\n", 0);
 
 		Object objectToSend = null;
 
-		if("get item names".equalsIgnoreCase(command))
+		Class<?> clazz = Class.forName(command[0]);
+
+		Method[] methods = clazz.getMethods();
+
+		for(Method method: methods)
 		{
-			objectToSend = Application.getItemLibrary().getItemNames();
-		}
-		else if("get items".equalsIgnoreCase(command))
-		{
-			objectToSend = Application.getItemLibrary().getItems();
-		}
-		else if(command.startsWith("get item"))
-		{
-			command = command.replace("get item", "").trim();
-			objectToSend = Application.getItemLibrary().getItem(command);
-		}
-		else if("get production steps".equalsIgnoreCase(command))
-		{
-			objectToSend = Application.getProductionStepsLibrary()
-					.getProductionSteps();
+			if(method.getName().equals(command[1]))
+			{
+				switch (method.getParameterTypes().length)
+				{
+				case 5:
+					objectToSend = method.invoke(command[2], command[3],
+							command[4], command[5], command[6]);
+					break;
+				case 4:
+					objectToSend = method.invoke(command[2], command[3],
+							command[4], command[5]);
+					break;
+				case 3:
+					objectToSend = method.invoke(command[2], command[3],
+							command[4]);
+					break;
+				case 2:
+					objectToSend = method.invoke(command[2], command[3]);
+					break;
+				case 1:
+					objectToSend = method.invoke(command[2]);
+					break;
+				case 0:
+					objectToSend = method.invoke(null);
+					break;
+				}
+			}
 		}
 
 		if(objectToSend == null)
