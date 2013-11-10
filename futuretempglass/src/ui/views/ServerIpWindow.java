@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import core.Client;
 
+@SuppressWarnings("serial")
 public class ServerIpWindow extends JFrame implements MouseListener{
 
 	private JPanel contentPane;

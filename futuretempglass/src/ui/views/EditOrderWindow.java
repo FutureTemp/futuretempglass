@@ -25,6 +25,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import core.Application;
 
+@SuppressWarnings("serial")
 public class EditOrderWindow extends Window implements MouseListener{
 
 	private ItemListWindow itemListWindow;
@@ -69,6 +70,7 @@ public class EditOrderWindow extends Window implements MouseListener{
 		switch (mode)
 		{
 		case EDIT:
+			setTitle("Edit Order " + order.getOrderNumber());
 			break;
 		case NEW:
 			setTitle("Order Entry");
@@ -169,7 +171,6 @@ public class EditOrderWindow extends Window implements MouseListener{
 	{
 		// removeAll();
 		// setContentPane(new JPanel());
-		repaint();
 		RowSpec[] rowSpec = new RowSpec[order.getItems().size() * 2];
 		for(int i = 0; i < rowSpec.length; i++)
 		{
@@ -197,6 +198,7 @@ public class EditOrderWindow extends Window implements MouseListener{
 			itemsPanel.add(itemComponent, "2, " + (i + 1) * 2 + ", fill, fill");
 			items.add(itemComponent);
 		}
+		repaint();
 		setVisible(true);
 		pack();
 	}

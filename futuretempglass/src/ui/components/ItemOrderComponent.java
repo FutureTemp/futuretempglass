@@ -2,19 +2,15 @@ package ui.components;
 
 import items.Item;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import ui.Mode;
-import ui.views.EditItemWindow;
 import ui.views.Window;
 
 import com.jgoodies.forms.factories.FormFactory;
@@ -22,6 +18,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
+@SuppressWarnings("serial")
 public class ItemOrderComponent extends Component{
 
 	private JButton editButton;
@@ -48,7 +45,7 @@ public class ItemOrderComponent extends Component{
 			rowSpec[i] = FormFactory.DEFAULT_ROWSPEC;
 		}
 
-		setBorder(BorderFactory.createLineBorder(Color.black));
+		//setBorder(BorderFactory.createLineBorder(Color.black));
 		setLayout(new FormLayout(
 				new ColumnSpec[] { FormFactory.RELATED_GAP_COLSPEC,
 						ColumnSpec.decode("default"), }, rowSpec));

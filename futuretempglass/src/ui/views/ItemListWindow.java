@@ -17,13 +17,14 @@ import javax.swing.border.EmptyBorder;
 
 import core.Application;
 
+@SuppressWarnings("serial")
 public class ItemListWindow extends Window implements MouseListener{
 	
 	private JPanel contentPane;
 	
 	private JButton selectButton;
 	
-	private JList itemList;
+	private JList<String> itemList;
 
 	/**
 	 * Create the frame.
@@ -63,7 +64,7 @@ public class ItemListWindow extends Window implements MouseListener{
 		scrollPane.setViewportView(panel);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		
-		itemList = new JList(itemNames);
+		itemList = new JList<String>(itemNames);
 		panel.add(itemList);
 		
 		selectButton = new JButton("Select");

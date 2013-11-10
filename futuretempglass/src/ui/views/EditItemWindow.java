@@ -45,7 +45,7 @@ public class EditItemWindow extends Window implements MouseListener{
 
 	private Item item;
 
-	private Mode mode;
+	//private Mode mode;
 
 	/**
 	 * Create the frame.
@@ -57,7 +57,7 @@ public class EditItemWindow extends Window implements MouseListener{
 		attributeQuestions = new ArrayList<InputQuestion>();
 
 		this.item = item;
-		this.mode = mode;
+		//this.mode = mode;
 
 		for(String attributeName: item.getAttributeNames())
 		{

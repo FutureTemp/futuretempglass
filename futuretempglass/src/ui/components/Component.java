@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 
 import ui.views.Window;
 
+@SuppressWarnings("serial")
 public abstract class Component extends JComponent implements MouseListener{
 
 	private Window parent;

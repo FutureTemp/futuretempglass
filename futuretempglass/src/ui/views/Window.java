@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public abstract class Window extends JFrame implements MouseListener{
 	
 	private Window parentWindow;
