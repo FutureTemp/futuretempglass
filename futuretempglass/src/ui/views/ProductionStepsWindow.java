@@ -1,7 +1,6 @@
 package ui.views;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -9,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+@SuppressWarnings("serial")
 public class ProductionStepsWindow extends Window implements MouseListener{
 
 	private JPanel contentPane;
@@ -16,8 +16,9 @@ public class ProductionStepsWindow extends Window implements MouseListener{
 	/**
 	 * Create the frame.
 	 */
-	public ProductionStepsWindow()
+	public ProductionStepsWindow(Window parentWindow)
 	{
+		super(parentWindow);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

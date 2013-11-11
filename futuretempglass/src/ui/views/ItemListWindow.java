@@ -17,24 +17,23 @@ import javax.swing.border.EmptyBorder;
 
 import core.Application;
 
+@SuppressWarnings("serial")
 public class ItemListWindow extends Window implements MouseListener{
-
-	private Window parentWindow;
 	
 	private JPanel contentPane;
 	
 	private JButton selectButton;
 	
-	private JList itemList;
+	private JList<String> itemList;
 
 	/**
 	 * Create the frame.
 	 */
 	public ItemListWindow(Window parentWindow)
 	{
-		this.parentWindow = parentWindow;
+		super(parentWindow);
 		
-		List<String> items = Application.getItemLibrary().getItemNames();
+		List<String> items = Application.getInventoryLibrary().getItemNames();
 		String[] itemNames = new String[items.size()];
 		for(int i = 0; i < items.size(); i++)
 		{
@@ -65,7 +64,7 @@ public class ItemListWindow extends Window implements MouseListener{
 		scrollPane.setViewportView(panel);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		
-		itemList = new JList(itemNames);
+		itemList = new JList<String>(itemNames);
 		panel.add(itemList);
 		
 		selectButton = new JButton("Select");
@@ -77,20 +76,25 @@ public class ItemListWindow extends Window implements MouseListener{
 		
 		setVisible(true);
 	}
-
+	
+	private void sendItemNamesToParent()
+	{
+		int[] indecies = itemList.getSelectedIndices();
+		List<Object> itemNames = new ArrayList<Object>();
+		for(int index: indecies)
+		{
+			itemNames.add(this.itemList.getModel().getElementAt(index));
+		}
+		getParent().sendData(this, itemNames);
+		dispose();
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
 		if(e.getSource().equals(selectButton))
 		{
-			int[] indecies = itemList.getSelectedIndices();
-			List<Object> itemNames = new ArrayList<Object>();
-			for(int index: indecies)
-			{
-				itemNames.add(this.itemList.getModel().getElementAt(index));
-			}
-			parentWindow.sendMessage(this, itemNames);
-			dispose();
+			sendItemNamesToParent();
 		}
 	}
 

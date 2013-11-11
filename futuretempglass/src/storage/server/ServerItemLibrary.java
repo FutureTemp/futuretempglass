@@ -8,35 +8,41 @@ import java.util.List;
 
 import storage.ItemLibrary;
 
-import xml.InventoryXml;
+import com.sun.istack.internal.NotNull;
 
 public class ServerItemLibrary extends ItemLibrary{
 
+	/**
+	 * Maps item ID's to their respective items
+	 */
 	private HashMap<String, Item> items;
-	
+
 	private List<Item> itemList;
-	
+
 	public ServerItemLibrary()
 	{
 		init();
 	}
-	
+
 	public void init()
 	{
+		// TODO implement
 		items = new HashMap<String, Item>();
-		itemList = InventoryXml.getItems();
-		for(Item item: itemList)
-		{
-			items.put(item.getItemName(), item);
-		}
+		itemList = new ArrayList<Item>();
 	}
-	
-	@Override
-	public Item getItem(String itemName)
+
+	private boolean save()
 	{
-		return items.get(itemName);
+		// TODO implement
+		return false;
 	}
-	
+
+	@Override
+	public Item getItem(String id)
+	{
+		return items.get(id);
+	}
+
 	@Override
 	public List<Item> getItems()
 	{
@@ -44,13 +50,53 @@ public class ServerItemLibrary extends ItemLibrary{
 	}
 
 	@Override
-	public List<String> getItemNames()
+	public boolean addItem(Item item)
 	{
-		List<String> itemNames = new ArrayList<String>();
-		for(Item item: itemList)
+		if(item == null)
 		{
-			itemNames.add(item.getItemName());
+			return false;
 		}
-		return itemNames;
+		if(item.getItemId() == null)
+		{
+			item.setItemId(getAvailableId());
+		}
+		return updateItem(item);
+	}
+
+	@Override
+	public boolean updateItem(Item item)
+	{
+		if(item == null || item.getItemId() == null)
+		{
+			return false;
+		}
+		items.put(item.getItemId(), item);
+		itemList.add(item);
+		return save();
+	}
+
+	@Override
+	@NotNull
+	public boolean deleteItem(Item item)
+	{
+		if(item == null || item.getItemId() == null)
+		{
+			return false;
+		}
+		items.remove(item.getItemId());
+		itemList.remove(item);
+		return save();
+	}
+
+	@Override
+	@NotNull
+	public boolean deleteItem(String itemId)
+	{
+		if(itemId == null)
+		{
+			return false;
+		}
+		itemList.remove(items.remove(itemId));
+		return save();
 	}
 }

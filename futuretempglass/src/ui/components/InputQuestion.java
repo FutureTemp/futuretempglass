@@ -6,6 +6,7 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
+@SuppressWarnings("serial")
 public class InputQuestion extends JComponent{
 	
 	private QuestionTypes type;
