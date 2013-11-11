@@ -2,7 +2,7 @@ import storage.server.ServerInventoryLibrary;
 import storage.server.ServerItemLibrary;
 import storage.server.ServerOrderLibrary;
 import storage.server.ServerProductionStepsLibrary;
-import ui.views.EditOrderWindow;
+import ui.views.OrderSearchWindow;
 import core.Application;
 
 public class LocalClient{
@@ -18,7 +18,7 @@ public class LocalClient{
 		Application.productionStepsLibrary = new ServerProductionStepsLibrary();
 		Application.inventoryLibrary = new ServerInventoryLibrary();
 
-		new EditOrderWindow();
+		new OrderSearchWindow();
 	}
 
 }

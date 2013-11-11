@@ -49,18 +49,23 @@ public class EditOrderWindow extends Window implements MouseListener{
 
 	private List<ItemOrderComponent> items;
 
-	public EditOrderWindow()
+	public EditOrderWindow(Window parentWindow)
 	{
-		this(new Order(), Mode.NEW);
+		this(null, Mode.NEW, parentWindow);
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public EditOrderWindow(Order order, Mode mode)
+	public EditOrderWindow(Order order, Mode mode, Window parentWindow)
 	{
-		super(null);
+		super(parentWindow);
+		this.mode = mode;
 		setFocusable(true);
+		if(order == null)
+		{
+			order = new Order();
+		}
 		this.order = order;
 		if(order.getItems() == null)
 		{
@@ -76,8 +81,6 @@ public class EditOrderWindow extends Window implements MouseListener{
 			setTitle("Order Entry");
 			break;
 		}
-
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		getContentPane().setLayout(
 				new FormLayout(new ColumnSpec[] {
@@ -113,6 +116,12 @@ public class EditOrderWindow extends Window implements MouseListener{
 		informationPane.add(orderNumberField, "4, 2, fill, default");
 		orderNumberField.setColumns(10);
 
+		if(mode == Mode.NEW)
+		{
+			order.setOrderNumber(Application.getOrderLibrary().getNextOrderNumber());
+		}
+		orderNumberField.setText(order.getOrderNumber());
+		
 		customerLabel = new JLabel("Customer: ");
 		informationPane.add(customerLabel, "2, 4, right, default");
 
@@ -135,6 +144,7 @@ public class EditOrderWindow extends Window implements MouseListener{
 		dueDateField.setColumns(10);
 
 		btnDone = new JButton("Done");
+		btnDone.addMouseListener(this);
 		informationPane.add(btnDone, "2, 10");
 		informationPane.add(addItemButton, "4, 10, left, top");
 		getContentPane().add(scrollPane, "2, 4, fill, fill");
@@ -216,7 +226,21 @@ public class EditOrderWindow extends Window implements MouseListener{
 
 	private void saveThisOrder()
 	{
-		refresh();
+		order.setOrderNumber(orderNumberField.getText());
+		switch(mode)
+		{
+		case NEW:
+			Application.getOrderLibrary().addOrder(order);
+			break;
+		case EDIT:
+			Application.getOrderLibrary().updateOrder(order);
+			break;
+		}
+		if(getParent() != null)
+		{
+			getParent().refresh();
+		}
+		dispose();
 	}
 
 	private void openItemWindows(List<String> itemNames)

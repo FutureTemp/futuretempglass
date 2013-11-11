@@ -65,7 +65,7 @@ public class ServerIpWindow extends JFrame implements MouseListener{
 		{
 			Client.serverIp = textField.getText().trim();
 		}
-		new EditOrderWindow();
+		new EditOrderWindow(null);
 		dispose();
 	}
 

@@ -17,5 +17,9 @@ public abstract class OrderLibrary{
 	public abstract boolean deleteOrder(String orderId);
 
 	public abstract List<Order> getOrders();
+	
+	public abstract List<String> getOrderNumbers();
+
+	public abstract String getNextOrderNumber();
 
 }
