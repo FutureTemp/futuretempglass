@@ -116,7 +116,7 @@ public class EditOrderWindow extends Window implements MouseListener{
 		informationPane.add(orderNumberField, "4, 2, fill, default");
 		orderNumberField.setColumns(10);
 
-		if(mode == Mode.NEW)
+		if(mode == Mode.NEW && Application.getOrderLibrary().isSequentialOrderNumbersUsed())
 		{
 			order.setOrderNumber(Application.getOrderLibrary().getNextOrderNumber());
 		}

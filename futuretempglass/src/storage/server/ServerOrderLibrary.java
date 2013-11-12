@@ -3,6 +3,7 @@ package storage.server;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,7 +18,15 @@ public class ServerOrderLibrary extends OrderLibrary{
 	private final static String orderPropertiesFilePath = "xml-orders/properties.txt";
 	private final static String ordersPath = "xml-orders/";
 
-	private final String[] orderPropertyNames = { "last_order_number" };
+	private final List<String> orderPropertyNames = Arrays.asList(
+			"last_order_number", 
+			"use_sequential_order_numbers"
+	);
+
+	private final List<String> defaultPropertyValues = Arrays.asList(
+			"0",
+			"false"
+	);
 
 	private List<Order> orders;
 
@@ -99,7 +108,9 @@ public class ServerOrderLibrary extends OrderLibrary{
 			String propertyValue = orderProperties.get(propertyName);
 			if(propertyValue == null)
 			{
-				propertyValue = "";
+				String defaultValue = defaultPropertyValues.get(orderPropertyNames.indexOf(propertyName));
+				propertyValue = defaultValue;
+				orderProperties.put(propertyName, propertyValue);
 			}
 			orderPropertyContents.add(propertyName + "=" + propertyValue);
 		}
@@ -160,7 +171,7 @@ public class ServerOrderLibrary extends OrderLibrary{
 	@Override
 	public String getNextOrderNumber()
 	{
-		String lastOrderNumber = orderProperties.get(orderPropertyNames[0]);
+		String lastOrderNumber = orderProperties.get(orderPropertyNames.get(0));
 		int length = lastOrderNumber.length();
 		try
 		{
@@ -175,7 +186,7 @@ public class ServerOrderLibrary extends OrderLibrary{
 		{
 			lastOrderNumber = "0" + lastOrderNumber;
 		}
-		orderProperties.put(orderPropertyNames[0], lastOrderNumber);
+		orderProperties.put(orderPropertyNames.get(0), lastOrderNumber);
 		return lastOrderNumber; // TODO implement
 	}
 
@@ -240,6 +251,19 @@ public class ServerOrderLibrary extends OrderLibrary{
 		}
 
 		return orderNumbers;
+	}
+
+	@Override
+	public boolean isSequentialOrderNumbersUsed()
+	{
+		return orderProperties.get(orderPropertyNames.get(1)).equals("true");
+	}
+
+	@Override
+	public void setSequentialOrderNumbersUsed(boolean used)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

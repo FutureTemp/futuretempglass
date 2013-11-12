@@ -21,5 +21,9 @@ public abstract class OrderLibrary{
 	public abstract List<String> getOrderNumbers();
 
 	public abstract String getNextOrderNumber();
+	
+	public abstract boolean isSequentialOrderNumbersUsed();
+	
+	public abstract void setSequentialOrderNumbersUsed(boolean used);
 
 }
