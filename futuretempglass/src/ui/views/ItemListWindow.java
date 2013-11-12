@@ -3,6 +3,7 @@ package ui.views;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -18,12 +19,12 @@ import javax.swing.border.EmptyBorder;
 import core.Application;
 
 @SuppressWarnings("serial")
-public class ItemListWindow extends Window implements MouseListener{
-	
+public class ItemListWindow extends Window{
+
 	private JPanel contentPane;
-	
+
 	private JButton selectButton;
-	
+
 	private JList<String> itemList;
 
 	/**
@@ -32,26 +33,34 @@ public class ItemListWindow extends Window implements MouseListener{
 	public ItemListWindow(Window parentWindow)
 	{
 		super(parentWindow);
-		
+
 		List<String> items = Application.getInventoryLibrary().getItemNames();
 		String[] itemNames = new String[items.size()];
 		for(int i = 0; i < items.size(); i++)
 		{
 			itemNames[i] = items.get(i);
 		}
-		
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 178, 391);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[] {
+				0, 0
+		};
+		gbl_contentPane.rowHeights = new int[] {
+				0, 0, 0
+		};
+		gbl_contentPane.columnWeights = new double[] {
+				1.0, Double.MIN_VALUE
+		};
+		gbl_contentPane.rowWeights = new double[] {
+				1.0, 0.0, Double.MIN_VALUE
+		};
 		contentPane.setLayout(gbl_contentPane);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
@@ -59,24 +68,26 @@ public class ItemListWindow extends Window implements MouseListener{
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 0;
 		contentPane.add(scrollPane, gbc_scrollPane);
-		
+
 		JPanel panel = new JPanel();
 		scrollPane.setViewportView(panel);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-		
+
 		itemList = new JList<String>(itemNames);
+		itemList.addMouseListener(this);
+		itemList.addKeyListener(this);
 		panel.add(itemList);
-		
+
 		selectButton = new JButton("Select");
 		selectButton.addMouseListener(this);
 		GridBagConstraints gbc_btnSelect = new GridBagConstraints();
 		gbc_btnSelect.gridx = 0;
 		gbc_btnSelect.gridy = 1;
 		contentPane.add(selectButton, gbc_btnSelect);
-		
+
 		setVisible(true);
 	}
-	
+
 	private void sendItemNamesToParent()
 	{
 		int[] indecies = itemList.getSelectedIndices();
@@ -88,7 +99,18 @@ public class ItemListWindow extends Window implements MouseListener{
 		getParent().sendData(this, itemNames);
 		dispose();
 	}
-	
+
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		switch(e.getKeyCode())
+		{
+		case KeyEvent.VK_ENTER:
+			sendItemNamesToParent();
+			break;
+		}
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
@@ -96,34 +118,10 @@ public class ItemListWindow extends Window implements MouseListener{
 		{
 			sendItemNamesToParent();
 		}
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e)
-	{
-		// TODO Auto-generated method stub
-		
+		else if(e.getSource().equals(itemList) && e.getClickCount() == 2)
+		{
+			sendItemNamesToParent();
+		}
 	}
 
 }

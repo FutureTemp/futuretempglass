@@ -26,7 +26,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import core.Application;
 
 @SuppressWarnings("serial")
-public class EditOrderWindow extends Window implements MouseListener{
+public class EditOrderWindow extends Window{
 
 	private ItemListWindow itemListWindow;
 

@@ -3,6 +3,7 @@ package ui.views;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
@@ -115,9 +116,29 @@ public class OrderSearchWindow extends Window{
 		List<String> orderNumbers = Application.getOrderLibrary()
 				.getOrderNumbers();
 		orderList = new JList<Object>(orderNumbers.toArray());
+		orderList.addMouseListener(this);
+		orderList.addKeyListener(this);
 		scrollPane.setViewportView(orderList);
 		setVisible(true);
 		repaint();
+	}
+	
+	private void editSelectedOrders()
+	{
+		for(Object orderNumber: orderList.getSelectedValuesList())
+		{
+			Order order = Application.getOrderLibrary().getOrder((String)orderNumber);
+			new EditOrderWindow(order, Mode.EDIT, this);
+		}
+	}
+	
+	private void deleteSelectedOrders()
+	{
+		for(Object orderNumber: orderList.getSelectedValuesList())
+		{
+			Application.getOrderLibrary().deleteOrder((String)orderNumber);
+			refresh();
+		}
 	}
 	
 	@Override
@@ -129,19 +150,29 @@ public class OrderSearchWindow extends Window{
 		}
 		else if(e.getSource().equals(editOrderButton))
 		{
-			for(Object orderNumber: orderList.getSelectedValuesList())
-			{
-				Order order = Application.getOrderLibrary().getOrder((String)orderNumber);
-				new EditOrderWindow(order, Mode.EDIT, this);
-			}
+			editSelectedOrders();
 		}
 		else if(e.getSource().equals(deleteOrderButton))
 		{
-			for(Object orderNumber: orderList.getSelectedValuesList())
-			{
-				Application.getOrderLibrary().deleteOrder((String)orderNumber);
-				refresh();
-			}
+			deleteSelectedOrders();
+		}
+		else if(e.getSource().equals(orderList) && e.getClickCount() == 2)
+		{
+			editSelectedOrders();
+		}
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		switch(e.getKeyCode())
+		{
+		case KeyEvent.VK_DELETE:
+			deleteSelectedOrders();
+			break;
+		case KeyEvent.VK_ENTER:
+			editSelectedOrders();
+			break;
 		}
 	}
 
