@@ -240,7 +240,6 @@ public class EditOrderWindow extends Window implements MouseListener{
 		{
 			getParent().refresh();
 		}
-		dispose();
 	}
 
 	private void openItemWindows(List<String> itemNames)
@@ -267,6 +266,7 @@ public class EditOrderWindow extends Window implements MouseListener{
 		if(!exists)
 		{
 			order.getItems().add(item);
+			item.setOrder(order);
 		}
 		if(item.getItemId() == null)
 		{
@@ -299,6 +299,7 @@ public class EditOrderWindow extends Window implements MouseListener{
 		else if(e.getSource().equals(btnDone))
 		{
 			saveThisOrder();
+			dispose();
 		}
 
 		for(ItemOrderComponent item: items)

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <order orderNumber="12345">
-    <item name="glass" quantity="5">
-        <attribute name="width" value="5"/>
-        <attribute name="height" value="10"/>
+    <item id="PmEwYZvN" name="glass" quantity="5">
+        <orderId>12345</orderId>
+        <attribute name="width" value="15"/>
+        <attribute name="height" value="20"/>
     </item>
-    <item name="crate" quantity="1">
+    <item id="HduKmG5f" name="crate" quantity="1">
+        <orderId>12345</orderId>
         <attribute name="material" value="wood"/>
     </item>
 </order>

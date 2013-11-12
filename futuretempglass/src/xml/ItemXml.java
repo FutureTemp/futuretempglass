@@ -9,8 +9,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import core.Application;
-
 @XmlType(name = "item")
 public class ItemXml{
 
@@ -29,13 +27,32 @@ public class ItemXml{
 	@XmlElement(name = "attribute")
 	public List<ItemAttributeXml> attributes = new ArrayList<ItemAttributeXml>();
 
+	public ItemXml()
+	{
+		
+	}
+	
+	public ItemXml(Item item)
+	{
+		this.id = item.getItemId();
+		this.name = item.getItemName();
+		this.quantity = item.getQuantity();
+		this.orderId = item.getOrder().getOrderNumber();
+		for(String attributeName: item.getAttributeNames())
+		{
+			ItemAttributeXml attribute = new ItemAttributeXml();
+			attribute.name = attributeName;
+			attribute.value = (String)item.getAttribute(attributeName);
+			attributes.add(attribute);
+		}
+	}
+	
 	public Item getItem()
 	{
 		Item item = new Item(null);
 		item.setItemId(id);
 		item.setName(name);
 		item.setQuantity(quantity);
-		item.setOrder(Application.getOrderLibrary().getOrder(orderId));
 		for(ItemAttributeXml itemAttribute: attributes)
 		{
 			item.setAttribute(itemAttribute.name, itemAttribute.value);

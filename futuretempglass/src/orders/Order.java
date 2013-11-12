@@ -66,5 +66,19 @@ public class Order{
 	{
 		this.customer = customer;
 	}
-
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(!(obj instanceof Order))
+		{
+			return false;
+		}
+		Order order = (Order)obj;
+		if(order.getOrderNumber() == null || getOrderNumber() == null)
+		{
+			return super.equals(obj);
+		}
+		return order.getOrderNumber().equals(getOrderNumber());
+	}
 }

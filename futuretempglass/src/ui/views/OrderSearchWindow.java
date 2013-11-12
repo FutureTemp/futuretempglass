@@ -14,9 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import orders.Order;
-
 import ui.Mode;
-
 import core.Application;
 
 public class OrderSearchWindow extends Window{
@@ -28,6 +26,8 @@ public class OrderSearchWindow extends Window{
 	private JButton editOrderButton;
 
 	private JButton viewOrderButton;
+	
+	private JButton deleteOrderButton;
 	
 	private JList<Object> orderList;
 
@@ -69,9 +69,9 @@ public class OrderSearchWindow extends Window{
 		contentPane.add(mainPane, gbc_mainPane);
 		GridBagLayout gbl_mainPane = new GridBagLayout();
 		gbl_mainPane.columnWidths = new int[] { 0, 0 };
-		gbl_mainPane.rowHeights = new int[] { 0, 0, 0, 0 };
+		gbl_mainPane.rowHeights = new int[] { 0, 0, 0, 0, 0};
 		gbl_mainPane.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
-		gbl_mainPane.rowWeights = new double[] { 0.0, 0.0, 0.0,
+		gbl_mainPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		mainPane.setLayout(gbl_mainPane);
 
@@ -97,6 +97,13 @@ public class OrderSearchWindow extends Window{
 		gbc_viewOrderButton.gridx = 0;
 		gbc_viewOrderButton.gridy = 2;
 		mainPane.add(viewOrderButton, gbc_viewOrderButton);
+		
+		deleteOrderButton = new JButton("Delete Order");
+		deleteOrderButton.addMouseListener(this);
+		GridBagConstraints gbc_deleteOrderButton = new GridBagConstraints();
+		gbc_deleteOrderButton.gridx = 0;
+		gbc_deleteOrderButton.gridy = 3;
+		mainPane.add(deleteOrderButton, gbc_deleteOrderButton);
 
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -126,6 +133,14 @@ public class OrderSearchWindow extends Window{
 			{
 				Order order = Application.getOrderLibrary().getOrder((String)orderNumber);
 				new EditOrderWindow(order, Mode.EDIT, this);
+			}
+		}
+		else if(e.getSource().equals(deleteOrderButton))
+		{
+			for(Object orderNumber: orderList.getSelectedValuesList())
+			{
+				Application.getOrderLibrary().deleteOrder((String)orderNumber);
+				refresh();
 			}
 		}
 	}
