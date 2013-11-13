@@ -1,6 +1,7 @@
 package storage.client;
 
 import items.Item;
+import items.ItemFilter;
 
 import java.util.List;
 
@@ -58,6 +59,13 @@ public class ClientItemLibrary extends ItemLibrary{
 
 	@Override
 	public String getAvailableId()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Item> getItemsWithFilter(ItemFilter filter)
 	{
 		// TODO Auto-generated method stub
 		return null;
