@@ -1,6 +1,7 @@
 package storage.server;
 
 import items.Item;
+import items.ItemFilter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,5 +99,11 @@ public class ServerItemLibrary extends ItemLibrary{
 		}
 		itemList.remove(items.remove(itemId));
 		return save();
+	}
+
+	@Override
+	public List<Item> getItemsWithFilter(ItemFilter filter)
+	{
+		return filter.filter(new ArrayList<Item>(itemList));
 	}
 }

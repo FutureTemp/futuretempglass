@@ -1,6 +1,7 @@
 package storage;
 
 import items.Item;
+import items.ItemFilter;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public abstract class ItemLibrary{
 	public abstract boolean deleteItem(Item item);
 
 	public abstract boolean deleteItem(String itemId);
+	
+	public abstract List<Item> getItemsWithFilter(ItemFilter filter);
 	
 	public String getAvailableId()
 	{

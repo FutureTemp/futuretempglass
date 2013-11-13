@@ -3,6 +3,8 @@ package storage;
 import java.util.List;
 
 import orders.Order;
+import orders.OrderFilter;
+import workflow.ProductionStep;
 
 public abstract class OrderLibrary{
 
@@ -25,5 +27,7 @@ public abstract class OrderLibrary{
 	public abstract boolean isSequentialOrderNumbersUsed();
 	
 	public abstract void setSequentialOrderNumbersUsed(boolean used);
+	
+	public abstract List<Order> getOrdersWithFilter(OrderFilter filter);
 
 }

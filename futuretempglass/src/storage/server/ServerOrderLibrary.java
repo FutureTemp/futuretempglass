@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import orders.Order;
+import orders.OrderFilter;
 import storage.OrderLibrary;
 import utils.FileUtils;
 import xml.OrderXml;
@@ -264,6 +265,12 @@ public class ServerOrderLibrary extends OrderLibrary{
 	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Order> getOrdersWithFilter(OrderFilter filter)
+	{
+		return filter.filter(new ArrayList<Order>(orders));
 	}
 
 }
