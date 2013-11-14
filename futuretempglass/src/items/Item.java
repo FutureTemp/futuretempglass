@@ -23,7 +23,7 @@ public class Item implements Serializable{
 
 	private int quantity;
 
-	private List<ProductionStep> productionSteps;
+	private List<ProductionStep> productionSteps = new ArrayList<ProductionStep>();
 
 	private List<ProductionStep> doneSteps;
 
@@ -129,7 +129,7 @@ public class Item implements Serializable{
 			throw new Exception(currentStep + " is already in progress");
 		}
 		List<ProductionStep> notDoneSteps = new ArrayList<ProductionStep>();
-		for(ProductionStep dependency: step.getDependency())
+		for(ProductionStep dependency: step.getDependencies())
 		{
 			if(!doneSteps.contains(dependency))
 			{

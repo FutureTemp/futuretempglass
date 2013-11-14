@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import workflow.ProductionStep;
+
 @XmlType(name = "item")
 public class ItemXml{
 
@@ -27,11 +29,14 @@ public class ItemXml{
 	@XmlElement(name = "attribute")
 	public List<ItemAttributeXml> attributes = new ArrayList<ItemAttributeXml>();
 
+	@XmlElement(name = "productionStep")
+	public List<ProductionStepXml> productionSteps = new ArrayList<ProductionStepXml>();
+
 	public ItemXml()
 	{
-		
+
 	}
-	
+
 	public ItemXml(Item item)
 	{
 		this.id = item.getItemId();
@@ -45,8 +50,16 @@ public class ItemXml{
 			attribute.value = (String)item.getAttribute(attributeName);
 			attributes.add(attribute);
 		}
+		if(item.getProductionSteps() != null)
+		{
+			for(ProductionStep step: item.getProductionSteps())
+			{
+				ProductionStepXml stepXml = new ProductionStepXml(step);
+				this.productionSteps.add(stepXml);
+			}
+		}
 	}
-	
+
 	public Item getItem()
 	{
 		Item item = new Item(null);
@@ -56,6 +69,10 @@ public class ItemXml{
 		for(ItemAttributeXml itemAttribute: attributes)
 		{
 			item.setAttribute(itemAttribute.name, itemAttribute.value);
+		}
+		for(ProductionStepXml stepXml: this.productionSteps)
+		{
+			item.addProductionStep(stepXml.getProductionStep());
 		}
 		return item;
 	}
