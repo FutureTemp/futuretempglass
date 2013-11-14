@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workFlow>
-	<productionStep>Cutting</productionStep>
-	<productionStep>Polishing</productionStep>
-	<productionStep>Sandblasting</productionStep>
-	<productionStep>Cutting</productionStep>
+	<productionStep name="Cutting"></productionStep>
+	<productionStep name="Polishing"></productionStep>
+	<productionStep name="Sandblasting"></productionStep>
+	<productionStep name="Tempering"></productionStep>
 </workFlow>

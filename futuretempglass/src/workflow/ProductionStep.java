@@ -44,7 +44,7 @@ public class ProductionStep{
 		return getName();
 	}
 
-	public List<ProductionStep> getDependency()
+	public List<ProductionStep> getDependencies()
 	{
 		return dependencies;
 	}

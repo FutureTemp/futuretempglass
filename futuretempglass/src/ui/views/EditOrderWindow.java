@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -276,7 +275,7 @@ public class EditOrderWindow extends Window{
 	}
 
 	@Override
-	public void sendData(JFrame source, Object object)
+	public void sendData(Window source, Object object)
 	{
 		super.sendData(source, object);
 		if(source.equals(itemListWindow))

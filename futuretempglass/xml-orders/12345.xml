@@ -4,9 +4,13 @@
         <orderId>12345</orderId>
         <attribute name="width" value="15"/>
         <attribute name="height" value="20"/>
+        <productionStep name="Cutting"/>
+        <productionStep name="Polishing"/>
+        <productionStep name="Tempering"/>
     </item>
     <item id="HduKmG5f" name="crate" quantity="1">
         <orderId>12345</orderId>
         <attribute name="material" value="wood"/>
+        <productionStep name="Cutting"/>
     </item>
 </order>

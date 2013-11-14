@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import ui.Mode;
 import ui.components.InputQuestion;
+import workflow.ProductionStep;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -37,7 +38,7 @@ public class EditItemWindow extends Window implements MouseListener{
 
 	private JButton doneButton;
 
-	private JButton addStepsButton;
+	private JButton editStepsButton;
 
 	private JButton cancelButton;
 
@@ -45,7 +46,9 @@ public class EditItemWindow extends Window implements MouseListener{
 
 	private Item item;
 
-	//private Mode mode;
+	private Window productionStepsSelectWindow = null;
+
+	// private Mode mode;
 
 	/**
 	 * Create the frame.
@@ -57,7 +60,7 @@ public class EditItemWindow extends Window implements MouseListener{
 		attributeQuestions = new ArrayList<InputQuestion>();
 
 		this.item = item;
-		//this.mode = mode;
+		// this.mode = mode;
 
 		for(String attributeName: item.getAttributeNames())
 		{
@@ -125,21 +128,24 @@ public class EditItemWindow extends Window implements MouseListener{
 		cancelButton = new JButton("Cancel");
 		cancelButton.addMouseListener(this);
 
-		addStepsButton = new JButton("Add Steps");
-		addStepsButton.addMouseListener(this);
+		editStepsButton = new JButton("Edit Steps");
+		editStepsButton.addMouseListener(this);
 
 		buttonPane.add(doneButton);
-		buttonPane.add(addStepsButton);
+		buttonPane.add(editStepsButton);
 		buttonPane.add(cancelButton);
 
 		setVisible(true);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void sendData(JFrame source, Object object)
+	public void sendData(Window source, Object object)
 	{
-		// TODO Auto-generated method stub
-
+		if(source.equals(productionStepsSelectWindow))
+		{
+			item.setProductionSteps((List<ProductionStep>)object);
+		}
 	}
 
 	@Override
@@ -158,9 +164,15 @@ public class EditItemWindow extends Window implements MouseListener{
 			getParent().sendData(this, item);
 			dispose();
 		}
-		else if(e.getSource().equals(addStepsButton))
+		else if(e.getSource().equals(editStepsButton))
 		{
-
+			if(productionStepsSelectWindow != null)
+			{
+				productionStepsSelectWindow.dispose();
+				productionStepsSelectWindow = null;
+			}
+			productionStepsSelectWindow = new ProductionStepsSelectWindow(this,
+					item.getProductionSteps());
 		}
 	}
 

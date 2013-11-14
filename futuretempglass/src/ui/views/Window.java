@@ -22,7 +22,7 @@ public abstract class Window extends JFrame implements MouseListener, KeyListene
 		return parentWindow;
 	}
 	
-	public void sendData(JFrame source, Object object)
+	public void sendData(Window source, Object object)
 	{
 		
 	}
