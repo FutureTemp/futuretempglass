@@ -147,7 +147,6 @@ public class Item implements Serializable{
 	public void finishCurrentStep()
 	{
 		doneSteps.add(currentStep);
-		currentStep = null;
 	}
 
 	public boolean isDone(ProductionStep step)
@@ -157,6 +156,10 @@ public class Item implements Serializable{
 
 	public ProductionStep getCurrentStep()
 	{
+		if(currentStep == null)
+		{
+			currentStep = getProductionSteps().get(0);
+		}
 		return currentStep;
 	}
 

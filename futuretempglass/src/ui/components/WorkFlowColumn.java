@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import ui.views.Window;
+import workflow.ProductionStep;
 
 public class WorkFlowColumn extends Component{
 
@@ -22,13 +23,16 @@ public class WorkFlowColumn extends Component{
 
 	private List<ItemWorkFlowComponent> itemComponents;
 
+	private ProductionStep productionStep;
+	
 	/**
 	 * Create the panel.
 	 */
-	public WorkFlowColumn(List<Item> items, Window parentWindow)
+	public WorkFlowColumn(ProductionStep productionStep, List<Item> items, Window parentWindow)
 	{
 		super(parentWindow);
 
+		this.productionStep = productionStep;
 		this.items = items;
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -38,7 +42,7 @@ public class WorkFlowColumn extends Component{
 		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		JLabel lblProductionStep = new JLabel("Production Step");
+		JLabel lblProductionStep = new JLabel(productionStep.getName());
 		lblProductionStep.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProductionStep.setFont(new Font("SansSerif", Font.PLAIN, 26));
 		GridBagConstraints gbc_lblProductionStep = new GridBagConstraints();

@@ -7,9 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import orders.Order;
 import storage.ItemLibrary;
+import utils.StringUtils;
 
 import com.sun.istack.internal.NotNull;
+
+import core.Application;
 
 public class ServerItemLibrary extends ItemLibrary{
 
@@ -27,15 +31,16 @@ public class ServerItemLibrary extends ItemLibrary{
 
 	public void init()
 	{
-		// TODO implement
 		items = new HashMap<String, Item>();
 		itemList = new ArrayList<Item>();
-	}
-
-	private boolean save()
-	{
-		// TODO implement
-		return false;
+		for(Order order: Application.getOrderLibrary().getOrders())
+		{
+			for(Item item: order.getItems())
+			{
+				itemList.add(item);
+				items.put(item.getItemId(), item);
+			}
+		}
 	}
 
 	@Override
@@ -59,9 +64,14 @@ public class ServerItemLibrary extends ItemLibrary{
 		}
 		if(item.getItemId() == null)
 		{
-			item.setItemId(getAvailableId());
+			item.setItemId(StringUtils.getRandomeStringOfLettersAndNumbers(8));
 		}
-		return updateItem(item);
+		if(items.get(item.getItemId()) == null)
+		{
+			items.put(item.getItemId(), item);
+			itemList.add(item);
+		}
+		return false;
 	}
 
 	@Override
@@ -71,9 +81,16 @@ public class ServerItemLibrary extends ItemLibrary{
 		{
 			return false;
 		}
+
+		if(items.get(item.getItemId()) == null)
+		{
+			return false;
+		}
+		
 		items.put(item.getItemId(), item);
 		itemList.add(item);
-		return save();
+		
+		return true;
 	}
 
 	@Override
@@ -86,7 +103,7 @@ public class ServerItemLibrary extends ItemLibrary{
 		}
 		items.remove(item.getItemId());
 		itemList.remove(item);
-		return save();
+		return false;
 	}
 
 	@Override
@@ -98,7 +115,7 @@ public class ServerItemLibrary extends ItemLibrary{
 			return false;
 		}
 		itemList.remove(items.remove(itemId));
-		return save();
+		return true;
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package storage.server;
 
+import items.Item;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import orders.OrderFilter;
 import storage.OrderLibrary;
 import utils.FileUtils;
 import xml.OrderXml;
+import core.Application;
 
 public class ServerOrderLibrary extends OrderLibrary{
 
@@ -163,6 +166,10 @@ public class ServerOrderLibrary extends OrderLibrary{
 		{
 			order.setOrderNumber(getNextOrderNumber());
 		}
+		for(Item item: order.getItems())
+		{
+			Application.getItemLibrary().addItem(item);
+		}
 		orders.add(order);
 		orderNumbers.add(order.getOrderNumber());
 		save();
@@ -198,6 +205,13 @@ public class ServerOrderLibrary extends OrderLibrary{
 		{
 			if(orders.get(i).getOrderNumber().equals(order.getOrderNumber()))
 			{
+				for(Item item: order.getItems())
+				{
+					if(!Application.getItemLibrary().addItem(item))
+					{
+						Application.getItemLibrary().updateItem(item);
+					}
+				}
 				orders.remove(i);
 				orders.add(i, order);
 				save();
@@ -215,6 +229,10 @@ public class ServerOrderLibrary extends OrderLibrary{
 				|| !orderNumbers.contains(order.getOrderNumber()))
 		{
 			return false;
+		}
+		for(Item item: order.getItems())
+		{
+			Application.getItemLibrary().deleteItem(item);
 		}
 		orders.remove(order);
 		orderNumbers.remove(order.getOrderNumber());

@@ -2,6 +2,6 @@
 <workFlow>
 	<productionStep name="Cutting"></productionStep>
 	<productionStep name="Polishing"></productionStep>
-	<productionStep name="Sandblasting"></productionStep>
 	<productionStep name="Tempering"></productionStep>
+	<productionStep name="Sandblasting"></productionStep>
 </workFlow>
