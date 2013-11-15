@@ -3,6 +3,7 @@ import storage.server.ServerItemLibrary;
 import storage.server.ServerOrderLibrary;
 import storage.server.ServerProductionStepsLibrary;
 import ui.views.OrderSearchWindow;
+import ui.views.WorkFlowWindow;
 import core.Application;
 
 public class LocalClient{
@@ -19,6 +20,7 @@ public class LocalClient{
 		Application.inventoryLibrary = new ServerInventoryLibrary();
 
 		new OrderSearchWindow();
+		new WorkFlowWindow(null);
 	}
 
 }
