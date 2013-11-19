@@ -3,6 +3,7 @@ package ui.components;
 import java.awt.GridLayout;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
@@ -11,7 +12,7 @@ public class InputQuestion extends JComponent{
 	
 	private QuestionTypes type;
 	
-	private JTextField txtQuestion;
+	private JLabel txtQuestion;
 	private JComponent txtAnswer;
 
 	public InputQuestion(String field, Object value)
@@ -27,11 +28,10 @@ public class InputQuestion extends JComponent{
 		switch(type)
 		{
 		case INPUT:
-			txtQuestion = new JTextField();
-			txtQuestion.setEditable(false);
+			txtQuestion = new JLabel();
 			txtQuestion.setText(field);
 			add(txtQuestion);
-			txtQuestion.setColumns(10);
+			//txtQuestion.setWidth(10);
 
 			txtAnswer = new JTextField();
 			((JTextField)txtAnswer).setText((String)value);
