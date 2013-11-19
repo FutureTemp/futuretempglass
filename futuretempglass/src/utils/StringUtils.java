@@ -7,7 +7,7 @@ public class StringUtils{
 
 	public static char getRandomLetterOrNumber()
 	{
-		int randomNum = (int)(Math.random() * 62)+1;
+		int randomNum = (int)(Math.random() * 62) + 1;
 		if(randomNum > 36)
 		{
 			randomNum += 60;
@@ -34,20 +34,31 @@ public class StringUtils{
 		return random;
 	}
 	
+	public static boolean isEmpty(String string)
+	{
+		if(string == null)
+		{
+			return true;
+		}
+		return "".equals(string.trim());
+	}
+
 	public static void main(String args[])
 	{
+		long startTime = System.currentTimeMillis();
 		List<String> strings = new ArrayList<String>();
-		while(true)
+		while (true)
 		{
 			String string = getRandomeStringOfLettersAndNumbers(8);
 			if(strings.contains(string))
 			{
 				break;
 			}
-			//System.out.println(string);
+			System.out.println(string);
 			strings.add(string);
 		}
 		System.out.println(strings.size());
+		System.out.println((System.currentTimeMillis() - startTime)/1000);
 	}
 
 }

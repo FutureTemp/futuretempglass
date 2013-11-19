@@ -62,7 +62,7 @@ public class ServerItemLibrary extends ItemLibrary{
 		{
 			return false;
 		}
-		if(item.getItemId() == null)
+		if(StringUtils.isEmpty(item.getItemId()))
 		{
 			item.setItemId(StringUtils.getRandomeStringOfLettersAndNumbers(8));
 		}
@@ -70,6 +70,7 @@ public class ServerItemLibrary extends ItemLibrary{
 		{
 			items.put(item.getItemId(), item);
 			itemList.add(item);
+			return true;
 		}
 		return false;
 	}
