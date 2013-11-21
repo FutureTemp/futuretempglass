@@ -1,4 +1,4 @@
-import storage.server.ServerInventoryLibrary;
+import storage.database.DBInventoryLibrary;
 import storage.server.ServerItemLibrary;
 import storage.server.ServerOrderLibrary;
 import storage.server.ServerProductionStepsLibrary;
@@ -17,7 +17,7 @@ public class LocalClient{
 		Application.orderLibrary = new ServerOrderLibrary();
 		Application.itemLibrary = new ServerItemLibrary();
 		Application.productionStepsLibrary = new ServerProductionStepsLibrary();
-		Application.inventoryLibrary = new ServerInventoryLibrary();
+		Application.inventoryLibrary = new DBInventoryLibrary();
 
 		new OrderSearchWindow();
 		new WorkFlowWindow(null);
