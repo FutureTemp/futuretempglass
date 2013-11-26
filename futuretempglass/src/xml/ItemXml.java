@@ -42,7 +42,7 @@ public class ItemXml{
 		this.id = item.getItemId();
 		this.name = item.getItemName();
 		this.quantity = item.getQuantity();
-		this.orderId = item.getOrder().getOrderNumber();
+		this.orderId = item.getOrderNumber();
 		for(String attributeName: item.getAttributeNames())
 		{
 			ItemAttributeXml attribute = new ItemAttributeXml();

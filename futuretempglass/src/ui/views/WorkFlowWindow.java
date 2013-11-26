@@ -96,6 +96,10 @@ public class WorkFlowWindow extends Window{
 		List<Item> allItems = Application.getItemLibrary().getItems();
 		for(Item item: allItems)
 		{
+			if(item.getCurrentStep() == null)
+			{
+				continue;
+			}
 			itemLists.get(item.getCurrentStep().getName()).add(item);
 		}
 		return itemLists;

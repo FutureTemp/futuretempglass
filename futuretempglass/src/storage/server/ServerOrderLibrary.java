@@ -23,14 +23,10 @@ public class ServerOrderLibrary extends OrderLibrary{
 	private final static String ordersPath = "xml-orders/";
 
 	private final List<String> orderPropertyNames = Arrays.asList(
-			"last_order_number", 
-			"use_sequential_order_numbers"
-	);
+			"last_order_number", "use_sequential_order_numbers");
 
-	private final List<String> defaultPropertyValues = Arrays.asList(
-			"0",
-			"false"
-	);
+	private final List<String> defaultPropertyValues = Arrays.asList("0",
+			"false");
 
 	private List<Order> orders;
 
@@ -112,7 +108,8 @@ public class ServerOrderLibrary extends OrderLibrary{
 			String propertyValue = orderProperties.get(propertyName);
 			if(propertyValue == null)
 			{
-				String defaultValue = defaultPropertyValues.get(orderPropertyNames.indexOf(propertyName));
+				String defaultValue = defaultPropertyValues
+						.get(orderPropertyNames.indexOf(propertyName));
 				propertyValue = defaultValue;
 				orderProperties.put(propertyName, propertyValue);
 			}
@@ -166,10 +163,6 @@ public class ServerOrderLibrary extends OrderLibrary{
 		{
 			order.setOrderNumber(getNextOrderNumber());
 		}
-		for(Item item: order.getItems())
-		{
-			Application.getItemLibrary().addItem(item);
-		}
 		orders.add(order);
 		orderNumbers.add(order.getOrderNumber());
 		save();
@@ -205,13 +198,6 @@ public class ServerOrderLibrary extends OrderLibrary{
 		{
 			if(orders.get(i).getOrderNumber().equals(order.getOrderNumber()))
 			{
-				for(Item item: order.getItems())
-				{
-					if(!Application.getItemLibrary().addItem(item))
-					{
-						Application.getItemLibrary().updateItem(item);
-					}
-				}
 				orders.remove(i);
 				orders.add(i, order);
 				save();
@@ -230,9 +216,12 @@ public class ServerOrderLibrary extends OrderLibrary{
 		{
 			return false;
 		}
-		for(Item item: order.getItems())
+		if(order.getItemIds() != null)
 		{
-			Application.getItemLibrary().deleteItem(item);
+			for(String itemId: order.getItemIds())
+			{
+				Application.getItemLibrary().deleteItem(itemId);
+			}
 		}
 		orders.remove(order);
 		orderNumbers.remove(order.getOrderNumber());
@@ -282,7 +271,7 @@ public class ServerOrderLibrary extends OrderLibrary{
 	public void setSequentialOrderNumbersUsed(boolean used)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

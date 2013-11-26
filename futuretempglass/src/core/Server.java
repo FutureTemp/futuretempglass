@@ -275,10 +275,10 @@ class Server extends Window implements MouseListener{
 	}
 
 	public static void main(String[] args)
-	{
+	{/*
 		Application.itemLibrary = new ServerItemLibrary();
 		Application.productionStepsLibrary = new ServerProductionStepsLibrary();
-
+*/
 		new Server();
 
 		return;

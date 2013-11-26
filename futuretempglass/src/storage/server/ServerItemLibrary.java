@@ -31,16 +31,7 @@ public class ServerItemLibrary extends ItemLibrary{
 
 	public void init()
 	{
-		items = new HashMap<String, Item>();
-		itemList = new ArrayList<Item>();
-		for(Order order: Application.getOrderLibrary().getOrders())
-		{
-			for(Item item: order.getItems())
-			{
-				itemList.add(item);
-				items.put(item.getItemId(), item);
-			}
-		}
+		//TODO
 	}
 
 	@Override
@@ -64,7 +55,7 @@ public class ServerItemLibrary extends ItemLibrary{
 		}
 		if(StringUtils.isEmpty(item.getItemId()))
 		{
-			item.setItemId(StringUtils.getRandomeStringOfLettersAndNumbers(8));
+			item.setItemId(StringUtils.getRandomStringOfLettersAndNumbers(8));
 		}
 		if(items.get(item.getItemId()) == null)
 		{
@@ -123,5 +114,12 @@ public class ServerItemLibrary extends ItemLibrary{
 	public List<Item> getItemsWithFilter(ItemFilter filter)
 	{
 		return filter.filter(new ArrayList<Item>(itemList));
+	}
+
+	@Override
+	public List<Item> getItems(List<String> itemIds)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -3,7 +3,6 @@ package ui.views;
 import items.Item;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +32,8 @@ public class EditOrderWindow extends Window{
 
 	private Order order;
 
+	private List<Item> items = new ArrayList<Item>();
+
 	private Mode mode;
 
 	private JPanel itemsPanel;
@@ -46,7 +47,7 @@ public class EditOrderWindow extends Window{
 	private JTextField dueDateField;
 	private JButton btnDone;
 
-	private List<ItemOrderComponent> items;
+	private List<ItemOrderComponent> itemComponents;
 
 	public EditOrderWindow(Window parentWindow)
 	{
@@ -66,15 +67,16 @@ public class EditOrderWindow extends Window{
 			order = new Order();
 		}
 		this.order = order;
-		if(order.getItems() == null)
+		if(order.getItemIds() == null)
 		{
-			order.setItems(new ArrayList<Item>());
+			order.setItemIds(new ArrayList<String>());
 		}
 
 		switch (mode)
 		{
 		case EDIT:
 			setTitle("Edit Order " + order.getOrderNumber());
+			items = Application.getItemLibrary().getItems(order.getItemIds());
 			break;
 		case NEW:
 			setTitle("Order Entry");
@@ -115,12 +117,14 @@ public class EditOrderWindow extends Window{
 		informationPane.add(orderNumberField, "4, 2, fill, default");
 		orderNumberField.setColumns(10);
 
-		if(mode == Mode.NEW && Application.getOrderLibrary().isSequentialOrderNumbersUsed())
+		if(mode == Mode.NEW
+				&& Application.getOrderLibrary().isSequentialOrderNumbersUsed())
 		{
-			order.setOrderNumber(Application.getOrderLibrary().getNextOrderNumber());
+			order.setOrderNumber(Application.getOrderLibrary()
+					.getNextOrderNumber());
 		}
 		orderNumberField.setText(order.getOrderNumber());
-		
+
 		customerLabel = new JLabel("Customer: ");
 		informationPane.add(customerLabel, "2, 4, right, default");
 
@@ -180,7 +184,7 @@ public class EditOrderWindow extends Window{
 	{
 		// removeAll();
 		// setContentPane(new JPanel());
-		RowSpec[] rowSpec = new RowSpec[order.getItems().size() * 2];
+		RowSpec[] rowSpec = new RowSpec[items.size() * 2];
 		for(int i = 0; i < rowSpec.length; i++)
 		{
 			rowSpec[i++] = FormFactory.RELATED_GAP_ROWSPEC;
@@ -191,21 +195,21 @@ public class EditOrderWindow extends Window{
 				FormFactory.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("default:grow"), }, rowSpec));
 
-		if(items != null)
+		if(itemComponents != null)
 		{
-			for(ItemOrderComponent item: items)
+			for(ItemOrderComponent item: itemComponents)
 			{
 				item.removeAll();
 			}
-			items.clear();
+			itemComponents.clear();
 		}
-		items = new ArrayList<ItemOrderComponent>();
-		for(int i = 0; i < order.getItems().size(); i++)
+		itemComponents = new ArrayList<ItemOrderComponent>();
+		for(int i = 0; i < items.size(); i++)
 		{
-			ItemOrderComponent itemComponent = new ItemOrderComponent(order
-					.getItems().get(i), this);
+			ItemOrderComponent itemComponent = new ItemOrderComponent(
+					items.get(i), this);
 			itemsPanel.add(itemComponent, "2, " + (i + 1) * 2 + ", fill, fill");
-			items.add(itemComponent);
+			itemComponents.add(itemComponent);
 		}
 		repaint();
 		setVisible(true);
@@ -214,7 +218,8 @@ public class EditOrderWindow extends Window{
 
 	private void deleteItem(Item item)
 	{
-		order.getItems().remove(item);
+		items.remove(item);
+		order.getItemIds().remove(item.getItemId());
 		refresh();
 	}
 
@@ -226,7 +231,7 @@ public class EditOrderWindow extends Window{
 	private void saveThisOrder()
 	{
 		order.setOrderNumber(orderNumberField.getText());
-		switch(mode)
+		switch (mode)
 		{
 		case NEW:
 			Application.getOrderLibrary().addOrder(order);
@@ -253,23 +258,24 @@ public class EditOrderWindow extends Window{
 	private void addOrUpdateItem(Item item)
 	{
 		boolean exists = false;
-		for(int i = 0; i < order.getItems().size(); i++)
+		for(int i = 0; i < items.size(); i++)
 		{
-			if(order.getItems().get(i).equals(item))
+			if(items.get(i).equals(item))
 			{
-				order.getItems().remove(i);
-				order.getItems().add(i, item);
+				items.remove(i);
+				items.add(i, item);
 				exists = true;
 			}
 		}
 		if(!exists)
 		{
-			order.getItems().add(item);
-			item.setOrder(order);
-		}
-		if(item.getItemId() == null)
-		{
-			item.setItemId(Application.getItemLibrary().getAvailableId());
+			if(item.getItemId() == null)
+			{
+				item.setItemId(Application.getItemLibrary().getAvailableId());
+			}
+			items.add(item);
+			order.getItemIds().add(item.getItemId());
+			item.setOrderNumber(order.getOrderNumber());
 		}
 		refresh();
 	}
@@ -301,7 +307,7 @@ public class EditOrderWindow extends Window{
 			dispose();
 		}
 
-		for(ItemOrderComponent item: items)
+		for(ItemOrderComponent item: itemComponents)
 		{
 			if(e.getSource() == item.getEditButton())
 			{

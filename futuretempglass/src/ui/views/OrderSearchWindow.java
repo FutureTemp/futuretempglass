@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -27,9 +28,9 @@ public class OrderSearchWindow extends Window{
 	private JButton editOrderButton;
 
 	private JButton viewOrderButton;
-	
+
 	private JButton deleteOrderButton;
-	
+
 	private JList<Object> orderList;
 
 	public OrderSearchWindow()
@@ -70,7 +71,7 @@ public class OrderSearchWindow extends Window{
 		contentPane.add(mainPane, gbc_mainPane);
 		GridBagLayout gbl_mainPane = new GridBagLayout();
 		gbl_mainPane.columnWidths = new int[] { 0, 0 };
-		gbl_mainPane.rowHeights = new int[] { 0, 0, 0, 0, 0};
+		gbl_mainPane.rowHeights = new int[] { 0, 0, 0, 0, 0 };
 		gbl_mainPane.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
 		gbl_mainPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
@@ -98,7 +99,7 @@ public class OrderSearchWindow extends Window{
 		gbc_viewOrderButton.gridx = 0;
 		gbc_viewOrderButton.gridy = 2;
 		mainPane.add(viewOrderButton, gbc_viewOrderButton);
-		
+
 		deleteOrderButton = new JButton("Delete Order");
 		deleteOrderButton.addMouseListener(this);
 		GridBagConstraints gbc_deleteOrderButton = new GridBagConstraints();
@@ -115,6 +116,10 @@ public class OrderSearchWindow extends Window{
 
 		List<String> orderNumbers = Application.getOrderLibrary()
 				.getOrderNumbers();
+		if(orderNumbers == null)
+		{
+			orderNumbers = new ArrayList<String>();
+		}
 		orderList = new JList<Object>(orderNumbers.toArray());
 		orderList.addMouseListener(this);
 		orderList.addKeyListener(this);
@@ -122,16 +127,17 @@ public class OrderSearchWindow extends Window{
 		setVisible(true);
 		repaint();
 	}
-	
+
 	private void editSelectedOrders()
 	{
 		for(Object orderNumber: orderList.getSelectedValuesList())
 		{
-			Order order = Application.getOrderLibrary().getOrder((String)orderNumber);
+			Order order = Application.getOrderLibrary().getOrder(
+					(String)orderNumber);
 			new EditOrderWindow(order, Mode.EDIT, this);
 		}
 	}
-	
+
 	private void deleteSelectedOrders()
 	{
 		for(Object orderNumber: orderList.getSelectedValuesList())
@@ -140,7 +146,7 @@ public class OrderSearchWindow extends Window{
 			refresh();
 		}
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
@@ -161,11 +167,11 @@ public class OrderSearchWindow extends Window{
 			editSelectedOrders();
 		}
 	}
-	
+
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		switch(e.getKeyCode())
+		switch (e.getKeyCode())
 		{
 		case KeyEvent.VK_DELETE:
 			deleteSelectedOrders();

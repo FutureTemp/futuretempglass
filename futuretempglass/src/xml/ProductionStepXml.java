@@ -26,22 +26,14 @@ public class ProductionStepXml{
 	public ProductionStepXml(ProductionStep step)
 	{
 		this.name = step.getName();
-		for(ProductionStep dependency: step.getDependencies())
-		{
-			dependcies.add(dependency.getName());
-		}
+		this.dependcies = step.getDependencies();
 	}
 	
 	public ProductionStep getProductionStep()
 	{
 		ProductionStep step = new ProductionStep();
 		step.setName(this.name);
-		for(String dependencyName: this.dependcies)
-		{
-			ProductionStep dependency = new ProductionStep();
-			dependency.setName(dependencyName);
-			step.addDependency(dependency);
-		}
+		step.setDependencies(this.dependcies);
 		return step;
 	}
 

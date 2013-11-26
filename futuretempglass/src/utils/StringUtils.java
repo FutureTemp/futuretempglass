@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class StringUtils{
@@ -24,7 +25,7 @@ public class StringUtils{
 		// 10+26+26
 	}
 
-	public static String getRandomeStringOfLettersAndNumbers(int length)
+	public static String getRandomStringOfLettersAndNumbers(int length)
 	{
 		String random = "";
 		for(int i = 0; i < length; i++)
@@ -32,6 +33,39 @@ public class StringUtils{
 			random += getRandomLetterOrNumber();
 		}
 		return random;
+	}
+	
+	public static String listToString(List<?> list)
+	{
+		if(list == null)
+		{
+			return null;
+		}
+		StringBuilder builder = new StringBuilder();
+		boolean first = true;
+		for(Object object: list)
+		{
+			if(!first)
+			{
+				builder.append(", ");
+			}
+			first = false;
+			builder.append(object.toString());
+		}
+		return builder.toString();
+	}
+	
+	public static List<String> stringToList(String string)
+	{
+		if(string == null)
+		{
+			return null;
+		}
+		if(string == "")
+		{
+			return new ArrayList<String>();
+		}
+		return Arrays.asList(string.split(", "));
 	}
 	
 	public static boolean isEmpty(String string)
@@ -49,7 +83,7 @@ public class StringUtils{
 		List<String> strings = new ArrayList<String>();
 		while (true)
 		{
-			String string = getRandomeStringOfLettersAndNumbers(8);
+			String string = getRandomStringOfLettersAndNumbers(8);
 			if(strings.contains(string))
 			{
 				break;

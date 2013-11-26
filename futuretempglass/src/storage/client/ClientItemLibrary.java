@@ -71,4 +71,11 @@ public class ClientItemLibrary extends ItemLibrary{
 		return null;
 	}
 
+	@Override
+	public List<Item> getItems(List<String> itemIds)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

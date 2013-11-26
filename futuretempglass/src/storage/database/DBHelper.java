@@ -16,6 +16,43 @@ public class DBHelper{
 	private static String userName = "root";
 	private static String password = "4201994Fr";
 
+	public static boolean writeToDb(String query)
+	{
+		Connection con = null;
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+
+			con = DriverManager
+					.getConnection(connectionURL, userName, password);
+
+			Statement statement = con.createStatement();
+
+			statement.execute(query);
+			con.close();
+			return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		finally
+		{
+			if(con != null)
+			{
+				try
+				{
+					con.close();
+				}
+				catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public static HashMap<String, List<String>> queryDb(String query)
 	{
 		Connection con = null;
@@ -28,7 +65,7 @@ public class DBHelper{
 
 			Statement statement = con.createStatement();
 
-			statement.execute("SELECT * FROM futuretemp.inventory");
+			statement.execute(query);
 			ResultSet rs = statement.getResultSet();
 
 			HashMap<String, List<String>> results = new HashMap<String, List<String>>();

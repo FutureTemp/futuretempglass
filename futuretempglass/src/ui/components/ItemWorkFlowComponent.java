@@ -12,16 +12,19 @@ import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import core.Application;
+
 import ui.views.Window;
 
-public class ItemWorkFlowComponent extends Component {
+public class ItemWorkFlowComponent extends Component{
 
 	private Item item;
 
 	/**
 	 * Create the panel.
 	 */
-	public ItemWorkFlowComponent(Item item, Window parentWindow) {
+	public ItemWorkFlowComponent(Item item, Window parentWindow)
+	{
 		super(parentWindow);
 
 		this.item = item;
@@ -29,8 +32,8 @@ public class ItemWorkFlowComponent extends Component {
 		setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)),
 				item.getItemName(), TitledBorder.LEADING, TitledBorder.TOP,
 				null, Color.BLACK));
-		((TitledBorder) getBorder()).setTitleFont(new Font("Verdana",
-				Font.BOLD, 18));
+		((TitledBorder)getBorder()).setTitleFont(new Font("Verdana", Font.BOLD,
+				18));
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
@@ -39,14 +42,15 @@ public class ItemWorkFlowComponent extends Component {
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		JLabel lblOrder = new JLabel(item.getOrder().getOrderNumber());
+		JLabel lblOrder = new JLabel(item.getOrderNumber());
 		GridBagConstraints gbc_lblOrder = new GridBagConstraints();
 		gbc_lblOrder.insets = new Insets(0, 0, 5, 0);
 		gbc_lblOrder.gridx = 0;
 		gbc_lblOrder.gridy = 0;
 		add(lblOrder, gbc_lblOrder);
 
-		JLabel lblItemName = new JLabel(item.getOrder().getCustomer());
+		JLabel lblItemName = new JLabel(Application.getOrderLibrary()
+				.getOrder(item.getOrderNumber()).getCustomer());
 		GridBagConstraints gbc_lblItemName = new GridBagConstraints();
 		gbc_lblItemName.gridx = 0;
 		gbc_lblItemName.gridy = 1;

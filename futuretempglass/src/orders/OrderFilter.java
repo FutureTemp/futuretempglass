@@ -92,7 +92,7 @@ public class OrderFilter{
 		return false;
 	}
 	
-	private static enum OrderFilterEnum{
+	public static enum OrderFilterEnum{
 
 		PRODUCTION_STEP,
 		PRODUCTION_STEPS,
