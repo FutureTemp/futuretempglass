@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import orders.Order;
 import workflow.ProductionStep;
 
 public class Item implements Serializable{

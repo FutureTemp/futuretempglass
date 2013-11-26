@@ -2,7 +2,6 @@ package ui.views;
 
 import items.Item;
 
-import java.awt.Event;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,12 +12,16 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import core.Application;
-
 import ui.components.WorkFlowColumn;
 import workflow.ProductionStep;
+import core.Application;
 
 public class WorkFlowWindow extends Window{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static final long REFRESH_INTERVAL = 30000; //5 seconds
 	

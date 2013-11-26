@@ -54,6 +54,8 @@ public class InputQuestion extends JComponent{
 		{
 		case INPUT:
 			return ((JTextComponent)txtAnswer).getText();
+		default:
+			break;
 		}
 		return null;
 	}

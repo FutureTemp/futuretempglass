@@ -10,7 +10,7 @@ import javax.xml.bind.Unmarshaller;
 
 public class JAXBHelper{
 
-	private static JAXBContext getJAXBContext(Class xmlClass)
+	private static JAXBContext getJAXBContext(Class<?> xmlClass)
 	{
 		// Passing in package name where XML objects are held
 		try
@@ -24,7 +24,7 @@ public class JAXBHelper{
 		return null;
 	}
 
-	private static Unmarshaller getUnmarshaller(Class xmlClass)
+	private static Unmarshaller getUnmarshaller(Class<?> xmlClass)
 	{
 		try
 		{
@@ -37,7 +37,7 @@ public class JAXBHelper{
 		return null;
 	}
 
-	private static Marshaller getMarshaller(Class xmlClass)
+	private static Marshaller getMarshaller(Class<?> xmlClass)
 	{
 		try
 		{
@@ -52,7 +52,7 @@ public class JAXBHelper{
 		return null;
 	}
 
-	public static Object readFromXmlFile(String filePath, Class xmlClass)
+	public static Object readFromXmlFile(String filePath, Class<?> xmlClass)
 	{
 		File file = new File(filePath);
 		try

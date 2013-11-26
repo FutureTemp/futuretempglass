@@ -1,8 +1,6 @@
 package xml;
 
 import items.Item;
-import items.ItemFilter;
-import items.ItemFilter.ItemFilterType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +9,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import core.Application;
-
 import orders.Order;
-import orders.OrderFilter;
-import orders.OrderFilter.OrderFilterEnum;
 import storage.JAXBHelper;
+import core.Application;
 
 @XmlRootElement(name = "order")
 public class OrderXml{

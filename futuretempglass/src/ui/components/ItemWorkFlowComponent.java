@@ -12,12 +12,15 @@ import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import core.Application;
-
 import ui.views.Window;
+import core.Application;
 
 public class ItemWorkFlowComponent extends Component{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Item item;
 
 	/**

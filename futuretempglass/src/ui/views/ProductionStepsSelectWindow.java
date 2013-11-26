@@ -19,6 +19,11 @@ import workflow.ProductionStep;
 
 public class ProductionStepsSelectWindow extends Window{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private JPanel contentPane;
 
 	private List<ProductionStep> productionSteps;

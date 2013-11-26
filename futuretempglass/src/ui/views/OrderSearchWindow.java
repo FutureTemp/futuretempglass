@@ -21,6 +21,11 @@ import core.Application;
 
 public class OrderSearchWindow extends Window{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private JPanel contentPane;
 
 	private JButton newOrderButton;

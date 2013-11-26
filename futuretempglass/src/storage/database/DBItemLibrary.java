@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.management.Query;
-
 import storage.ItemLibrary;
 import utils.StringUtils;
 import workflow.ProductionStep;

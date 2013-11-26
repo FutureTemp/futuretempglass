@@ -63,7 +63,11 @@ public class ItemFilter{
 				}
 			}
 			return true;
+		case ORDER_NUMBER:
+			//TODO
+			break;
 		}
+			
 		return false;
 	}
 

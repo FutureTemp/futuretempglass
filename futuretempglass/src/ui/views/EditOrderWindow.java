@@ -280,6 +280,7 @@ public class EditOrderWindow extends Window{
 		refresh();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void sendData(Window source, Object object)
 	{

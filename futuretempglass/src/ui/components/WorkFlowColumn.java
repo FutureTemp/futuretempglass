@@ -19,6 +19,11 @@ import workflow.ProductionStep;
 
 public class WorkFlowColumn extends Component{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private List<Item> items;
 
 	private List<ItemWorkFlowComponent> itemComponents;
@@ -42,7 +47,7 @@ public class WorkFlowColumn extends Component{
 		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		JLabel lblProductionStep = new JLabel(productionStep.getName());
+		JLabel lblProductionStep = new JLabel(this.productionStep.getName());
 		lblProductionStep.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProductionStep.setFont(new Font("SansSerif", Font.PLAIN, 26));
 		GridBagConstraints gbc_lblProductionStep = new GridBagConstraints();
@@ -63,11 +68,11 @@ public class WorkFlowColumn extends Component{
 		scrollPane.setViewportView(itemsInStepPanel);
 		GridBagLayout gbl_itemsInStepPanel = new GridBagLayout();
 
-		int[] rowHeights = new int[items.size() + 1];
-		double[] rowWeights = new double[items.size() + 1];
-		rowHeights[items.size()] = 0;
-		rowWeights[items.size()] = Double.MIN_VALUE;
-		for(int i = 0; i < items.size(); i++)
+		int[] rowHeights = new int[this.items.size() + 1];
+		double[] rowWeights = new double[this.items.size() + 1];
+		rowHeights[this.items.size()] = 0;
+		rowWeights[this.items.size()] = Double.MIN_VALUE;
+		for(int i = 0; i < this.items.size(); i++)
 		{
 			rowHeights[i] = 0;
 			rowWeights[i] = 0;
@@ -81,10 +86,10 @@ public class WorkFlowColumn extends Component{
 		itemsInStepPanel.setLayout(gbl_itemsInStepPanel);
 
 		itemComponents = new ArrayList<ItemWorkFlowComponent>();
-		for(int i = 0; i < items.size(); i++)
+		for(int i = 0; i < this.items.size(); i++)
 		{
 			ItemWorkFlowComponent itemWorkFlowComponent = new ItemWorkFlowComponent(
-					items.get(i), getParent());
+					this.items.get(i), getParent());
 			GridBagConstraints gbc_itemWorkFlowComponent = new GridBagConstraints();
 			gbc_itemWorkFlowComponent.insets = new Insets(0, 0, 5, 0);
 			gbc_itemWorkFlowComponent.fill = GridBagConstraints.HORIZONTAL;
