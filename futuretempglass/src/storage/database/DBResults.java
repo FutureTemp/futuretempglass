@@ -36,10 +36,25 @@ public class DBResults{
 		}
 		currentRow = -1;
 	}
+	
+	public List<String> getColumnNames()
+	{
+		return columnNames;
+	}
 
 	public String[] getRow()
 	{
 		return results[currentRow];
+	}
+	
+	public String getString(int colIndex)
+	{
+		return results[colIndex][currentRow];
+	}
+	
+	public String getString(String colName)
+	{
+		return getString(columnIndex.get(colName));
 	}
 	
 	public boolean hasNext()
