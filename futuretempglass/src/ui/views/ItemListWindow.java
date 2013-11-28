@@ -28,8 +28,10 @@ public class ItemListWindow extends Window{
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @throws Exception
 	 */
-	public ItemListWindow(Window parentWindow)
+	public ItemListWindow(Window parentWindow) throws Exception
 	{
 		super(parentWindow);
 
@@ -47,16 +49,22 @@ public class ItemListWindow extends Window{
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] {
-				0, 0
+				0,
+				0
 		};
 		gbl_contentPane.rowHeights = new int[] {
-				0, 0, 0
+				0,
+				0,
+				0
 		};
 		gbl_contentPane.columnWeights = new double[] {
-				1.0, Double.MIN_VALUE
+				1.0,
+				Double.MIN_VALUE
 		};
 		gbl_contentPane.rowWeights = new double[] {
-				1.0, 0.0, Double.MIN_VALUE
+				1.0,
+				0.0,
+				Double.MIN_VALUE
 		};
 		contentPane.setLayout(gbl_contentPane);
 
@@ -87,7 +95,7 @@ public class ItemListWindow extends Window{
 		setVisible(true);
 	}
 
-	private void sendItemNamesToParent()
+	private void sendItemNamesToParent() throws Exception
 	{
 		int[] indecies = itemList.getSelectedIndices();
 		List<Object> itemNames = new ArrayList<Object>();
@@ -102,24 +110,40 @@ public class ItemListWindow extends Window{
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		switch(e.getKeyCode())
+		try
 		{
-		case KeyEvent.VK_ENTER:
-			sendItemNamesToParent();
-			break;
+			switch (e.getKeyCode())
+			{
+			case KeyEvent.VK_ENTER:
+				sendItemNamesToParent();
+				break;
+			}
+		}
+		catch(Exception e1)
+		{
+			// TODO
+			e1.printStackTrace();
 		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if(e.getSource().equals(selectButton))
+		try
 		{
-			sendItemNamesToParent();
+			if(e.getSource().equals(selectButton))
+			{
+				sendItemNamesToParent();
+			}
+			else if(e.getSource().equals(itemList) && e.getClickCount() == 2)
+			{
+				sendItemNamesToParent();
+			}
 		}
-		else if(e.getSource().equals(itemList) && e.getClickCount() == 2)
+		catch(Exception e1)
 		{
-			sendItemNamesToParent();
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 

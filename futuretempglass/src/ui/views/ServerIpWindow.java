@@ -33,12 +33,26 @@ public class ServerIpWindow extends JFrame implements MouseListener{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 44, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[] {
+				0,
+				0
+		};
+		gbl_contentPane.rowHeights = new int[] {
+				0,
+				44,
+				0
+		};
+		gbl_contentPane.columnWeights = new double[] {
+				1.0,
+				Double.MIN_VALUE
+		};
+		gbl_contentPane.rowWeights = new double[] {
+				0.0,
+				0.0,
+				Double.MIN_VALUE
+		};
 		contentPane.setLayout(gbl_contentPane);
-		
+
 		textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
@@ -47,7 +61,7 @@ public class ServerIpWindow extends JFrame implements MouseListener{
 		gbc_textField.gridy = 0;
 		contentPane.add(textField, gbc_textField);
 		textField.setColumns(10);
-		
+
 		doneButton = new JButton("Done");
 		doneButton.addMouseListener(this);
 		GridBagConstraints gbc_doneButton = new GridBagConstraints();
@@ -61,40 +75,48 @@ public class ServerIpWindow extends JFrame implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if(e.getSource().equals(doneButton))
+		try
 		{
-			Client.serverIp = textField.getText().trim();
+			if(e.getSource().equals(doneButton))
+			{
+				Client.serverIp = textField.getText().trim();
+			}
+			new EditOrderWindow(null);
+			dispose();
 		}
-		new EditOrderWindow(null);
-		dispose();
+		catch(Exception e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

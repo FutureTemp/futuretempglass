@@ -116,7 +116,7 @@ public class ServerOrderLibrary extends OrderLibrary{
 		FileUtils.writeFile(orderPropertiesFile, orderPropertyContents);
 	}
 
-	private void save()
+	private void save() throws Exception
 	{
 		saveOrderNumbers();
 		saveOrders();
@@ -132,7 +132,7 @@ public class ServerOrderLibrary extends OrderLibrary{
 		FileUtils.writeFile(orderNumbersFilePath, fileContents);
 	}
 
-	private void saveOrders()
+	private void saveOrders() throws Exception
 	{
 		for(Order order: orders)
 		{
@@ -155,7 +155,7 @@ public class ServerOrderLibrary extends OrderLibrary{
 	}
 
 	@Override
-	public boolean addOrder(Order order)
+	public boolean addOrder(Order order) throws Exception
 	{
 		if(order.getOrderNumber() == null)
 		{
@@ -190,7 +190,7 @@ public class ServerOrderLibrary extends OrderLibrary{
 	}
 
 	@Override
-	public boolean updateOrder(Order order)
+	public boolean updateOrder(Order order) throws Exception
 	{
 		for(int i = 0; i < orders.size(); i++)
 		{
@@ -206,7 +206,7 @@ public class ServerOrderLibrary extends OrderLibrary{
 	}
 
 	@Override
-	public boolean deleteOrder(Order order)
+	public boolean deleteOrder(Order order) throws Exception
 	{
 
 		if(order.getOrderNumber() == null
@@ -229,7 +229,7 @@ public class ServerOrderLibrary extends OrderLibrary{
 	}
 
 	@Override
-	public boolean deleteOrder(String orderId)
+	public boolean deleteOrder(String orderId) throws Exception
 	{
 		if(orderId == null)
 		{

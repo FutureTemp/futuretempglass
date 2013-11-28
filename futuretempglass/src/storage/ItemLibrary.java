@@ -9,11 +9,11 @@ import utils.StringUtils;
 
 public abstract class ItemLibrary{
 
-	public abstract Item getItem(String id);
+	public abstract Item getItem(String id) throws Exception;
 
-	public abstract List<Item> getItems();
+	public abstract List<Item> getItems() throws Exception;
 	
-	public abstract List<Item> getItems(List<String> itemIds);
+	public abstract List<Item> getItems(List<String> itemIds) throws Exception;
 
 	public abstract boolean addItem(Item item);
 

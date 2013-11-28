@@ -29,7 +29,7 @@ public class OrderXml{
 		
 	}
 	
-	public OrderXml(Order order)
+	public OrderXml(Order order) throws Exception
 	{
 		this.orderNumber = order.getOrderNumber();
 		for(Item item: Application.getItemLibrary().getItems(order.getItemIds()))

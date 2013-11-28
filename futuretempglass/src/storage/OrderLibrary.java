@@ -9,13 +9,13 @@ public abstract class OrderLibrary{
 
 	public abstract Order getOrder(String orderId);
 
-	public abstract boolean addOrder(Order order);
+	public abstract boolean addOrder(Order order) throws Exception;
 
-	public abstract boolean updateOrder(Order order);
+	public abstract boolean updateOrder(Order order) throws Exception;
 	
-	public abstract boolean deleteOrder(Order order);
+	public abstract boolean deleteOrder(Order order) throws Exception;
 	
-	public abstract boolean deleteOrder(String orderId);
+	public abstract boolean deleteOrder(String orderId) throws Exception;
 
 	public abstract List<Order> getOrders();
 	

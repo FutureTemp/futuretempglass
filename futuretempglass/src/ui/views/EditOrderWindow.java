@@ -49,15 +49,18 @@ public class EditOrderWindow extends Window{
 
 	private List<ItemOrderComponent> itemComponents;
 
-	public EditOrderWindow(Window parentWindow)
+	public EditOrderWindow(Window parentWindow) throws Exception
 	{
 		this(null, Mode.NEW, parentWindow);
 	}
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @throws Exception
 	 */
 	public EditOrderWindow(Order order, Mode mode, Window parentWindow)
+			throws Exception
 	{
 		super(parentWindow);
 		this.mode = mode;
@@ -83,14 +86,15 @@ public class EditOrderWindow extends Window{
 			break;
 		}
 
-		getContentPane().setLayout(
-				new FormLayout(new ColumnSpec[] {
-						FormFactory.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("default:grow"), }, new RowSpec[] {
-						FormFactory.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("default:grow"),
-						FormFactory.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("default:grow"), }));
+		getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+		}, new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),
+				FormFactory.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),
+		}));
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -101,14 +105,22 @@ public class EditOrderWindow extends Window{
 		addItemButton = new JButton("Add Item");
 		addItemButton.addMouseListener(this);
 		informationPane.setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("96px:grow"), }, new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("25px"), }));
+				ColumnSpec.decode("96px:grow"),
+		}, new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.LINE_GAP_ROWSPEC,
+				RowSpec.decode("25px"),
+		}));
 
 		orderNumberLabel = new JLabel("Order #: ");
 		informationPane.add(orderNumberLabel, "2, 2, right, default");
@@ -193,7 +205,8 @@ public class EditOrderWindow extends Window{
 
 		itemsPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"), }, rowSpec));
+				ColumnSpec.decode("default:grow"),
+		}, rowSpec));
 
 		if(itemComponents != null)
 		{
@@ -228,7 +241,7 @@ public class EditOrderWindow extends Window{
 		new EditItemWindow(this, item, Mode.EDIT);
 	}
 
-	private void saveThisOrder()
+	private void saveThisOrder() throws Exception
 	{
 		order.setOrderNumber(orderNumberField.getText());
 		switch (mode)
@@ -246,7 +259,7 @@ public class EditOrderWindow extends Window{
 		}
 	}
 
-	private void openItemWindows(List<String> itemNames)
+	private void openItemWindows(List<String> itemNames) throws Exception
 	{
 		for(String itemName: itemNames)
 		{
@@ -282,7 +295,7 @@ public class EditOrderWindow extends Window{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void sendData(Window source, Object object)
+	public void sendData(Window source, Object object) throws Exception
 	{
 		super.sendData(source, object);
 		if(source.equals(itemListWindow))
@@ -298,29 +311,37 @@ public class EditOrderWindow extends Window{
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if(e.getSource().equals(addItemButton))
+		try
 		{
-			itemListWindow = new ItemListWindow(this);
-		}
-		else if(e.getSource().equals(btnDone))
-		{
-			saveThisOrder();
-			dispose();
-		}
-
-		for(ItemOrderComponent item: itemComponents)
-		{
-			if(e.getSource() == item.getEditButton())
+			if(e.getSource().equals(addItemButton))
 			{
-				editItem(item.getItem());
+				itemListWindow = new ItemListWindow(this);
 			}
-			else if(e.getSource() == item.getDeleteButton())
+			else if(e.getSource().equals(btnDone))
 			{
-				deleteItem(item.getItem());
-				return;
+				saveThisOrder();
+				dispose();
 			}
-		}
 
+			for(ItemOrderComponent item: itemComponents)
+			{
+				if(e.getSource() == item.getEditButton())
+				{
+					editItem(item.getItem());
+				}
+				else if(e.getSource() == item.getDeleteButton())
+				{
+					deleteItem(item.getItem());
+					return;
+				}
+			}
+
+		}
+		catch(Exception e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	@Override

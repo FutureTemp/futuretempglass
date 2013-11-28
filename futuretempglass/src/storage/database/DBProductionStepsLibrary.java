@@ -1,11 +1,10 @@
 package storage.database;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import storage.ProductionStepsLibrary;
+import utils.StringUtils;
 import workflow.ProductionStep;
 
 public class DBProductionStepsLibrary extends ProductionStepsLibrary{
@@ -16,27 +15,22 @@ public class DBProductionStepsLibrary extends ProductionStepsLibrary{
 	private final static String dependenciesRow = "dependencies";
 
 	@Override
-	public List<ProductionStep> getProductionSteps()
+	public List<ProductionStep> getProductionSteps() throws Exception
 	{
-		HashMap<String, List<String>> results = DBHelper
+		DBResults results = DBHelper
 				.queryDb("SELECT * FROM " + database + "." + table);
-		return hashmapToProductionSteps(results);
+		return dbResultsToProductionSteps(results);
 	}
 
-	private List<ProductionStep> hashmapToProductionSteps(
-			HashMap<String, List<String>> hashmap)
+	private List<ProductionStep> dbResultsToProductionSteps(DBResults results) throws Exception
 	{
 		List<ProductionStep> steps = new ArrayList<ProductionStep>();
 
-		for(int i = 0; i < hashmap.get(nameRow).size(); i++)
+		while(results.next())
 		{
 			ProductionStep step = new ProductionStep();
-			step.setName(hashmap.get(nameRow).get(i));
-			String dependencies = hashmap.get(dependenciesRow).get(i);
-			if(dependencies != null)
-			{
-				step.setDependencies(Arrays.asList(dependencies.split(",")));
-			}
+			step.setName(results.getString(nameRow));
+			step.setDependencies(StringUtils.stringToList(results.getString(dependenciesRow)));
 			steps.add(step);
 		}
 

@@ -6,6 +6,6 @@ import workflow.ProductionStep;
 
 public abstract class ProductionStepsLibrary{
 
-	public abstract List<ProductionStep> getProductionSteps();
+	public abstract List<ProductionStep> getProductionSteps() throws Exception;
 	
 }

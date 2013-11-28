@@ -3,12 +3,8 @@ package storage.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class DBHelper{
 
@@ -53,7 +49,7 @@ public class DBHelper{
 		}
 	}
 	
-	public static HashMap<String, List<String>> queryDb(String query)
+	public static DBResults queryDb(String query)
 	{
 		Connection con = null;
 		try
@@ -68,25 +64,7 @@ public class DBHelper{
 			statement.execute(query);
 			ResultSet rs = statement.getResultSet();
 
-			HashMap<String, List<String>> results = new HashMap<String, List<String>>();
-
-			ResultSetMetaData data = rs.getMetaData();
-
-			List<List<String>> columnLists = new ArrayList<List<String>>();
-			int colCount = data.getColumnCount();
-			for(int i = 0; i < colCount; i++)
-			{
-				List<String> list = new ArrayList<String>();
-				columnLists.add(list);
-				results.put(data.getColumnName(i + 1), list);
-			}
-			while (rs.next())
-			{
-				for(int i = 0; i < colCount; i++)
-				{
-					columnLists.get(i).add(rs.getString(i + 1));
-				}
-			}
+			DBResults results = new DBResults(rs);
 
 			con.close();
 			return results;

@@ -4,7 +4,6 @@ import items.Item;
 import items.ItemFilter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import storage.ItemLibrary;
@@ -24,21 +23,20 @@ public class DBItemLibrary extends ItemLibrary{
 	private static String currentStepCol = "current_step";
 
 	@Override
-	public Item getItem(String id)
+	public Item getItem(String id) throws Exception
 	{
-		HashMap<String, List<String>> results = DBHelper
-				.queryDb("SELECT * FROM " + database + "." + table + " WHERE "
-						+ idCol + "='" + id + "'");
-		return hashmapToItems(results).get(0);
+		DBResults results = DBHelper.queryDb("SELECT * FROM " + database + "."
+				+ table + " WHERE " + idCol + "='" + id + "'");
+		return dbResultsToItems(results).get(0);
 	}
 
 	@Override
-	public List<Item> getItems()
+	public List<Item> getItems() throws Exception
 	{
-		HashMap<String, List<String>> results = DBHelper
-				.queryDb("SELECT * FROM " + database + "." + table);
+		DBResults results = DBHelper.queryDb("SELECT * FROM " + database + "."
+				+ table);
 
-		return hashmapToItems(results);
+		return dbResultsToItems(results);
 	}
 
 	@Override
@@ -94,24 +92,22 @@ public class DBItemLibrary extends ItemLibrary{
 		return null;
 	}
 
-	private List<Item> hashmapToItems(HashMap<String, List<String>> hashmap)
+	private List<Item> dbResultsToItems(DBResults results) throws Exception
 	{
 		List<Item> items = new ArrayList<Item>();
 
-		for(int i = 0; i < hashmap.get(idCol).size(); i++)
+		while(results.next())
 		{
 			Item item = new Item();
-			item.setItemId(hashmap.get(idCol).get(i));
-			item.setName(hashmap.get(nameCol).get(i));
-			item.setOrderNumber(hashmap.get(orderNumCol).get(i));
-
-			List<String> stepsStrings = StringUtils.stringToList(hashmap.get(
-					productionStepsCol).get(i));
-
-			String currentStep = hashmap.get(currentStepCol).get(i);
-
+			item.setItemId(results.getString(idCol));
+			item.setOrderNumber(results.getString(orderNumCol));
+			item.setName(results.getString(nameCol));
+			item = stringToAttributes(results.getString(attributesCol), item);
+			
 			List<ProductionStep> productionSteps = Application
 					.getProductionStepsLibrary().getProductionSteps();
+			List<String> stepsStrings = StringUtils.stringToList(results.getString(productionStepsCol));
+			String currentStep = results.getString(currentStepCol);
 			for(ProductionStep step: productionSteps)
 			{
 				if(stepsStrings.contains(step.getName()))
@@ -122,16 +118,6 @@ public class DBItemLibrary extends ItemLibrary{
 						item.setCurrentStep(step);
 					}
 				}
-			}
-
-			String attributesString = hashmap.get(attributesCol).get(i);
-			if(StringUtils.isEmpty(attributesString))
-			{
-				item.setAttributeNames(new ArrayList<String>());
-			}
-			else
-			{
-				item = stringToAttributes(attributesString, item);
 			}
 			items.add(item);
 		}
@@ -156,7 +142,7 @@ public class DBItemLibrary extends ItemLibrary{
 
 	private Item stringToAttributes(String attributes, Item item)
 	{
-		if(attributes == null)
+		if(StringUtils.isEmpty(attributes))
 		{
 			item.setAttributeNames(new ArrayList<String>());
 			return item;
@@ -171,7 +157,7 @@ public class DBItemLibrary extends ItemLibrary{
 	}
 
 	@Override
-	public List<Item> getItems(List<String> itemIds)
+	public List<Item> getItems(List<String> itemIds) throws Exception
 	{
 		StringBuilder builder = new StringBuilder("SELECT * FROM '" + database
 				+ "'.'" + table + "' WHERE ");
@@ -185,13 +171,14 @@ public class DBItemLibrary extends ItemLibrary{
 			first = false;
 			builder.append("'" + idCol + "' = '" + itemId + "'");
 		}
-		
-		HashMap<String, List<String>> hashmap = DBHelper.queryDb(builder.toString());
-		if(hashmap == null)
+
+		DBResults results = DBHelper.queryDb(builder
+				.toString());
+		if(results == null)
 		{
 			return null;
 		}
-		
-		return hashmapToItems(hashmap);
+
+		return dbResultsToItems(results);
 	}
 }

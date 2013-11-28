@@ -1,7 +1,6 @@
 package storage.database;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import orders.Order;
@@ -22,12 +21,12 @@ public class DBOrderLibrary extends OrderLibrary{
 	{
 		String query = "SELECT * FROM '" + database + "'.'" + table
 				+ "' WHERE '" + orderNumberCol + "' = '" + orderId + "'";
-		HashMap<String, List<String>> results = DBHelper.queryDb(query);
+		DBResults results = DBHelper.queryDb(query);
 		if(results == null)
 		{
 			return null;
 		}
-		return hashmapToOrders(results).get(0);
+		return dbResultsToOrders(results).get(0);
 	}
 
 	@Override
@@ -99,22 +98,20 @@ public class DBOrderLibrary extends OrderLibrary{
 		return null;
 	}
 
-	private static List<Order> hashmapToOrders(
-			HashMap<String, List<String>> hashmap)
+	private static List<Order> dbResultsToOrders(DBResults results)
 	{
 		List<Order> orders = new ArrayList<Order>();
-		for(int i = 0; i < hashmap.get(orderNumberCol).size(); i++)
+
+		while (results.hasNext())
 		{
 			Order order = new Order();
-			order.setOrderNumber(hashmap.get(orderNumberCol).get(i));
-			order.setCustomer(hashmap.get(customerCol).get(i));
-			if(hashmap.get(itemIdsCol).get(i) != null)
-			{
-				order.setItemIds(StringUtils.stringToList(hashmap.get(
-						itemIdsCol).get(i)));
-			}
+			order.setOrderNumber(results.getString(orderNumberCol));
+			order.setCustomer(results.getString(customerCol));
+			order.setItemIds(StringUtils.stringToList(results
+					.getString(itemIdsCol)));
 			orders.add(order);
 		}
+
 		return orders;
 	}
 

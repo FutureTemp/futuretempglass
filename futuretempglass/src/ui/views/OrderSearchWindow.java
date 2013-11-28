@@ -61,10 +61,24 @@ public class OrderSearchWindow extends Window{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 0, 0 };
-		gbl_contentPane.rowHeights = new int[] { 0, 0, 0 };
-		gbl_contentPane.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 0.2, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.columnWidths = new int[] {
+				0,
+				0
+		};
+		gbl_contentPane.rowHeights = new int[] {
+				0,
+				0,
+				0
+		};
+		gbl_contentPane.columnWeights = new double[] {
+				1.0,
+				Double.MIN_VALUE
+		};
+		gbl_contentPane.rowWeights = new double[] {
+				0.2,
+				1.0,
+				Double.MIN_VALUE
+		};
 		contentPane.setLayout(gbl_contentPane);
 
 		JPanel mainPane = new JPanel();
@@ -75,11 +89,28 @@ public class OrderSearchWindow extends Window{
 		gbc_mainPane.gridy = 0;
 		contentPane.add(mainPane, gbc_mainPane);
 		GridBagLayout gbl_mainPane = new GridBagLayout();
-		gbl_mainPane.columnWidths = new int[] { 0, 0 };
-		gbl_mainPane.rowHeights = new int[] { 0, 0, 0, 0, 0 };
-		gbl_mainPane.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
-		gbl_mainPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
-				Double.MIN_VALUE };
+		gbl_mainPane.columnWidths = new int[] {
+				0,
+				0
+		};
+		gbl_mainPane.rowHeights = new int[] {
+				0,
+				0,
+				0,
+				0,
+				0
+		};
+		gbl_mainPane.columnWeights = new double[] {
+				0.0,
+				Double.MIN_VALUE
+		};
+		gbl_mainPane.rowWeights = new double[] {
+				0.0,
+				0.0,
+				0.0,
+				0.0,
+				Double.MIN_VALUE
+		};
 		mainPane.setLayout(gbl_mainPane);
 
 		newOrderButton = new JButton("New Order");
@@ -133,7 +164,7 @@ public class OrderSearchWindow extends Window{
 		repaint();
 	}
 
-	private void editSelectedOrders()
+	private void editSelectedOrders() throws Exception
 	{
 		for(Object orderNumber: orderList.getSelectedValuesList())
 		{
@@ -143,7 +174,7 @@ public class OrderSearchWindow extends Window{
 		}
 	}
 
-	private void deleteSelectedOrders()
+	private void deleteSelectedOrders() throws Exception
 	{
 		for(Object orderNumber: orderList.getSelectedValuesList())
 		{
@@ -155,35 +186,51 @@ public class OrderSearchWindow extends Window{
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if(e.getSource().equals(newOrderButton))
+		try
 		{
-			new EditOrderWindow(null, Mode.NEW, this);
+			if(e.getSource().equals(newOrderButton))
+			{
+				new EditOrderWindow(null, Mode.NEW, this);
+			}
+			else if(e.getSource().equals(editOrderButton))
+			{
+				editSelectedOrders();
+			}
+			else if(e.getSource().equals(deleteOrderButton))
+			{
+				deleteSelectedOrders();
+			}
+			else if(e.getSource().equals(orderList) && e.getClickCount() == 2)
+			{
+				editSelectedOrders();
+			}
 		}
-		else if(e.getSource().equals(editOrderButton))
+		catch(Exception e1)
 		{
-			editSelectedOrders();
-		}
-		else if(e.getSource().equals(deleteOrderButton))
-		{
-			deleteSelectedOrders();
-		}
-		else if(e.getSource().equals(orderList) && e.getClickCount() == 2)
-		{
-			editSelectedOrders();
+			// TODO
+			e1.printStackTrace();
 		}
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		switch (e.getKeyCode())
+		try
 		{
-		case KeyEvent.VK_DELETE:
-			deleteSelectedOrders();
-			break;
-		case KeyEvent.VK_ENTER:
-			editSelectedOrders();
-			break;
+			switch (e.getKeyCode())
+			{
+			case KeyEvent.VK_DELETE:
+				deleteSelectedOrders();
+				break;
+			case KeyEvent.VK_ENTER:
+				editSelectedOrders();
+				break;
+			}
+		}
+		catch(Exception e1)
+		{
+			// TODO
+			e1.printStackTrace();
 		}
 	}
 

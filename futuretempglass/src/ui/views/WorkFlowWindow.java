@@ -23,8 +23,8 @@ public class WorkFlowWindow extends Window{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final long REFRESH_INTERVAL = 30000; //5 seconds
-	
+	private static final long REFRESH_INTERVAL = 30000; // 5 seconds
+
 	private JPanel contentPanel;
 
 	private List<ProductionStep> productionSteps;
@@ -32,10 +32,10 @@ public class WorkFlowWindow extends Window{
 	private List<WorkFlowColumn> columns = new ArrayList<WorkFlowColumn>();
 
 	private HashMap<String, List<Item>> itemLists;
-	
+
 	private long lastUpdateTime = -1;
 
-	public WorkFlowWindow(Window parentWindow)
+	public WorkFlowWindow(Window parentWindow) throws Exception
 	{
 		super(parentWindow);
 		addMouseMotionListener(this);
@@ -45,7 +45,7 @@ public class WorkFlowWindow extends Window{
 	}
 
 	@Override
-	public void refresh()
+	public void refresh() throws Exception
 	{
 		super.refresh();
 		contentPanel = new JPanel();
@@ -67,9 +67,15 @@ public class WorkFlowWindow extends Window{
 		}
 
 		gbl_contentPanel.columnWidths = columnWidths;
-		gbl_contentPanel.rowHeights = new int[] { 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] {
+				0,
+				0
+		};
 		gbl_contentPanel.columnWeights = columnWeights;
-		gbl_contentPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] {
+				1.0,
+				Double.MIN_VALUE
+		};
 		contentPanel.setLayout(gbl_contentPanel);
 
 		for(int i = 0; i < productionSteps.size(); i++)
@@ -88,8 +94,8 @@ public class WorkFlowWindow extends Window{
 		// pack();
 		setVisible(true);
 	}
-	
-	private HashMap<String, List<Item>> getSortedItems()
+
+	private HashMap<String, List<Item>> getSortedItems() throws Exception
 	{
 		HashMap<String, List<Item>> itemLists = new HashMap<String, List<Item>>();
 		for(ProductionStep productionStep: this.productionSteps)
@@ -107,16 +113,25 @@ public class WorkFlowWindow extends Window{
 		}
 		return itemLists;
 	}
-	
+
 	@Override
 	protected void processMouseMotionEvent(MouseEvent e)
 	{
-		super.processMouseMotionEvent(e);
-		long current = System.currentTimeMillis();
-		if(lastUpdateTime == -1 || current - lastUpdateTime > REFRESH_INTERVAL)
+		try
 		{
-			lastUpdateTime = current;
-			refresh();
+			super.processMouseMotionEvent(e);
+			long current = System.currentTimeMillis();
+			if(lastUpdateTime == -1
+					|| current - lastUpdateTime > REFRESH_INTERVAL)
+			{
+				lastUpdateTime = current;
+				refresh();
+			}
+		}
+		catch(Exception e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 

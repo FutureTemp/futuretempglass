@@ -3,11 +3,10 @@ package storage.database;
 import items.Item;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import storage.InventoryLibrary;
+import utils.StringUtils;
 
 public class DBInventoryLibrary extends InventoryLibrary{
 
@@ -23,31 +22,36 @@ public class DBInventoryLibrary extends InventoryLibrary{
 	}
 
 	@Override
-	public Item getItem(String itemName)
+	public Item getItem(String itemName) throws Exception
 	{
-		HashMap<String, List<String>> results = DBHelper
-				.queryDb("SELECT * FROM " + database + "." + table
-						+ " WHERE name='" + itemName + "'");
+		DBResults results = DBHelper.queryDb("SELECT * FROM " + database + "."
+				+ table + " WHERE name='" + itemName + "'");
 		Item item = new Item();
 		item.setName(itemName);
-		String attributes = results.get(attributesRow).get(0);
+		results.next();
+		String attributes = results.getString(attributesRow);
 		if(attributes == null)
 		{
 			item.setAttributeNames(new ArrayList<String>());
 		}
 		else
 		{
-			item.setAttributeNames(Arrays.asList(attributes.split(",")));
+			item.setAttributeNames(StringUtils.stringToList(attributes));
 		}
 		return item;
 	}
 
 	@Override
-	public List<String> getItemNames()
+	public List<String> getItemNames() throws Exception
 	{
-		HashMap<String, List<String>> rs = DBHelper
+		DBResults results = DBHelper
 				.queryDb("SELECT name FROM futuretemp.inventory");
-		return rs.get("name");
+		List<String> names = new ArrayList<String>();
+		while(results.next())
+		{
+			names.add(results.getString(nameRow));
+		}
+		return names;
 	}
 
 }
