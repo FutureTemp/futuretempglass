@@ -10,13 +10,13 @@ import java.util.List;
 public class DBResults{
 
 	private List<String> columnNames = new ArrayList<String>();
-	
+
 	private HashMap<String, Integer> columnIndex = new HashMap<String, Integer>();
-	
+
 	private String[][] results;
-	
+
 	private int currentRow = 0;
-	
+
 	public DBResults(ResultSet rs) throws SQLException
 	{
 		ResultSetMetaData metaData = rs.getMetaData();
@@ -26,17 +26,29 @@ public class DBResults{
 			columnNames.add(columnName);
 			columnIndex.put(columnName, i);
 		}
-		results = new String[columnNames.size()][rs.getFetchSize()];
-		while(rs.next())
+		rs.last();
+		int lastRow = rs.getRow();
+		if(lastRow <= 0)
+		{
+			results = null;
+		}
+		else
+		{
+			results = new String[columnNames.size()][rs.getRow()];
+		}
+		rs.beforeFirst();
+		while (rs.next())
 		{
 			for(int i = 0; i < columnNames.size(); i++)
 			{
-				results[i][currentRow++] = rs.getString(i);
+				String string = rs.getString(i + 1);
+				results[i][currentRow] = string;
 			}
+			currentRow++;
 		}
 		currentRow = -1;
 	}
-	
+
 	public List<String> getColumnNames()
 	{
 		return columnNames;
@@ -46,30 +58,43 @@ public class DBResults{
 	{
 		return results[currentRow];
 	}
-	
+
 	public String getString(int colIndex)
 	{
+		if(results == null)
+		{
+			return null;
+		}
 		return results[colIndex][currentRow];
 	}
-	
+
 	public String getString(String colName)
 	{
 		return getString(columnIndex.get(colName));
 	}
-	
+
 	public boolean hasNext()
 	{
-		return results.length < currentRow - 1;
+		if(results == null)
+		{
+			return false;
+		}
+		return results.length > currentRow - 1;
 	}
-	
+
 	public boolean next() throws Exception
 	{
+		boolean more = hasNext();
 		currentRow++;
-		return hasNext();
+		return more;
 	}
-	
+
 	public boolean goToRow(int index)
 	{
+		if(results == null)
+		{
+			return false;
+		}
 		if(index < results.length)
 		{
 			currentRow = index;
