@@ -19,6 +19,10 @@ public class DBResults{
 
 	public DBResults(ResultSet rs) throws SQLException
 	{
+		if(rs == null)
+		{
+			return;
+		}
 		ResultSetMetaData metaData = rs.getMetaData();
 		for(int i = 0; i < metaData.getColumnCount(); i++)
 		{
@@ -34,7 +38,7 @@ public class DBResults{
 		}
 		else
 		{
-			results = new String[columnNames.size()][rs.getRow()];
+			results = new String[rs.getRow()][columnNames.size()];
 		}
 		rs.beforeFirst();
 		while (rs.next())
@@ -42,7 +46,7 @@ public class DBResults{
 			for(int i = 0; i < columnNames.size(); i++)
 			{
 				String string = rs.getString(i + 1);
-				results[i][currentRow] = string;
+				results[currentRow][i] = string;
 			}
 			currentRow++;
 		}
@@ -65,7 +69,7 @@ public class DBResults{
 		{
 			return null;
 		}
-		return results[colIndex][currentRow];
+		return results[currentRow][colIndex];
 	}
 
 	public String getString(String colName)
@@ -101,5 +105,10 @@ public class DBResults{
 			return true;
 		}
 		return false;
+	}
+
+	public String[][] getAllResults()
+	{
+		return results;
 	}
 }
