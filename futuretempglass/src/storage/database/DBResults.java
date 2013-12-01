@@ -83,7 +83,7 @@ public class DBResults{
 		{
 			return false;
 		}
-		return results.length > currentRow - 1;
+		return results[0].length > currentRow - 1;
 	}
 
 	public boolean next() throws Exception
