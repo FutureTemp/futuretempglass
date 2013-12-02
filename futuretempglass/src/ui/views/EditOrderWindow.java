@@ -234,6 +234,7 @@ public class EditOrderWindow extends Window{
 	private void saveThisOrder() throws Exception
 	{
 		order.setOrderNumber(orderNumberField.getText());
+		order.setCustomer(customerField.getText());
 		switch (mode)
 		{
 		case NEW:
