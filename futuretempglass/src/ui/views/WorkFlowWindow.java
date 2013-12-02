@@ -23,7 +23,7 @@ public class WorkFlowWindow extends Window{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final long REFRESH_INTERVAL = 30000; // 5 seconds
+	private static final long REFRESH_INTERVAL = 3000; // 3 seconds
 
 	private JPanel contentPanel;
 
@@ -121,8 +121,8 @@ public class WorkFlowWindow extends Window{
 		{
 			super.processMouseMotionEvent(e);
 			long current = System.currentTimeMillis();
-			if(lastUpdateTime == -1
-					|| current - lastUpdateTime > REFRESH_INTERVAL)
+			if(this.isFocused() && (lastUpdateTime == -1
+					|| current - lastUpdateTime > REFRESH_INTERVAL))
 			{
 				lastUpdateTime = current;
 				refresh();

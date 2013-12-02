@@ -34,6 +34,12 @@ public class EditOrderWindow extends Window{
 
 	private List<Item> items = new ArrayList<Item>();
 
+	private List<Item> newItems = new ArrayList<Item>();
+
+	private List<Item> updateItems = new ArrayList<Item>();
+
+	private List<Item> deletedItems = new ArrayList<Item>();
+
 	private Mode mode;
 
 	private JPanel itemsPanel;
@@ -221,6 +227,14 @@ public class EditOrderWindow extends Window{
 
 	private void deleteItem(Item item)
 	{
+		if(newItems.contains(item))
+		{
+			newItems.remove(item);
+		}
+		else
+		{
+			deletedItems.add(item);
+		}
 		items.remove(item);
 		order.getItemIds().remove(item.getItemId());
 		refresh();
@@ -240,7 +254,7 @@ public class EditOrderWindow extends Window{
 		case NEW:
 			if(Application.getOrderLibrary().addOrder(order))
 			{
-				for(Item item: items)
+				for(Item item: newItems)
 				{
 					item.setOrderNumber(order.getOrderNumber());
 					Application.getItemLibrary().addItem(item);
@@ -248,7 +262,22 @@ public class EditOrderWindow extends Window{
 			}
 			break;
 		case EDIT:
-			Application.getOrderLibrary().updateOrder(order);
+			if(Application.getOrderLibrary().updateOrder(order))
+			{
+				for(Item item: newItems)
+				{
+					item.setOrderNumber(order.getOrderNumber());
+					Application.getItemLibrary().addItem(item);
+				}
+				for(Item item: updateItems)
+				{
+					Application.getItemLibrary().updateItem(item);
+				}
+				for(Item item: deletedItems)
+				{
+					Application.getItemLibrary().deleteItem(item);
+				}
+			}
 			break;
 		}
 		if(getParent() != null)
@@ -275,6 +304,10 @@ public class EditOrderWindow extends Window{
 			{
 				items.remove(i);
 				items.add(i, item);
+				if(!updateItems.contains(item) && !newItems.contains(item))
+				{
+					updateItems.add(item);
+				}
 				exists = true;
 			}
 		}
@@ -285,6 +318,7 @@ public class EditOrderWindow extends Window{
 				item.setItemId(Application.getItemLibrary().getAvailableId());
 			}
 			items.add(item);
+			newItems.add(item);
 			order.getItemIds().add(item.getItemId());
 			item.setOrderNumber(order.getOrderNumber());
 		}

@@ -96,17 +96,18 @@ public class DBItemLibrary extends ItemLibrary{
 	{
 		List<Item> items = new ArrayList<Item>();
 
-		while(results.next())
+		while (results.next())
 		{
 			Item item = new Item();
 			item.setItemId(results.getString(idCol));
 			item.setOrderNumber(results.getString(orderNumCol));
 			item.setName(results.getString(nameCol));
 			item = stringToAttributes(results.getString(attributesCol), item);
-			
+
 			List<ProductionStep> productionSteps = Application
 					.getProductionStepsLibrary().getProductionSteps();
-			List<String> stepsStrings = StringUtils.stringToList(results.getString(productionStepsCol));
+			List<String> stepsStrings = StringUtils.stringToList(results
+					.getString(productionStepsCol));
 			String currentStep = results.getString(currentStepCol);
 			for(ProductionStep step: productionSteps)
 			{
@@ -136,6 +137,7 @@ public class DBItemLibrary extends ItemLibrary{
 				builder.append(", ");
 			}
 			builder.append(attribute + ":" + item.getAttribute(attribute));
+			first = false;
 		}
 		return builder.toString();
 	}
@@ -151,7 +153,10 @@ public class DBItemLibrary extends ItemLibrary{
 		{
 			String[] attributePair = attributeString.split(":");
 			item.getAttributeNames().add(attributePair[0]);
-			item.setAttribute(attributePair[0], attributePair[1]);
+			if(attributePair.length != 1)
+			{
+				item.setAttribute(attributePair[0], attributePair[1]);
+			}
 		}
 		return item;
 	}
@@ -159,8 +164,8 @@ public class DBItemLibrary extends ItemLibrary{
 	@Override
 	public List<Item> getItems(List<String> itemIds) throws Exception
 	{
-		StringBuilder builder = new StringBuilder("SELECT * FROM '" + database
-				+ "'.'" + table + "' WHERE ");
+		StringBuilder builder = new StringBuilder("SELECT * FROM " + database
+				+ "." + table + " WHERE ");
 		boolean first = true;
 		for(String itemId: itemIds)
 		{
@@ -169,11 +174,10 @@ public class DBItemLibrary extends ItemLibrary{
 				builder.append(" OR ");
 			}
 			first = false;
-			builder.append("'" + idCol + "' = '" + itemId + "'");
+			builder.append(idCol + " = '" + itemId + "'");
 		}
 
-		DBResults results = DBHelper.queryDb(builder
-				.toString());
+		DBResults results = DBHelper.queryDb(builder.toString());
 		if(results == null)
 		{
 			return null;

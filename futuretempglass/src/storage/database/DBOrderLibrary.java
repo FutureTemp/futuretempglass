@@ -45,8 +45,13 @@ public class DBOrderLibrary extends OrderLibrary{
 	@Override
 	public boolean updateOrder(Order order)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		String query = "UPDATE " + database + "." + table + " SET "
+				+ orderNumberCol + "=" + order.getOrderNumber() + ", "
+				+ itemIdsCol + "='"
+				+ StringUtils.listToString(order.getItemIds()) + "', "
+				+ customerCol + "='" + order.getCustomer() + "' WHERE "
+				+ orderNumberCol + "='" + order.getOrderNumber() + "';";
+		return DBHelper.writeToDb(query);
 	}
 
 	@Override

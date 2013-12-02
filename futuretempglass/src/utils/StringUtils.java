@@ -65,7 +65,13 @@ public class StringUtils{
 		{
 			return new ArrayList<String>();
 		}
-		return Arrays.asList(string.split(", "));
+		String[] stringArray = string.split(", ");
+		List<String> stringList = new ArrayList<String>();
+		for(String s: stringArray)
+		{
+			stringList.add(s);
+		}
+		return stringList;
 	}
 	
 	public static boolean isEmpty(String string)
