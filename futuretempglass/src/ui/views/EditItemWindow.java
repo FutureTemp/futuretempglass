@@ -75,10 +75,22 @@ public class EditItemWindow extends Window implements MouseListener{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 208, 0 };
-		gbl_contentPane.rowHeights = new int[] { 300, -66 };
-		gbl_contentPane.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 1.0, 1.0 };
+		gbl_contentPane.columnWidths = new int[] {
+				208,
+				0
+		};
+		gbl_contentPane.rowHeights = new int[] {
+				300,
+				-66
+		};
+		gbl_contentPane.columnWeights = new double[] {
+				1.0,
+				Double.MIN_VALUE
+		};
+		gbl_contentPane.rowWeights = new double[] {
+				1.0,
+				1.0
+		};
 		contentPane.setLayout(gbl_contentPane);
 
 		JPanel panel = new JPanel();
@@ -106,9 +118,10 @@ public class EditItemWindow extends Window implements MouseListener{
 
 		JPanel scrollPaneContent = new JPanel();
 		scrollPane.setViewportView(scrollPaneContent);
-		scrollPaneContent.setLayout(new FormLayout(
-				new ColumnSpec[] { FormFactory.RELATED_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC, }, rowSpec));
+		scrollPaneContent.setLayout(new FormLayout(new ColumnSpec[] {
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
+		}, rowSpec));
 		int i = 2;
 		for(InputQuestion inputQuestion: attributeQuestions)
 		{
@@ -151,28 +164,36 @@ public class EditItemWindow extends Window implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if(e.getSource().equals(cancelButton))
+		try
 		{
-			dispose();
-		}
-		else if(e.getSource().equals(doneButton))
-		{
-			for(InputQuestion question: attributeQuestions)
+			if(e.getSource().equals(cancelButton))
 			{
-				item.setAttribute(question.getField(), question.getValue());
+				dispose();
 			}
-			getParent().sendData(this, item);
-			dispose();
-		}
-		else if(e.getSource().equals(editStepsButton))
-		{
-			if(productionStepsSelectWindow != null)
+			else if(e.getSource().equals(doneButton))
 			{
-				productionStepsSelectWindow.dispose();
-				productionStepsSelectWindow = null;
+				for(InputQuestion question: attributeQuestions)
+				{
+					item.setAttribute(question.getField(), question.getValue());
+				}
+				getParent().sendData(this, item);
+				dispose();
 			}
-			productionStepsSelectWindow = new ProductionStepsSelectWindow(this,
-					item.getProductionSteps());
+			else if(e.getSource().equals(editStepsButton))
+			{
+				if(productionStepsSelectWindow != null)
+				{
+					productionStepsSelectWindow.dispose();
+					productionStepsSelectWindow = null;
+				}
+				productionStepsSelectWindow = new ProductionStepsSelectWindow(
+						this, item.getProductionSteps());
+			}
+		}
+		catch(Exception e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 

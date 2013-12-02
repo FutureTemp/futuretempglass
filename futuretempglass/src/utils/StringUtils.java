@@ -1,13 +1,14 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class StringUtils{
 
 	public static char getRandomLetterOrNumber()
 	{
-		int randomNum = (int)(Math.random() * 62)+1;
+		int randomNum = (int)(Math.random() * 62) + 1;
 		if(randomNum > 36)
 		{
 			randomNum += 60;
@@ -24,7 +25,7 @@ public class StringUtils{
 		// 10+26+26
 	}
 
-	public static String getRandomeStringOfLettersAndNumbers(int length)
+	public static String getRandomStringOfLettersAndNumbers(int length)
 	{
 		String random = "";
 		for(int i = 0; i < length; i++)
@@ -34,20 +35,70 @@ public class StringUtils{
 		return random;
 	}
 	
+	public static String listToString(List<?> list)
+	{
+		if(list == null)
+		{
+			return null;
+		}
+		StringBuilder builder = new StringBuilder();
+		boolean first = true;
+		for(Object object: list)
+		{
+			if(!first)
+			{
+				builder.append(", ");
+			}
+			first = false;
+			builder.append(object.toString());
+		}
+		return builder.toString();
+	}
+	
+	public static List<String> stringToList(String string)
+	{
+		if(string == null)
+		{
+			return null;
+		}
+		if(string == "")
+		{
+			return new ArrayList<String>();
+		}
+		String[] stringArray = string.split(", ");
+		List<String> stringList = new ArrayList<String>();
+		for(String s: stringArray)
+		{
+			stringList.add(s);
+		}
+		return stringList;
+	}
+	
+	public static boolean isEmpty(String string)
+	{
+		if(string == null)
+		{
+			return true;
+		}
+		return "".equals(string.trim());
+	}
+
 	public static void main(String args[])
 	{
+		long startTime = System.currentTimeMillis();
 		List<String> strings = new ArrayList<String>();
-		while(true)
+		while (true)
 		{
-			String string = getRandomeStringOfLettersAndNumbers(8);
+			String string = getRandomStringOfLettersAndNumbers(8);
 			if(strings.contains(string))
 			{
 				break;
 			}
-			//System.out.println(string);
+			System.out.println(string);
 			strings.add(string);
 		}
 		System.out.println(strings.size());
+		System.out.println((System.currentTimeMillis() - startTime)/1000);
 	}
 
 }

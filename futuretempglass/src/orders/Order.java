@@ -1,7 +1,5 @@
 package orders;
 
-import items.Item;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -13,7 +11,7 @@ public class Order{
 
 	private Calendar dueDate;
 
-	private List<Item> items;
+	private List<String> itemIds;
 
 	private boolean rush;
 
@@ -27,14 +25,14 @@ public class Order{
 		this.orderNumber = orderNumber;
 	}
 
-	public List<Item> getItems()
+	public List<String> getItemIds()
 	{
-		return items;
+		return itemIds;
 	}
 
-	public void setItems(List<Item> items)
+	public void setItemIds(List<String> itemIds)
 	{
-		this.items = items;
+		this.itemIds = itemIds;
 	}
 
 	public boolean isRush()

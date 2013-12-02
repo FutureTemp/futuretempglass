@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -20,6 +21,11 @@ import core.Application;
 
 public class OrderSearchWindow extends Window{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private JPanel contentPane;
 
 	private JButton newOrderButton;
@@ -27,20 +33,21 @@ public class OrderSearchWindow extends Window{
 	private JButton editOrderButton;
 
 	private JButton viewOrderButton;
-	
+
 	private JButton deleteOrderButton;
-	
+
 	private JList<Object> orderList;
 
-	public OrderSearchWindow()
+	public OrderSearchWindow() throws Exception
 	{
 		this(null);
 	}
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public OrderSearchWindow(Window parentWindow)
+	public OrderSearchWindow(Window parentWindow) throws Exception
 	{
 		super(parentWindow);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,17 +55,31 @@ public class OrderSearchWindow extends Window{
 	}
 
 	@Override
-	public void refresh()
+	public void refresh() throws Exception
 	{
 		setBounds(100, 100, 203, 393);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 0, 0 };
-		gbl_contentPane.rowHeights = new int[] { 0, 0, 0 };
-		gbl_contentPane.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 0.2, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.columnWidths = new int[] {
+				0,
+				0
+		};
+		gbl_contentPane.rowHeights = new int[] {
+				0,
+				0,
+				0
+		};
+		gbl_contentPane.columnWeights = new double[] {
+				1.0,
+				Double.MIN_VALUE
+		};
+		gbl_contentPane.rowWeights = new double[] {
+				0.2,
+				1.0,
+				Double.MIN_VALUE
+		};
 		contentPane.setLayout(gbl_contentPane);
 
 		JPanel mainPane = new JPanel();
@@ -69,11 +90,28 @@ public class OrderSearchWindow extends Window{
 		gbc_mainPane.gridy = 0;
 		contentPane.add(mainPane, gbc_mainPane);
 		GridBagLayout gbl_mainPane = new GridBagLayout();
-		gbl_mainPane.columnWidths = new int[] { 0, 0 };
-		gbl_mainPane.rowHeights = new int[] { 0, 0, 0, 0, 0};
-		gbl_mainPane.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
-		gbl_mainPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
-				Double.MIN_VALUE };
+		gbl_mainPane.columnWidths = new int[] {
+				0,
+				0
+		};
+		gbl_mainPane.rowHeights = new int[] {
+				0,
+				0,
+				0,
+				0,
+				0
+		};
+		gbl_mainPane.columnWeights = new double[] {
+				0.0,
+				Double.MIN_VALUE
+		};
+		gbl_mainPane.rowWeights = new double[] {
+				0.0,
+				0.0,
+				0.0,
+				0.0,
+				Double.MIN_VALUE
+		};
 		mainPane.setLayout(gbl_mainPane);
 
 		newOrderButton = new JButton("New Order");
@@ -98,7 +136,7 @@ public class OrderSearchWindow extends Window{
 		gbc_viewOrderButton.gridx = 0;
 		gbc_viewOrderButton.gridy = 2;
 		mainPane.add(viewOrderButton, gbc_viewOrderButton);
-		
+
 		deleteOrderButton = new JButton("Delete Order");
 		deleteOrderButton.addMouseListener(this);
 		GridBagConstraints gbc_deleteOrderButton = new GridBagConstraints();
@@ -115,6 +153,10 @@ public class OrderSearchWindow extends Window{
 
 		List<String> orderNumbers = Application.getOrderLibrary()
 				.getOrderNumbers();
+		if(orderNumbers == null)
+		{
+			orderNumbers = new ArrayList<String>();
+		}
 		orderList = new JList<Object>(orderNumbers.toArray());
 		orderList.addMouseListener(this);
 		orderList.addKeyListener(this);
@@ -122,17 +164,18 @@ public class OrderSearchWindow extends Window{
 		setVisible(true);
 		repaint();
 	}
-	
-	private void editSelectedOrders()
+
+	private void editSelectedOrders() throws Exception
 	{
 		for(Object orderNumber: orderList.getSelectedValuesList())
 		{
-			Order order = Application.getOrderLibrary().getOrder((String)orderNumber);
+			Order order = Application.getOrderLibrary().getOrder(
+					(String)orderNumber);
 			new EditOrderWindow(order, Mode.EDIT, this);
 		}
 	}
-	
-	private void deleteSelectedOrders()
+
+	private void deleteSelectedOrders() throws Exception
 	{
 		for(Object orderNumber: orderList.getSelectedValuesList())
 		{
@@ -140,39 +183,55 @@ public class OrderSearchWindow extends Window{
 			refresh();
 		}
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if(e.getSource().equals(newOrderButton))
+		try
 		{
-			new EditOrderWindow(null, Mode.NEW, this);
+			if(e.getSource().equals(newOrderButton))
+			{
+				new EditOrderWindow(null, Mode.NEW, this);
+			}
+			else if(e.getSource().equals(editOrderButton))
+			{
+				editSelectedOrders();
+			}
+			else if(e.getSource().equals(deleteOrderButton))
+			{
+				deleteSelectedOrders();
+			}
+			else if(e.getSource().equals(orderList) && e.getClickCount() == 2)
+			{
+				editSelectedOrders();
+			}
 		}
-		else if(e.getSource().equals(editOrderButton))
+		catch(Exception e1)
 		{
-			editSelectedOrders();
-		}
-		else if(e.getSource().equals(deleteOrderButton))
-		{
-			deleteSelectedOrders();
-		}
-		else if(e.getSource().equals(orderList) && e.getClickCount() == 2)
-		{
-			editSelectedOrders();
+			// TODO
+			e1.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		switch(e.getKeyCode())
+		try
 		{
-		case KeyEvent.VK_DELETE:
-			deleteSelectedOrders();
-			break;
-		case KeyEvent.VK_ENTER:
-			editSelectedOrders();
-			break;
+			switch (e.getKeyCode())
+			{
+			case KeyEvent.VK_DELETE:
+				deleteSelectedOrders();
+				break;
+			case KeyEvent.VK_ENTER:
+				editSelectedOrders();
+				break;
+			}
+		}
+		catch(Exception e1)
+		{
+			// TODO
+			e1.printStackTrace();
 		}
 	}
 

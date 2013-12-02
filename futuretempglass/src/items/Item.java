@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import orders.Order;
 import workflow.ProductionStep;
 
 public class Item implements Serializable{
@@ -15,7 +14,7 @@ public class Item implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Order order;
+	private String orderNumber;
 
 	private String id;
 
@@ -38,9 +37,9 @@ public class Item implements Serializable{
 		this(null);
 	}
 
-	public Item(Order order)
+	public Item(String orderId)
 	{
-		this.setOrder(order);
+		this.setOrderNumber(orderId);
 		attributeNames = new ArrayList<String>();
 		attributes = new Hashtable<String, Object>();
 	}
@@ -80,6 +79,11 @@ public class Item implements Serializable{
 		this.productionSteps = productionSteps;
 	}
 
+	public void setCurrentStep(ProductionStep step)
+	{
+		this.currentStep = step;
+	}
+	
 	public List<String> getAttributeNames()
 	{
 		return attributeNames;
@@ -104,50 +108,24 @@ public class Item implements Serializable{
 		}
 	}
 
-	public Order getOrder()
+	public String getOrderNumber()
 	{
-		return order;
+		return orderNumber;
 	}
 
-	public void setOrder(Order order)
+	public void setOrderNumber(String orderId)
 	{
-		this.order = order;
+		this.orderNumber = orderId;
 	}
 
 	public void startStep(ProductionStep step) throws Exception
 	{
-		if(!productionSteps.contains(step))
-		{
-			throw new Exception("This item does not call for " + step.getName());
-		}
-		if(doneSteps.contains(step))
-		{
-			throw new Exception(step.getName() + " has already been completed");
-		}
-		if(currentStep != null)
-		{
-			throw new Exception(currentStep + " is already in progress");
-		}
-		List<ProductionStep> notDoneSteps = new ArrayList<ProductionStep>();
-		for(ProductionStep dependency: step.getDependencies())
-		{
-			if(!doneSteps.contains(dependency))
-			{
-				notDoneSteps.add(dependency);
-			}
-		}
-		if(notDoneSteps.size() != 0)
-		{
-			throw new Exception("Cannot start " + step + ", before completing "
-					+ doneSteps);
-		}
-		currentStep = step;
+		//TODO
 	}
 
 	public void finishCurrentStep()
 	{
 		doneSteps.add(currentStep);
-		currentStep = null;
 	}
 
 	public boolean isDone(ProductionStep step)
@@ -157,6 +135,14 @@ public class Item implements Serializable{
 
 	public ProductionStep getCurrentStep()
 	{
+		if(currentStep == null)
+		{
+			if(getProductionSteps() == null || getProductionSteps().size() == 0)
+			{
+				return null;
+			}
+			currentStep = getProductionSteps().get(0);
+		}
 		return currentStep;
 	}
 

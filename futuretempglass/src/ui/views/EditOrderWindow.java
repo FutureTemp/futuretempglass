@@ -3,7 +3,6 @@ package ui.views;
 import items.Item;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +32,14 @@ public class EditOrderWindow extends Window{
 
 	private Order order;
 
+	private List<Item> items = new ArrayList<Item>();
+
+	private List<Item> newItems = new ArrayList<Item>();
+
+	private List<Item> updateItems = new ArrayList<Item>();
+
+	private List<Item> deletedItems = new ArrayList<Item>();
+
 	private Mode mode;
 
 	private JPanel itemsPanel;
@@ -46,17 +53,20 @@ public class EditOrderWindow extends Window{
 	private JTextField dueDateField;
 	private JButton btnDone;
 
-	private List<ItemOrderComponent> items;
+	private List<ItemOrderComponent> itemComponents;
 
-	public EditOrderWindow(Window parentWindow)
+	public EditOrderWindow(Window parentWindow) throws Exception
 	{
 		this(null, Mode.NEW, parentWindow);
 	}
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @throws Exception
 	 */
 	public EditOrderWindow(Order order, Mode mode, Window parentWindow)
+			throws Exception
 	{
 		super(parentWindow);
 		this.mode = mode;
@@ -66,15 +76,16 @@ public class EditOrderWindow extends Window{
 			order = new Order();
 		}
 		this.order = order;
-		if(order.getItems() == null)
+		if(order.getItemIds() == null)
 		{
-			order.setItems(new ArrayList<Item>());
+			order.setItemIds(new ArrayList<String>());
 		}
 
 		switch (mode)
 		{
 		case EDIT:
 			setTitle("Edit Order " + order.getOrderNumber());
+			items = Application.getItemLibrary().getItems(order.getItemIds());
 			break;
 		case NEW:
 			setTitle("Order Entry");
@@ -115,12 +126,14 @@ public class EditOrderWindow extends Window{
 		informationPane.add(orderNumberField, "4, 2, fill, default");
 		orderNumberField.setColumns(10);
 
-		if(mode == Mode.NEW && Application.getOrderLibrary().isSequentialOrderNumbersUsed())
+		if(mode == Mode.NEW
+				&& Application.getOrderLibrary().isSequentialOrderNumbersUsed())
 		{
-			order.setOrderNumber(Application.getOrderLibrary().getNextOrderNumber());
+			order.setOrderNumber(Application.getOrderLibrary()
+					.getNextOrderNumber());
 		}
 		orderNumberField.setText(order.getOrderNumber());
-		
+
 		customerLabel = new JLabel("Customer: ");
 		informationPane.add(customerLabel, "2, 4, right, default");
 
@@ -180,7 +193,7 @@ public class EditOrderWindow extends Window{
 	{
 		// removeAll();
 		// setContentPane(new JPanel());
-		RowSpec[] rowSpec = new RowSpec[order.getItems().size() * 2];
+		RowSpec[] rowSpec = new RowSpec[items.size() * 2];
 		for(int i = 0; i < rowSpec.length; i++)
 		{
 			rowSpec[i++] = FormFactory.RELATED_GAP_ROWSPEC;
@@ -191,21 +204,21 @@ public class EditOrderWindow extends Window{
 				FormFactory.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("default:grow"), }, rowSpec));
 
-		if(items != null)
+		if(itemComponents != null)
 		{
-			for(ItemOrderComponent item: items)
+			for(ItemOrderComponent item: itemComponents)
 			{
 				item.removeAll();
 			}
-			items.clear();
+			itemComponents.clear();
 		}
-		items = new ArrayList<ItemOrderComponent>();
-		for(int i = 0; i < order.getItems().size(); i++)
+		itemComponents = new ArrayList<ItemOrderComponent>();
+		for(int i = 0; i < items.size(); i++)
 		{
-			ItemOrderComponent itemComponent = new ItemOrderComponent(order
-					.getItems().get(i), this);
+			ItemOrderComponent itemComponent = new ItemOrderComponent(
+					items.get(i), this);
 			itemsPanel.add(itemComponent, "2, " + (i + 1) * 2 + ", fill, fill");
-			items.add(itemComponent);
+			itemComponents.add(itemComponent);
 		}
 		repaint();
 		setVisible(true);
@@ -214,7 +227,16 @@ public class EditOrderWindow extends Window{
 
 	private void deleteItem(Item item)
 	{
-		order.getItems().remove(item);
+		if(newItems.contains(item))
+		{
+			newItems.remove(item);
+		}
+		else
+		{
+			deletedItems.add(item);
+		}
+		items.remove(item);
+		order.getItemIds().remove(item.getItemId());
 		refresh();
 	}
 
@@ -223,16 +245,39 @@ public class EditOrderWindow extends Window{
 		new EditItemWindow(this, item, Mode.EDIT);
 	}
 
-	private void saveThisOrder()
+	private void saveThisOrder() throws Exception
 	{
 		order.setOrderNumber(orderNumberField.getText());
-		switch(mode)
+		order.setCustomer(customerField.getText());
+		switch (mode)
 		{
 		case NEW:
-			Application.getOrderLibrary().addOrder(order);
+			if(Application.getOrderLibrary().addOrder(order))
+			{
+				for(Item item: newItems)
+				{
+					item.setOrderNumber(order.getOrderNumber());
+					Application.getItemLibrary().addItem(item);
+				}
+			}
 			break;
 		case EDIT:
-			Application.getOrderLibrary().updateOrder(order);
+			if(Application.getOrderLibrary().updateOrder(order))
+			{
+				for(Item item: newItems)
+				{
+					item.setOrderNumber(order.getOrderNumber());
+					Application.getItemLibrary().addItem(item);
+				}
+				for(Item item: updateItems)
+				{
+					Application.getItemLibrary().updateItem(item);
+				}
+				for(Item item: deletedItems)
+				{
+					Application.getItemLibrary().deleteItem(item);
+				}
+			}
 			break;
 		}
 		if(getParent() != null)
@@ -241,7 +286,7 @@ public class EditOrderWindow extends Window{
 		}
 	}
 
-	private void openItemWindows(List<String> itemNames)
+	private void openItemWindows(List<String> itemNames) throws Exception
 	{
 		for(String itemName: itemNames)
 		{
@@ -253,29 +298,36 @@ public class EditOrderWindow extends Window{
 	private void addOrUpdateItem(Item item)
 	{
 		boolean exists = false;
-		for(int i = 0; i < order.getItems().size(); i++)
+		for(int i = 0; i < items.size(); i++)
 		{
-			if(order.getItems().get(i).equals(item))
+			if(items.get(i).equals(item))
 			{
-				order.getItems().remove(i);
-				order.getItems().add(i, item);
+				items.remove(i);
+				items.add(i, item);
+				if(!updateItems.contains(item) && !newItems.contains(item))
+				{
+					updateItems.add(item);
+				}
 				exists = true;
 			}
 		}
 		if(!exists)
 		{
-			order.getItems().add(item);
-			item.setOrder(order);
-		}
-		if(item.getItemId() == null)
-		{
-			item.setItemId(Application.getItemLibrary().getAvailableId());
+			if(item.getItemId() == null)
+			{
+				item.setItemId(Application.getItemLibrary().getAvailableId());
+			}
+			items.add(item);
+			newItems.add(item);
+			order.getItemIds().add(item.getItemId());
+			item.setOrderNumber(order.getOrderNumber());
 		}
 		refresh();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void sendData(Window source, Object object)
+	public void sendData(Window source, Object object) throws Exception
 	{
 		super.sendData(source, object);
 		if(source.equals(itemListWindow))
@@ -291,29 +343,37 @@ public class EditOrderWindow extends Window{
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if(e.getSource().equals(addItemButton))
+		try
 		{
-			itemListWindow = new ItemListWindow(this);
-		}
-		else if(e.getSource().equals(btnDone))
-		{
-			saveThisOrder();
-			dispose();
-		}
-
-		for(ItemOrderComponent item: items)
-		{
-			if(e.getSource() == item.getEditButton())
+			if(e.getSource().equals(addItemButton))
 			{
-				editItem(item.getItem());
+				itemListWindow = new ItemListWindow(this);
 			}
-			else if(e.getSource() == item.getDeleteButton())
+			else if(e.getSource().equals(btnDone))
 			{
-				deleteItem(item.getItem());
-				return;
+				saveThisOrder();
+				dispose();
 			}
-		}
 
+			for(ItemOrderComponent item: itemComponents)
+			{
+				if(e.getSource() == item.getEditButton())
+				{
+					editItem(item.getItem());
+				}
+				else if(e.getSource() == item.getDeleteButton())
+				{
+					deleteItem(item.getItem());
+					return;
+				}
+			}
+
+		}
+		catch(Exception e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	@Override

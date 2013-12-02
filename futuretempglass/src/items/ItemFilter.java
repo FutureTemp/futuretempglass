@@ -10,6 +10,8 @@ public class ItemFilter{
 	private ItemFilterType filterType;
 
 	private String itemName;
+	
+	private String orderNumber;
 
 	private List<String> attributeNames;
 
@@ -61,7 +63,11 @@ public class ItemFilter{
 				}
 			}
 			return true;
+		case ORDER_NUMBER:
+			//TODO
+			break;
 		}
+			
 		return false;
 	}
 
@@ -170,10 +176,27 @@ public class ItemFilter{
 		this.productionSteps = productionSteps;
 	}
 
+	/**
+	 * @return the orderNumber
+	 */
+	public String getOrderNumber()
+	{
+		return orderNumber;
+	}
+
+	/**
+	 * @param orderNumber the orderNumber to set
+	 */
+	public void setOrderNumber(String orderNumber)
+	{
+		this.orderNumber = orderNumber;
+	}
+
 	public static enum ItemFilterType{
 		ITEM_NAME,
 		ATTRIBUTE,
-		PRODUCTION_STEP
+		PRODUCTION_STEP,
+		ORDER_NUMBER
 
 	}
 

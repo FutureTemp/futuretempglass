@@ -27,21 +27,8 @@ public class WorkFlowXml{
 		{
 			ProductionStep step = new ProductionStep();
 			step.setName(stepXml.name);
+			step.setDependencies(stepXml.dependcies);
 			steps.add(step);
-		}
-		
-		for(int i = 0; i < steps.size(); i++)
-		{
-			for(String dependency: workFlow.productionSteps.get(i).dependcies)
-			{
-				for(ProductionStep step: steps)
-				{
-					if(step.getName().equalsIgnoreCase(dependency))
-					{
-						steps.get(i).addDependency(step);
-					}
-				}
-			}
 		}
 		
 		return steps;

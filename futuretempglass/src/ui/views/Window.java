@@ -4,11 +4,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-public abstract class Window extends JFrame implements MouseListener, KeyListener{
+public abstract class Window extends JFrame implements MouseListener, KeyListener, MouseMotionListener{
 	
 	private Window parentWindow;
 	
@@ -22,12 +23,12 @@ public abstract class Window extends JFrame implements MouseListener, KeyListene
 		return parentWindow;
 	}
 	
-	public void sendData(Window source, Object object)
+	public void sendData(Window source, Object object) throws Exception
 	{
 		
 	}
 	
-	public void refresh()
+	public void refresh() throws Exception
 	{
 		
 	}
@@ -83,6 +84,20 @@ public abstract class Window extends JFrame implements MouseListener, KeyListene
 
 	@Override
 	public void keyTyped(KeyEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e)
 	{
 		// TODO Auto-generated method stub
 		

@@ -88,11 +88,12 @@ public class OrderFilter{
 			return customer.equals(order.getCustomer());
 		case ORDER_NUMBER:
 			return orderNumber.equals(order.getOrderNumber());
+		default:
+			return false;
 		}
-		return false;
 	}
 	
-	private static enum OrderFilterEnum{
+	public static enum OrderFilterEnum{
 
 		PRODUCTION_STEP,
 		PRODUCTION_STEPS,

@@ -1,8 +1,9 @@
-import storage.server.ServerInventoryLibrary;
-import storage.server.ServerItemLibrary;
-import storage.server.ServerOrderLibrary;
-import storage.server.ServerProductionStepsLibrary;
+import storage.database.DBInventoryLibrary;
+import storage.database.DBItemLibrary;
+import storage.database.DBOrderLibrary;
+import storage.database.DBProductionStepsLibrary;
 import ui.views.OrderSearchWindow;
+import ui.views.WorkFlowWindow;
 import core.Application;
 
 public class LocalClient{
@@ -13,11 +14,12 @@ public class LocalClient{
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		Application.orderLibrary = new ServerOrderLibrary();
-		Application.itemLibrary = new ServerItemLibrary();
-		Application.productionStepsLibrary = new ServerProductionStepsLibrary();
-		Application.inventoryLibrary = new ServerInventoryLibrary();
+		Application.orderLibrary = new DBOrderLibrary();
+		Application.itemLibrary = new DBItemLibrary();
+		Application.productionStepsLibrary = new DBProductionStepsLibrary();
+		Application.inventoryLibrary = new DBInventoryLibrary();
 
+		new WorkFlowWindow(null);
 		new OrderSearchWindow();
 	}
 

@@ -18,8 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
-import storage.server.ServerItemLibrary;
-import storage.server.ServerProductionStepsLibrary;
 import ui.views.Window;
 
 import com.jgoodies.forms.factories.FormFactory;
@@ -275,10 +273,10 @@ class Server extends Window implements MouseListener{
 	}
 
 	public static void main(String[] args)
-	{
+	{/*
 		Application.itemLibrary = new ServerItemLibrary();
 		Application.productionStepsLibrary = new ServerProductionStepsLibrary();
-
+*/
 		new Server();
 
 		return;

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import storage.ItemLibrary;
+import utils.StringUtils;
 
 import com.sun.istack.internal.NotNull;
 
@@ -27,15 +28,7 @@ public class ServerItemLibrary extends ItemLibrary{
 
 	public void init()
 	{
-		// TODO implement
-		items = new HashMap<String, Item>();
-		itemList = new ArrayList<Item>();
-	}
-
-	private boolean save()
-	{
-		// TODO implement
-		return false;
+		//TODO
 	}
 
 	@Override
@@ -57,11 +50,17 @@ public class ServerItemLibrary extends ItemLibrary{
 		{
 			return false;
 		}
-		if(item.getItemId() == null)
+		if(StringUtils.isEmpty(item.getItemId()))
 		{
-			item.setItemId(getAvailableId());
+			item.setItemId(StringUtils.getRandomStringOfLettersAndNumbers(8));
 		}
-		return updateItem(item);
+		if(items.get(item.getItemId()) == null)
+		{
+			items.put(item.getItemId(), item);
+			itemList.add(item);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -71,9 +70,16 @@ public class ServerItemLibrary extends ItemLibrary{
 		{
 			return false;
 		}
+
+		if(items.get(item.getItemId()) == null)
+		{
+			return false;
+		}
+		
 		items.put(item.getItemId(), item);
 		itemList.add(item);
-		return save();
+		
+		return true;
 	}
 
 	@Override
@@ -86,7 +92,7 @@ public class ServerItemLibrary extends ItemLibrary{
 		}
 		items.remove(item.getItemId());
 		itemList.remove(item);
-		return save();
+		return false;
 	}
 
 	@Override
@@ -98,12 +104,19 @@ public class ServerItemLibrary extends ItemLibrary{
 			return false;
 		}
 		itemList.remove(items.remove(itemId));
-		return save();
+		return true;
 	}
 
 	@Override
 	public List<Item> getItemsWithFilter(ItemFilter filter)
 	{
 		return filter.filter(new ArrayList<Item>(itemList));
+	}
+
+	@Override
+	public List<Item> getItems(List<String> itemIds)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

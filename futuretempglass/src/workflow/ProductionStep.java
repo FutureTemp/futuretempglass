@@ -7,7 +7,7 @@ public class ProductionStep{
 
 	private String name;
 
-	private List<ProductionStep> dependencies = new ArrayList<ProductionStep>();
+	private List<String> dependencies = new ArrayList<String>();
 
 	public String getName()
 	{
@@ -19,7 +19,7 @@ public class ProductionStep{
 		this.name = name;
 	}
 
-	public void addDependency(ProductionStep dependency)
+	public void addDependency(String dependency)
 	{
 		dependencies.add(dependency);
 	}
@@ -44,8 +44,13 @@ public class ProductionStep{
 		return getName();
 	}
 
-	public List<ProductionStep> getDependencies()
+	public List<String> getDependencies()
 	{
 		return dependencies;
+	}
+	
+	public void setDependencies(List<String> dependencies)
+	{
+		this.dependencies = dependencies;
 	}
 }

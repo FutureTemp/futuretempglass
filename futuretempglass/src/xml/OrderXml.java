@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import orders.Order;
 import storage.JAXBHelper;
+import core.Application;
 
 @XmlRootElement(name = "order")
 public class OrderXml{
@@ -28,10 +29,10 @@ public class OrderXml{
 		
 	}
 	
-	public OrderXml(Order order)
+	public OrderXml(Order order) throws Exception
 	{
 		this.orderNumber = order.getOrderNumber();
-		for(Item item: order.getItems())
+		for(Item item: Application.getItemLibrary().getItems(order.getItemIds()))
 		{
 			items.add(new ItemXml(item));
 		}
@@ -53,14 +54,14 @@ public class OrderXml{
 	{
 		Order order = new Order();
 		order.setOrderNumber(orderNumber);
-		List<Item> items = new ArrayList<Item>();
+		List<String> itemIds = new ArrayList<String>();
 		for(ItemXml itemXml: this.items)
 		{
 			Item item = itemXml.getItem();
-			item.setOrder(order);
-			items.add(item);
+			item.setOrderNumber(order.getOrderNumber());
+			itemIds.add(item.getItemId());
 		}
-		order.setItems(items);
+		order.setItemIds(itemIds);
 		return order;
 	}
 }

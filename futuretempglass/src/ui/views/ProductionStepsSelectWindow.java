@@ -19,6 +19,11 @@ import workflow.ProductionStep;
 
 public class ProductionStepsSelectWindow extends Window{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private JPanel contentPane;
 
 	private List<ProductionStep> productionSteps;
@@ -29,16 +34,18 @@ public class ProductionStepsSelectWindow extends Window{
 
 	private List<JCheckBox> stepCheckBoxes;
 
-	public ProductionStepsSelectWindow(Window parentWindow)
+	public ProductionStepsSelectWindow(Window parentWindow) throws Exception
 	{
 		this(parentWindow, new ArrayList<ProductionStep>());
 	}
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @throws Exception
 	 */
 	public ProductionStepsSelectWindow(Window parentWindow,
-			List<ProductionStep> itemSteps)
+			List<ProductionStep> itemSteps) throws Exception
 	{
 		super(parentWindow);
 		if(itemSteps == null)
@@ -54,10 +61,24 @@ public class ProductionStepsSelectWindow extends Window{
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 0, 0 };
-		gbl_contentPane.rowHeights = new int[] { 0, 0, 0 };
-		gbl_contentPane.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.columnWidths = new int[] {
+				0,
+				0
+		};
+		gbl_contentPane.rowHeights = new int[] {
+				0,
+				0,
+				0
+		};
+		gbl_contentPane.columnWeights = new double[] {
+				1.0,
+				Double.MIN_VALUE
+		};
+		gbl_contentPane.rowWeights = new double[] {
+				1.0,
+				1.0,
+				Double.MIN_VALUE
+		};
 		contentPane.setLayout(gbl_contentPane);
 
 		JPanel productionStepsPanel = new JPanel();
@@ -80,10 +101,15 @@ public class ProductionStepsSelectWindow extends Window{
 		rowHeights[productionSteps.size()] = 0;
 		rowWeights[productionSteps.size()] = Double.MIN_VALUE;
 
-		gbl_productionStepsPanel.columnWidths = new int[] { 0, 0 };
+		gbl_productionStepsPanel.columnWidths = new int[] {
+				0,
+				0
+		};
 		gbl_productionStepsPanel.rowHeights = rowHeights;
-		gbl_productionStepsPanel.columnWeights = new double[] { 0.0,
-				Double.MIN_VALUE };
+		gbl_productionStepsPanel.columnWeights = new double[] {
+				0.0,
+				Double.MIN_VALUE
+		};
 		gbl_productionStepsPanel.rowWeights = rowWeights;
 		productionStepsPanel.setLayout(gbl_productionStepsPanel);
 
@@ -148,14 +174,22 @@ public class ProductionStepsSelectWindow extends Window{
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		if(e.getSource().equals(doneButton))
+		try
 		{
-			getParent().sendData(this, getSelectedProductionSteps());
-			dispose();
+			if(e.getSource().equals(doneButton))
+			{
+				getParent().sendData(this, getSelectedProductionSteps());
+				dispose();
+			}
+			else if(e.getSource().equals(cancelButton))
+			{
+				dispose();
+			}
 		}
-		else if(e.getSource().equals(cancelButton))
+		catch(Exception e1)
 		{
-			dispose();
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 }
