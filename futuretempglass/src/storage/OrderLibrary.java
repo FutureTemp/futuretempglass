@@ -7,7 +7,7 @@ import orders.OrderFilter;
 
 public abstract class OrderLibrary{
 
-	public abstract Order getOrder(String orderId);
+	public abstract Order getOrder(String orderId) throws Exception;
 
 	public abstract boolean addOrder(Order order) throws Exception;
 
@@ -17,9 +17,9 @@ public abstract class OrderLibrary{
 	
 	public abstract boolean deleteOrder(String orderId) throws Exception;
 
-	public abstract List<Order> getOrders();
+	public abstract List<Order> getOrders() throws Exception;
 	
-	public abstract List<String> getOrderNumbers();
+	public abstract List<String> getOrderNumbers() throws Exception;
 
 	public abstract String getNextOrderNumber();
 	

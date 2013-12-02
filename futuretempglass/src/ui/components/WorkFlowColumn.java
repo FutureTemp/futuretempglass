@@ -32,8 +32,9 @@ public class WorkFlowColumn extends Component{
 	
 	/**
 	 * Create the panel.
+	 * @throws Exception 
 	 */
-	public WorkFlowColumn(ProductionStep productionStep, List<Item> items, Window parentWindow)
+	public WorkFlowColumn(ProductionStep productionStep, List<Item> items, Window parentWindow) throws Exception
 	{
 		super(parentWindow);
 

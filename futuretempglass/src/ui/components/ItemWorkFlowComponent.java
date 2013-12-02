@@ -25,8 +25,9 @@ public class ItemWorkFlowComponent extends Component{
 
 	/**
 	 * Create the panel.
+	 * @throws Exception 
 	 */
-	public ItemWorkFlowComponent(Item item, Window parentWindow)
+	public ItemWorkFlowComponent(Item item, Window parentWindow) throws Exception
 	{
 		super(parentWindow);
 

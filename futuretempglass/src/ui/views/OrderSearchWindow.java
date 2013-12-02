@@ -38,15 +38,16 @@ public class OrderSearchWindow extends Window{
 
 	private JList<Object> orderList;
 
-	public OrderSearchWindow()
+	public OrderSearchWindow() throws Exception
 	{
 		this(null);
 	}
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public OrderSearchWindow(Window parentWindow)
+	public OrderSearchWindow(Window parentWindow) throws Exception
 	{
 		super(parentWindow);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,7 +55,7 @@ public class OrderSearchWindow extends Window{
 	}
 
 	@Override
-	public void refresh()
+	public void refresh() throws Exception
 	{
 		setBounds(100, 100, 203, 393);
 		contentPane = new JPanel();

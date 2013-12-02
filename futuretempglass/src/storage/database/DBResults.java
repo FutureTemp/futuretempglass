@@ -106,7 +106,27 @@ public class DBResults{
 		}
 		return false;
 	}
-
+	
+	public List<String> getColumn(int colIndex) throws Exception
+	{
+		if(results == null)
+		{
+			return null;
+		}
+		currentRow = -1;
+		List<String> column = new ArrayList<String>();
+		while(next())
+		{
+			column.add(getString(colIndex));
+		}
+		return column;
+	}
+	
+	public List<String> getColumn(String colName) throws Exception
+	{
+		return getColumn(columnIndex.get(colName));
+	}
+	
 	public String[][] getAllResults()
 	{
 		return results;

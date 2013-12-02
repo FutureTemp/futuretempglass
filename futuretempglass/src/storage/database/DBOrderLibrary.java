@@ -3,6 +3,8 @@ package storage.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.Application;
+
 import orders.Order;
 import orders.OrderFilter;
 import storage.OrderLibrary;
@@ -11,16 +13,16 @@ import utils.StringUtils;
 public class DBOrderLibrary extends OrderLibrary{
 
 	private final static String database = "futuretemp";
-	private final static String table = "order";
+	private final static String table = "orders";
 	private final static String orderNumberCol = "order_number";
 	private final static String customerCol = "customer";
 	private final static String itemIdsCol = "item_ids";
 
 	@Override
-	public Order getOrder(String orderId)
+	public Order getOrder(String orderId) throws Exception
 	{
-		String query = "SELECT * FROM '" + database + "'.'" + table
-				+ "' WHERE '" + orderNumberCol + "' = '" + orderId + "'";
+		String query = "SELECT * FROM " + database + "." + table + " WHERE "
+				+ orderNumberCol + " = '" + orderId + "'";
 		DBResults results = DBHelper.queryDb(query);
 		if(results == null)
 		{
@@ -32,8 +34,12 @@ public class DBOrderLibrary extends OrderLibrary{
 	@Override
 	public boolean addOrder(Order order)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		String query = "INSERT INTO " + database + "." + table + " ("
+				+ orderNumberCol + ", " + customerCol + ", " + itemIdsCol
+				+ ") VALUES (" + order.getOrderNumber() + ", '"
+				+ order.getCustomer() + "', '"
+				+ StringUtils.listToString(order.getItemIds()) + "');";
+		return DBHelper.writeToDb(query);
 	}
 
 	@Override
@@ -44,30 +50,51 @@ public class DBOrderLibrary extends OrderLibrary{
 	}
 
 	@Override
-	public boolean deleteOrder(Order order)
+	public boolean deleteOrder(Order order) throws Exception
 	{
 		return deleteOrder(order.getOrderNumber());
 	}
 
 	@Override
-	public boolean deleteOrder(String orderId)
+	public boolean deleteOrder(String orderId) throws Exception
 	{
-		// TODO Auto-generated method stub
+		String query = "DELETE FROM " + database + "." + table + " WHERE "
+				+ orderNumberCol + " = '" + orderId + "'";
+		Order order = getOrder(orderId);
+		if(DBHelper.writeToDb(query))
+		{
+			for(String itemId: order.getItemIds())
+			{
+				if(!Application.getItemLibrary().deleteItem(itemId))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
 		return false;
 	}
 
 	@Override
-	public List<Order> getOrders()
+	public List<Order> getOrders() throws Exception
 	{
-		// TODO Auto-generated method stub
-		return null;
+		String query = "SELECT * FROM " + database + "." + table;
+		DBResults results = DBHelper.queryDb(query);
+
+		return dbResultsToOrders(results);
 	}
 
 	@Override
-	public List<String> getOrderNumbers()
+	public List<String> getOrderNumbers() throws Exception
 	{
-		// TODO Auto-generated method stub
-		return null;
+		String query = "SELECT " + orderNumberCol + " FROM " + database + "."
+				+ table;
+		DBResults results = DBHelper.queryDb(query);
+		if(results == null)
+		{
+			return null;
+		}
+		return results.getColumn(orderNumberCol);
 	}
 
 	@Override
@@ -99,10 +126,14 @@ public class DBOrderLibrary extends OrderLibrary{
 	}
 
 	private static List<Order> dbResultsToOrders(DBResults results)
+			throws Exception
 	{
 		List<Order> orders = new ArrayList<Order>();
-
-		while (results.hasNext())
+		if(results == null)
+		{
+			return null;
+		}
+		while (results.next())
 		{
 			Order order = new Order();
 			order.setOrderNumber(results.getString(orderNumberCol));
