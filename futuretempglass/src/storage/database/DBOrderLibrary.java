@@ -28,7 +28,12 @@ public class DBOrderLibrary extends OrderLibrary{
 		{
 			return null;
 		}
-		return dbResultsToOrders(results).get(0);
+		List<Order> orders = dbResultsToOrders(results);
+		if(orders.size() == 0)
+		{
+			return null;
+		}
+		return orders.get(0);
 	}
 
 	@Override

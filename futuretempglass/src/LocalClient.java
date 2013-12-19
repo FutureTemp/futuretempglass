@@ -1,7 +1,7 @@
-import storage.server.XmlInventoryLibrary;
-import storage.server.XmlItemLibrary;
-import storage.server.XmlOrderLibrary;
-import storage.server.XmlProductionStepsLibrary;
+import storage.database.DBInventoryLibrary;
+import storage.database.DBItemLibrary;
+import storage.database.DBOrderLibrary;
+import storage.database.DBProductionStepsLibrary;
 import ui.views.OrderSearchWindow;
 import ui.views.WorkFlowWindow;
 import core.Application;
@@ -14,10 +14,10 @@ public class LocalClient{
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		Application.orderLibrary = new XmlOrderLibrary();
-		Application.itemLibrary = new XmlItemLibrary();
-		Application.productionStepsLibrary = new XmlProductionStepsLibrary();
-		Application.inventoryLibrary = new XmlInventoryLibrary();
+		Application.orderLibrary = new DBOrderLibrary();
+		Application.itemLibrary = new DBItemLibrary();
+		Application.productionStepsLibrary = new DBProductionStepsLibrary();
+		Application.inventoryLibrary = new DBInventoryLibrary();
 
 		new WorkFlowWindow(null);
 		new OrderSearchWindow();
