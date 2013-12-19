@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<order orderNumber="123">
+    <item id="F5EcuNGr" name="Starfire" quantity="0">
+        <orderId>123</orderId>
+        <attribute name="thickness" value="1"/>
+        <attribute name="width" value="2"/>
+        <attribute name="height" value="3"/>
+    </item>
+</order>

@@ -13,10 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 import server.handlers.OrderHandler;
-import storage.database.DBInventoryLibrary;
-import storage.database.DBItemLibrary;
-import storage.database.DBOrderLibrary;
-import storage.database.DBProductionStepsLibrary;
+import storage.server.XmlInventoryLibrary;
+import storage.server.XmlItemLibrary;
+import storage.server.XmlOrderLibrary;
+import storage.server.XmlProductionStepsLibrary;
 import ui.views.Window;
 
 import com.jgoodies.forms.factories.FormFactory;
@@ -51,10 +51,10 @@ class Server extends Window implements MouseListener{
 	
 	private void addLibraries()
 	{
-		Application.inventoryLibrary = new DBInventoryLibrary();
-		Application.itemLibrary = new DBItemLibrary();
-		Application.orderLibrary = new DBOrderLibrary();
-		Application.productionStepsLibrary = new DBProductionStepsLibrary();
+		Application.inventoryLibrary = new XmlInventoryLibrary();
+		Application.itemLibrary = new XmlItemLibrary();
+		Application.orderLibrary = new XmlOrderLibrary();
+		Application.productionStepsLibrary = new XmlProductionStepsLibrary();
 	}
 	
 	public static String getLocalIp()

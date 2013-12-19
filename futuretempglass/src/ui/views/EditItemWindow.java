@@ -27,6 +27,8 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
+import core.Application;
+
 public class EditItemWindow extends Window implements MouseListener{
 
 	/**
@@ -48,7 +50,7 @@ public class EditItemWindow extends Window implements MouseListener{
 
 	private Window productionStepsSelectWindow = null;
 
-	// private Mode mode;
+	private Mode mode;
 
 	/**
 	 * Create the frame.
@@ -57,6 +59,8 @@ public class EditItemWindow extends Window implements MouseListener{
 	{
 		super(parentWindow);
 
+		this.mode = mode;
+		
 		attributeQuestions = new ArrayList<InputQuestion>();
 
 		this.item = item;
@@ -172,6 +176,10 @@ public class EditItemWindow extends Window implements MouseListener{
 			}
 			else if(e.getSource().equals(doneButton))
 			{
+				if(Mode.NEW.equals(mode))
+				{
+					item.setItemId(Application.getItemLibrary().getAvailableId());
+				}
 				for(InputQuestion question: attributeQuestions)
 				{
 					item.setAttribute(question.getField(), question.getValue());

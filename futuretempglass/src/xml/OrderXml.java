@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import orders.Order;
 import storage.JAXBHelper;
-import core.Application;
 
 @XmlRootElement(name = "order")
 public class OrderXml{
@@ -26,18 +25,18 @@ public class OrderXml{
 
 	public OrderXml()
 	{
-		
+
 	}
-	
-	public OrderXml(Order order) throws Exception
+
+	public OrderXml(Order order, List<Item> items) throws Exception
 	{
 		this.orderNumber = order.getOrderNumber();
-		for(Item item: Application.getItemLibrary().getItems(order.getItemIds()))
+		for(Item item: items)
 		{
-			items.add(new ItemXml(item));
+			this.items.add(new ItemXml(item));
 		}
 	}
-	
+
 	public boolean saveOrder()
 	{
 		return JAXBHelper.writeToXmlFile(this, ORDERS_PATH + orderNumber
@@ -46,10 +45,10 @@ public class OrderXml{
 
 	public static OrderXml loadOrder(String orderNumber)
 	{
-		return (OrderXml) JAXBHelper.readFromXmlFile(ORDERS_PATH + orderNumber
+		return (OrderXml)JAXBHelper.readFromXmlFile(ORDERS_PATH + orderNumber
 				+ ".xml", OrderXml.class);
 	}
-	
+
 	public Order getOrder()
 	{
 		Order order = new Order();
