@@ -1,4 +1,5 @@
 package core;
+import storage.AccountLibrary;
 import storage.InventoryLibrary;
 import storage.ItemLibrary;
 import storage.OrderLibrary;
@@ -15,6 +16,8 @@ public class Application
 	public static InventoryLibrary inventoryLibrary;
 	
 	public static OrderLibrary orderLibrary;
+	
+	public static AccountLibrary accountLibrary;
 	
 	public static ItemLibrary getItemLibrary()
 	{
@@ -34,6 +37,11 @@ public class Application
 	public static OrderLibrary getOrderLibrary()
 	{
 		return orderLibrary;
+	}
+	
+	public static AccountLibrary getAccountLibrary()
+	{
+		return accountLibrary;
 	}
 	
 }

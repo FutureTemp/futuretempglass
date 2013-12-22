@@ -7,12 +7,15 @@ import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 import server.handlers.OrderHandler;
+import server.handlers.TokenHandler;
+import storage.server.XmlAccountLibrary;
 import storage.server.XmlInventoryLibrary;
 import storage.server.XmlItemLibrary;
 import storage.server.XmlOrderLibrary;
@@ -27,7 +30,7 @@ import com.sun.net.httpserver.HttpServer;
 
 import core.Application;
 
-class Server extends Window implements MouseListener{
+public class Server extends Window implements MouseListener{
 
 	/**
 	 * 
@@ -43,10 +46,13 @@ class Server extends Window implements MouseListener{
 	private JTextArea textArea;
 	
 	private HttpServer server;
+	
+	private static List<Session> activeSessions;
 
 	private void addHandlers()
 	{
 		server.createContext(OrderHandler.getContext(), new OrderHandler());
+		server.createContext(TokenHandler.getContext(), new TokenHandler());
 	}
 	
 	private void addLibraries()
@@ -55,6 +61,7 @@ class Server extends Window implements MouseListener{
 		Application.itemLibrary = new XmlItemLibrary();
 		Application.orderLibrary = new XmlOrderLibrary();
 		Application.productionStepsLibrary = new XmlProductionStepsLibrary();
+		Application.accountLibrary = new XmlAccountLibrary();
 	}
 	
 	public static String getLocalIp()
@@ -167,5 +174,21 @@ class Server extends Window implements MouseListener{
 		new Server();
 
 		return;
+	}
+
+	/**
+	 * @return the activeSessions
+	 */
+	public static List<Session> getActiveSessions()
+	{
+		return activeSessions;
+	}
+
+	/**
+	 * @param activeSessions the activeSessions to set
+	 */
+	public static void setActiveSessions(List<Session> activeSessions)
+	{
+		Server.activeSessions = activeSessions;
 	}
 }

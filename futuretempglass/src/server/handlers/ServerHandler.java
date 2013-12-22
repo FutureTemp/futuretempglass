@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import server.Server;
+import server.Session;
+import utils.AccountUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -17,6 +19,8 @@ public abstract class ServerHandler implements HttpHandler{
 	@Override
 	public void handle(HttpExchange ex) throws IOException
 	{
+		ex.setAttribute("session", getActiveSession(ex));
+		authenticate(ex);
 		if("GET".equals(ex.getRequestMethod()))
 		{
 			onGet(ex);
@@ -25,8 +29,30 @@ public abstract class ServerHandler implements HttpHandler{
 		{
 			onPost(ex);
 		}
+		finish(ex);
 	}
 
+	private static Session getActiveSession(HttpExchange ex)
+	{
+		List<Session> activeSessions = Server.getActiveSessions();
+		for(Session session: activeSessions)
+		{
+			if(ex.getLocalAddress().equals(session.getAddress()))
+			{
+				return session;
+			}
+		}
+		return null;
+	}
+	
+	protected void finish(HttpExchange ex) throws IOException
+	{
+		ex.getRequestBody().close();
+		ex.getResponseBody().flush();
+		ex.getResponseBody().close();
+		ex.close();
+	}
+	
 	protected void onGet(HttpExchange ex) throws IOException
 	{
 
@@ -37,6 +63,11 @@ public abstract class ServerHandler implements HttpHandler{
 
 	}
 
+	protected boolean authenticate(HttpExchange ex)
+	{
+		return ex.getAttribute("session") != null;
+	}
+	
 	protected void sendHeader(HttpExchange ex) throws IOException
 	{
 		ex.sendResponseHeaders(200, 0);
@@ -46,8 +77,6 @@ public abstract class ServerHandler implements HttpHandler{
 			throws IOException
 	{
 		ex.getResponseBody().write(response.getBytes());
-		ex.getResponseBody().flush();
-		ex.close();
 	}
 
 	protected void sendResponse(Object object, HttpExchange ex)
@@ -67,7 +96,6 @@ public abstract class ServerHandler implements HttpHandler{
 		{
 			builder.append(line);
 		}
-		ex.getRequestBody().close();
 		reader.close();
 		return builder.toString();
 	}

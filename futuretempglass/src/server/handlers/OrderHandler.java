@@ -30,12 +30,10 @@ public class OrderHandler extends ServerHandler{
 			if(order == null)
 			{
 				ex.sendResponseHeaders(404, 0);
-				ex.getResponseBody().close();
 				return;
 			}
 			sendHeader(ex);
 			sendResponse(order, ex);
-			ex.close();
 		}
 		catch(Exception e)
 		{
