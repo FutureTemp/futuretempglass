@@ -28,7 +28,7 @@ public class XmlAccountLibrary extends AccountLibrary{
 		}
 		
 		// TODO Auto-generated method stub
-		return "";
+		return null;
 	}
 
 }

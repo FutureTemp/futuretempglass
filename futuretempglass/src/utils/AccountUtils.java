@@ -25,7 +25,12 @@ public class AccountUtils{
 		{
 			MessageDigest m = MessageDigest.getInstance("SHA-256");
 			m.update(token.getBytes());
-			m.update(Application.getAccountLibrary().getHashedPassword(username).getBytes());
+			String hashedPassword = Application.getAccountLibrary().getHashedPassword(username);
+			if(hashedPassword == null)
+			{
+				return null;
+			}
+			m.update(hashedPassword.getBytes());
 			byte[] bytes = m.digest();
 			String hash = HexBin.encode(bytes);
 			hashes.add(hash.toUpperCase());

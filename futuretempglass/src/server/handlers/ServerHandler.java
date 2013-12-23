@@ -42,8 +42,7 @@ public abstract class ServerHandler implements HttpHandler{
 		List<Session> activeSessions = Server.getActiveSessions();
 		for(Session session: activeSessions)
 		{
-			if(ex.getRemoteAddress().getAddress().getHostAddress()
-					.equals(session.getIp()))
+			if(session.isMatchingSession(ex))
 			{
 				return session;
 			}

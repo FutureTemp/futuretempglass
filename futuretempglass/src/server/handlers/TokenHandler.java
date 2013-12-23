@@ -21,12 +21,20 @@ public class TokenHandler extends ServerHandler{
 	public void handle(HttpExchange ex) throws IOException
 	{
 		HashMap<String, String> parameters = getParameters(ex);
+		sendHeader(ex);
 		if(StringUtils.isEmpty(parameters.get("username")))
 		{
+			sendResponse("Must include username", ex);
+			finish(ex);
 			return;
 		}
 		String token = AccountUtils.getToken(parameters.get("username"));
-		sendHeader(ex);
+		if(token == null)
+		{
+			sendResponse("Invalid Username", ex);
+			finish(ex);
+			return;
+		}
 		sendResponse("{\"token\":\"" + token + "\"}", ex);
 		finish(ex);
 	}

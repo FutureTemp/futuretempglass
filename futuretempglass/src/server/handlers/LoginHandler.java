@@ -8,10 +8,9 @@ import server.Session;
 import utils.AccountUtils;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
-public class LoginHandler implements HttpHandler{
+public class LoginHandler extends ServerHandler{
 
 	private static String context = "/login";
 	
