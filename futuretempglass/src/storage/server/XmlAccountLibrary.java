@@ -17,7 +17,8 @@ public class XmlAccountLibrary extends AccountLibrary{
 			try
 			{
 				byte[] bytes = MessageDigest.getInstance("SHA-256").digest("francesco12345".getBytes());
-				return HexBin.encode(bytes).toUpperCase();
+				String hash = HexBin.encode(bytes).toUpperCase();
+				return hash;
 			}
 			catch(NoSuchAlgorithmException e)
 			{

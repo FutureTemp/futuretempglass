@@ -8,7 +8,6 @@ import java.util.List;
 
 import server.Server;
 import server.Session;
-import utils.AccountUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -20,7 +19,13 @@ public abstract class ServerHandler implements HttpHandler{
 	public void handle(HttpExchange ex) throws IOException
 	{
 		ex.setAttribute("session", getActiveSession(ex));
-		authenticate(ex);
+		if(!authenticate(ex))
+		{
+			sendHeader(ex);
+			sendResponse("MUST LOGIN", ex);
+			finish(ex);
+			return;
+		}
 		if("GET".equals(ex.getRequestMethod()))
 		{
 			onGet(ex);
@@ -37,14 +42,15 @@ public abstract class ServerHandler implements HttpHandler{
 		List<Session> activeSessions = Server.getActiveSessions();
 		for(Session session: activeSessions)
 		{
-			if(ex.getLocalAddress().equals(session.getAddress()))
+			if(ex.getRemoteAddress().getAddress().getHostAddress()
+					.equals(session.getIp()))
 			{
 				return session;
 			}
 		}
 		return null;
 	}
-	
+
 	protected void finish(HttpExchange ex) throws IOException
 	{
 		ex.getRequestBody().close();
@@ -52,7 +58,7 @@ public abstract class ServerHandler implements HttpHandler{
 		ex.getResponseBody().close();
 		ex.close();
 	}
-	
+
 	protected void onGet(HttpExchange ex) throws IOException
 	{
 
@@ -67,7 +73,7 @@ public abstract class ServerHandler implements HttpHandler{
 	{
 		return ex.getAttribute("session") != null;
 	}
-	
+
 	protected void sendHeader(HttpExchange ex) throws IOException
 	{
 		ex.sendResponseHeaders(200, 0);

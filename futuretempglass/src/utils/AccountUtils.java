@@ -20,15 +20,16 @@ public class AccountUtils{
 
 	public static String getToken(String username)
 	{
-		String token = StringUtils.getRandomStringOfLettersAndNumbers(10);
+		String token = StringUtils.getRandomStringOfLettersAndNumbers(10).toUpperCase();
 		try
 		{
-			byte[] bytes = MessageDigest.getInstance("SHA-256").digest(
-					(token + Application.getAccountLibrary().getHashedPassword(
-							username)).getBytes());
+			MessageDigest m = MessageDigest.getInstance("SHA-256");
+			m.update(token.getBytes());
+			m.update(Application.getAccountLibrary().getHashedPassword(username).getBytes());
+			byte[] bytes = m.digest();
 			String hash = HexBin.encode(bytes);
 			hashes.add(hash.toUpperCase());
-			return hash;
+			return token;
 		}
 		catch(NoSuchAlgorithmException e)
 		{
@@ -37,5 +38,4 @@ public class AccountUtils{
 		}
 		return null;
 	}
-
 }

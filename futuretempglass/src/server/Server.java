@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+import server.handlers.LoginHandler;
 import server.handlers.OrderHandler;
 import server.handlers.TokenHandler;
 import storage.server.XmlAccountLibrary;
@@ -47,12 +49,13 @@ public class Server extends Window implements MouseListener{
 	
 	private HttpServer server;
 	
-	private static List<Session> activeSessions;
+	private static List<Session> activeSessions = new ArrayList<Session>();
 
 	private void addHandlers()
 	{
 		server.createContext(OrderHandler.getContext(), new OrderHandler());
 		server.createContext(TokenHandler.getContext(), new TokenHandler());
+		server.createContext(LoginHandler.getContext(), new LoginHandler());
 	}
 	
 	private void addLibraries()

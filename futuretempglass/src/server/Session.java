@@ -1,31 +1,30 @@
 package server;
 
-import java.net.InetSocketAddress;
-
 import com.sun.net.httpserver.HttpExchange;
 
 public class Session{
 
-	private InetSocketAddress address;
+	private String ip;
 	
 	public Session(HttpExchange ex)
 	{
-		setAddress(ex.getRemoteAddress());
+		setIp(ex.getRemoteAddress().getAddress().getHostAddress());
 	}
 
 	/**
-	 * @return the address
+	 * @return the ip
 	 */
-	public InetSocketAddress getAddress()
+	public String getIp()
 	{
-		return address;
+		return ip;
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param ip the ip to set
 	 */
-	public void setAddress(InetSocketAddress address)
+	public void setIp(String ip)
 	{
-		this.address = address;
+		this.ip = ip;
 	}
+
 }
