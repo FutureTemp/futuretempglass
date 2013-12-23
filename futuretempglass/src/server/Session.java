@@ -5,7 +5,6 @@ import com.sun.net.httpserver.HttpExchange;
 public class Session{
 
 	private String ip;
-	private String hostName;
 	
 	public Session(HttpExchange ex)
 	{
@@ -37,19 +36,4 @@ public class Session{
 		this.ip = ip;
 	}
 
-	/**
-	 * @return the hostName
-	 */
-	public String getHostName()
-	{
-		return hostName;
-	}
-
-	/**
-	 * @param hostName the hostName to set
-	 */
-	public void setHostName(String hostName)
-	{
-		this.hostName = hostName;
-	}
 }
