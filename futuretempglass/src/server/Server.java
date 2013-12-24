@@ -19,11 +19,6 @@ import server.handlers.LoginHandler;
 import server.handlers.LogoutHandler;
 import server.handlers.OrderHandler;
 import server.handlers.TokenHandler;
-import storage.database.DBAccountLibrary;
-import storage.database.DBInventoryLibrary;
-import storage.database.DBItemLibrary;
-import storage.database.DBOrderLibrary;
-import storage.database.DBProductionStepsLibrary;
 import ui.views.Window;
 
 import com.jgoodies.forms.factories.FormFactory;
@@ -64,7 +59,7 @@ public class Server extends Window implements MouseListener{
 	
 	private void addLibraries()
 	{
-		Application.setXMLLibraries();
+		Application.setJSONLibraries();
 	}
 	
 	public static String getLocalIp()

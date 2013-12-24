@@ -1,0 +1,79 @@
+[ {
+  "itemName" : "Clear Glass",
+  "orderNumber" : "123",
+  "quantity" : 0,
+  "productionSteps" : [ {
+    "name" : "Cutting",
+    "dependencies" : [ ]
+  }, {
+    "name" : "Polishing",
+    "dependencies" : [ ]
+  }, {
+    "name" : "Tempering",
+    "dependencies" : [ ]
+  }, {
+    "name" : "Sandblasting",
+    "dependencies" : [ ]
+  } ],
+  "currentStep" : {
+    "name" : "Cutting",
+    "dependencies" : [ ]
+  },
+  "attributeNames" : [ "thickness", "width", "height" ],
+  "attributes" : {
+    "height" : "3",
+    "thickness" : "1",
+    "width" : "2"
+  },
+  "itemId" : "plkyHlxi"
+}, {
+  "itemName" : "Mirror",
+  "orderNumber" : "123",
+  "quantity" : 0,
+  "productionSteps" : [ {
+    "name" : "Cutting",
+    "dependencies" : [ ]
+  }, {
+    "name" : "Tempering",
+    "dependencies" : [ ]
+  } ],
+  "currentStep" : {
+    "name" : "Cutting",
+    "dependencies" : [ ]
+  },
+  "attributeNames" : [ "thickness", "width", "height" ],
+  "attributes" : {
+    "height" : "1",
+    "thickness" : "2",
+    "width" : "3"
+  },
+  "itemId" : "0kqT5gMA"
+}, {
+  "itemName" : "Starfire",
+  "orderNumber" : "123",
+  "quantity" : 0,
+  "productionSteps" : [ {
+    "name" : "Cutting",
+    "dependencies" : [ ]
+  }, {
+    "name" : "Polishing",
+    "dependencies" : [ ]
+  }, {
+    "name" : "Tempering",
+    "dependencies" : [ ]
+  }, {
+    "name" : "Sandblasting",
+    "dependencies" : [ ]
+  } ],
+  "currentStep" : {
+    "name" : "Cutting",
+    "dependencies" : [ ]
+  },
+  "attributeNames" : [ "thickness", "width", "height" ],
+  "attributes" : {
+    "height" : "1",
+    "thickness" : "3",
+    "width" : "2"
+  },
+  "itemId" : "CSr53SkH"
+} ]

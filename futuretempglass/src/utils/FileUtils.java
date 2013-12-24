@@ -11,10 +11,17 @@ import java.util.List;
 
 public class FileUtils{
 
-	public static void writeFile(String path, List<String> contents)
+	public static boolean writeFile(String path, List<String> contents)
 	{
 		File file = new File(path);
-		writeFile(file, contents);
+		return writeFile(file, contents);
+	}
+	
+	public static boolean writeFile(String path, String contents)
+	{
+		List<String> fileContents = new ArrayList<String>();
+		fileContents.add(contents);
+		return writeFile(path, fileContents);
 	}
 
 	public static boolean writeFile(File file, List<String> contents)

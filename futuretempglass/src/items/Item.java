@@ -98,6 +98,11 @@ public class Item implements Serializable{
 	{
 		return attributeNames;
 	}
+	
+	public Hashtable<String, Object> getAttributes()
+	{
+		return attributes;
+	}
 
 	public void setAttributeNames(List<String> attributeNames)
 	{

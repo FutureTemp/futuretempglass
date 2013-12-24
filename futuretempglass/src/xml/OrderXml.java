@@ -21,20 +21,17 @@ public class OrderXml{
 	public String orderNumber;
 
 	@XmlElement(name = "item")
-	public List<ItemXml> items = new ArrayList<ItemXml>();
+	public List<String> itemIds = new ArrayList<String>();
 
 	public OrderXml()
 	{
 
 	}
 
-	public OrderXml(Order order, List<Item> items) throws Exception
+	public OrderXml(Order order) throws Exception
 	{
 		this.orderNumber = order.getOrderNumber();
-		for(Item item: items)
-		{
-			this.items.add(new ItemXml(item));
-		}
+		this.itemIds = order.getItemIds();
 	}
 
 	public boolean saveOrder()
@@ -54,12 +51,6 @@ public class OrderXml{
 		Order order = new Order();
 		order.setOrderNumber(orderNumber);
 		List<String> itemIds = new ArrayList<String>();
-		for(ItemXml itemXml: this.items)
-		{
-			Item item = itemXml.getItem();
-			item.setOrderNumber(order.getOrderNumber());
-			itemIds.add(item.getItemId());
-		}
 		order.setItemIds(itemIds);
 		return order;
 	}

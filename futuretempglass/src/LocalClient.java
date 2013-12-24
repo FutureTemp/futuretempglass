@@ -10,7 +10,7 @@ public class LocalClient{
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		Application.setDBLibraries();
+		Application.setJSONLibraries();
 
 		new WorkFlowWindow(null);
 		new OrderSearchWindow();

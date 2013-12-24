@@ -13,6 +13,7 @@ public abstract class OrderLibrary{
 
 	public abstract boolean updateOrder(Order order) throws Exception;
 	
+	@Deprecated
 	public abstract boolean deleteOrder(Order order) throws Exception;
 	
 	public abstract boolean deleteOrder(String orderId) throws Exception;

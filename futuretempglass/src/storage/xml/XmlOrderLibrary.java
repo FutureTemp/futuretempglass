@@ -136,8 +136,7 @@ public class XmlOrderLibrary extends OrderLibrary{
 	{
 		for(Order order: orders)
 		{
-			OrderXml orderXml = new OrderXml(order, Application
-					.getItemLibrary().getItems(order.getItemIds()));
+			OrderXml orderXml = new OrderXml(order);
 			orderXml.saveOrder();
 		}
 	}
