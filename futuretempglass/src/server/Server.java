@@ -64,7 +64,7 @@ public class Server extends Window implements MouseListener{
 	
 	private void addLibraries()
 	{
-		Application.setDBLibraries();
+		Application.setXMLLibraries();
 	}
 	
 	public static String getLocalIp()
