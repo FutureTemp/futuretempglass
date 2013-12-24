@@ -1,4 +1,4 @@
-package storage.server;
+package storage.xml;
 
 import items.Item;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import storage.InventoryLibrary;
 import xml.InventoryXml;
 
-public class ServerInventoryLibrary extends InventoryLibrary{
+public class XmlInventoryLibrary extends InventoryLibrary{
 
 	private HashMap<String, Item> itemsMap;
 
@@ -17,7 +17,7 @@ public class ServerInventoryLibrary extends InventoryLibrary{
 
 	private List<String> itemNames;
 
-	public ServerInventoryLibrary()
+	public XmlInventoryLibrary()
 	{
 		init();
 	}

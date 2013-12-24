@@ -1,4 +1,4 @@
-package storage.server;
+package storage.xml;
 
 import java.util.List;
 
@@ -7,11 +7,11 @@ import storage.ProductionStepsLibrary;
 import workflow.ProductionStep;
 import xml.WorkFlowXml;
 
-public class ServerProductionStepsLibrary extends ProductionStepsLibrary{
+public class XmlProductionStepsLibrary extends ProductionStepsLibrary{
 
 	private List<ProductionStep> steps;
 	
-	public ServerProductionStepsLibrary()
+	public XmlProductionStepsLibrary()
 	{
 		steps = WorkFlowXml.getProductionSteps();
 	}

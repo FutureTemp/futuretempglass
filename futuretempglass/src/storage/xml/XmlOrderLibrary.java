@@ -1,4 +1,4 @@
-package storage.server;
+package storage.xml;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import utils.FileUtils;
 import xml.OrderXml;
 import core.Application;
 
-public class ServerOrderLibrary extends OrderLibrary{
+public class XmlOrderLibrary extends OrderLibrary{
 
 	private final static String orderNumbersFilePath = "xml-orders/Orders.txt";
 	private final static String orderPropertiesFilePath = "xml-orders/properties.txt";
@@ -32,7 +32,7 @@ public class ServerOrderLibrary extends OrderLibrary{
 
 	private HashMap<String, String> orderProperties = new HashMap<String, String>();
 
-	public ServerOrderLibrary()
+	public XmlOrderLibrary()
 	{
 		init();
 	}
@@ -136,7 +136,8 @@ public class ServerOrderLibrary extends OrderLibrary{
 	{
 		for(Order order: orders)
 		{
-			OrderXml orderXml = new OrderXml(order);
+			OrderXml orderXml = new OrderXml(order, Application
+					.getItemLibrary().getItems(order.getItemIds()));
 			orderXml.saveOrder();
 		}
 	}
