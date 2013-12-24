@@ -59,7 +59,7 @@ public class Server extends Window implements MouseListener{
 	
 	private void addLibraries()
 	{
-		Application.setJSONLibraries();
+		Application.setDBLibraries();
 	}
 	
 	public static String getLocalIp()
@@ -116,7 +116,7 @@ public class Server extends Window implements MouseListener{
 		setVisible(true);
 
 		addLibraries();
-		server = HttpServer.create(new InetSocketAddress(PORT), 0);
+		server = HttpServer.create(new InetSocketAddress("192.168.1.14",PORT), 0);
 		addHandlers();
 		server.start();
 		while (!stop)
