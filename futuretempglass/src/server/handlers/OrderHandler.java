@@ -1,5 +1,7 @@
 package server.handlers;
 
+import java.util.List;
+
 import orders.Order;
 import storage.database.DBOrderLibrary;
 
@@ -24,14 +26,25 @@ public class OrderHandler extends ServerHandler{
 		try
 		{
 			String orderNum = getParameters(ex).get("order");
-			Order order = Application.getOrderLibrary().getOrder(orderNum);
-			if(order == null)
+			// Send all orders
+			if(orderNum == null)
 			{
-				ex.sendResponseHeaders(404, 0);
-				return;
+				List<Order> orders = Application.getOrderLibrary().getOrders();
+				sendHeader(ex);
+				sendResponse(orders, ex);
 			}
-			sendHeader(ex);
-			sendResponse(order, ex);
+			// Send one order
+			else
+			{
+				Order order = Application.getOrderLibrary().getOrder(orderNum);
+				if(order == null)
+				{
+					ex.sendResponseHeaders(404, 0);
+					return;
+				}
+				sendHeader(ex);
+				sendResponse(order, ex);
+			}
 		}
 		catch(Exception e)
 		{

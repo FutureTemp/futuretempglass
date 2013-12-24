@@ -97,6 +97,20 @@ public class XmlItemLibrary extends ItemLibrary{
 	}
 
 	@Override
+	public List<Item> getItemsInOrder(String orderNum) throws Exception
+	{
+		List<Item> items = new ArrayList<Item>();
+		for(Item item: itemList)
+		{
+			if(item.getOrderNumber().equals(orderNum))
+			{
+				items.add(item);
+			}
+		}
+		return items;
+	}
+	
+	@Override
 	public boolean addItem(Item item)
 	{
 		if(item == null)

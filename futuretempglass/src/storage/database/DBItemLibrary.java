@@ -40,6 +40,14 @@ public class DBItemLibrary extends ItemLibrary{
 	}
 
 	@Override
+	public List<Item> getItemsInOrder(String orderNum) throws Exception
+	{
+		DBResults results = DBHelper.queryDb("SELECT * FROM " + database + "."
+				+ table + " WHERE " + orderNumCol + " = " + orderNum);
+		return dbResultsToItems(results);
+	}
+
+	@Override
 	public boolean addItem(Item item)
 	{
 		if(item.getItemId() == null)
