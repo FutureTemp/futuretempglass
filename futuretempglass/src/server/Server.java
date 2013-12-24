@@ -64,11 +64,7 @@ public class Server extends Window implements MouseListener{
 	
 	private void addLibraries()
 	{
-		Application.inventoryLibrary = new DBInventoryLibrary();
-		Application.itemLibrary = new DBItemLibrary();
-		Application.orderLibrary = new DBOrderLibrary();
-		Application.productionStepsLibrary = new DBProductionStepsLibrary();
-		Application.accountLibrary = new DBAccountLibrary();
+		Application.setDBLibraries();
 	}
 	
 	public static String getLocalIp()
