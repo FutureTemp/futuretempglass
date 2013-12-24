@@ -1,4 +1,4 @@
-package storage.server;
+package storage.database;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,7 +7,7 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
 import storage.AccountLibrary;
 
-public class XmlAccountLibrary extends AccountLibrary{
+public class DBAccountLibrary extends AccountLibrary{
 
 	@Override
 	public String getHashedPassword(String username)
@@ -30,5 +30,5 @@ public class XmlAccountLibrary extends AccountLibrary{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 }

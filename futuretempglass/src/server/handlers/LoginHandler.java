@@ -13,7 +13,7 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 public class LoginHandler extends ServerHandler{
 
 	private static String context = "/login";
-	
+
 	public static String getContext()
 	{
 		return context;
@@ -33,20 +33,26 @@ public class LoginHandler extends ServerHandler{
 		{
 			ex.getResponseBody().write("Login Failed".getBytes());
 		}
-		ex.getRequestBody().close();
-		ex.getResponseBody().close();
-		ex.close();
+		finish(ex);
 	}
-	
+
 	protected boolean authenticate(HttpExchange ex)
 	{
-		String hash = ex.getRequestHeaders().get("Authentication").get(0);
-		if(AccountUtils.authenticate(hash))
+		try
 		{
-			return true;
+			String hash = ex.getRequestHeaders().get("Authentication").get(0);
+			if(AccountUtils.authenticate(hash))
+			{
+				return true;
+			}
+		}
+		catch(Exception e)
+		{
+
 		}
 		return false;
 	}
+
 	public static void main(String[] args) throws Exception
 	{
 		MessageDigest m = MessageDigest.getInstance("SHA-256");

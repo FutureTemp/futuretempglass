@@ -1,7 +1,5 @@
 package server.handlers;
 
-import java.io.IOException;
-
 import orders.Order;
 import storage.database.DBOrderLibrary;
 
@@ -20,7 +18,7 @@ public class OrderHandler extends ServerHandler{
 	}
 
 	@Override
-	protected void onGet(HttpExchange ex) throws IOException
+	protected void onGet(HttpExchange ex) throws Exception
 	{
 		super.onGet(ex);
 		try

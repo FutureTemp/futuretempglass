@@ -14,11 +14,11 @@ public class Item implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String orderNumber;
-
 	private String id;
 
 	private String itemName;
+
+	private String orderNumber;
 
 	private int quantity;
 
@@ -42,6 +42,16 @@ public class Item implements Serializable{
 		this.setOrderNumber(orderId);
 		attributeNames = new ArrayList<String>();
 		attributes = new Hashtable<String, Object>();
+	}
+	
+	public String getItemId()
+	{
+		return id;
+	}
+	
+	public void setItemId(String id)
+	{
+		this.id = id;
 	}
 
 	public String getItemName()
@@ -144,16 +154,6 @@ public class Item implements Serializable{
 			currentStep = getProductionSteps().get(0);
 		}
 		return currentStep;
-	}
-
-	public String getItemId()
-	{
-		return id;
-	}
-
-	public void setItemId(String id)
-	{
-		this.id = id;
 	}
 
 	@Override

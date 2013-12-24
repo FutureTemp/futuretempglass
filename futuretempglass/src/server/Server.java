@@ -14,15 +14,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+import server.handlers.ItemsHandler;
 import server.handlers.LoginHandler;
 import server.handlers.LogoutHandler;
 import server.handlers.OrderHandler;
 import server.handlers.TokenHandler;
-import storage.server.XmlAccountLibrary;
-import storage.server.XmlInventoryLibrary;
-import storage.server.XmlItemLibrary;
-import storage.server.XmlOrderLibrary;
-import storage.server.XmlProductionStepsLibrary;
+import storage.database.DBAccountLibrary;
+import storage.database.DBInventoryLibrary;
+import storage.database.DBItemLibrary;
+import storage.database.DBOrderLibrary;
+import storage.database.DBProductionStepsLibrary;
 import ui.views.Window;
 
 import com.jgoodies.forms.factories.FormFactory;
@@ -57,16 +58,17 @@ public class Server extends Window implements MouseListener{
 		server.createContext(OrderHandler.getContext(), new OrderHandler());
 		server.createContext(TokenHandler.getContext(), new TokenHandler());
 		server.createContext(LoginHandler.getContext(), new LoginHandler());
+		server.createContext(ItemsHandler.getContext(), new ItemsHandler());
 		server.createContext(LogoutHandler.getContext(), new LogoutHandler());
 	}
 	
 	private void addLibraries()
 	{
-		Application.inventoryLibrary = new XmlInventoryLibrary();
-		Application.itemLibrary = new XmlItemLibrary();
-		Application.orderLibrary = new XmlOrderLibrary();
-		Application.productionStepsLibrary = new XmlProductionStepsLibrary();
-		Application.accountLibrary = new XmlAccountLibrary();
+		Application.inventoryLibrary = new DBInventoryLibrary();
+		Application.itemLibrary = new DBItemLibrary();
+		Application.orderLibrary = new DBOrderLibrary();
+		Application.productionStepsLibrary = new DBProductionStepsLibrary();
+		Application.accountLibrary = new DBAccountLibrary();
 	}
 	
 	public static String getLocalIp()

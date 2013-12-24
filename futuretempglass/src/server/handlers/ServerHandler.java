@@ -10,6 +10,7 @@ import server.Server;
 import server.Session;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -18,23 +19,33 @@ public abstract class ServerHandler implements HttpHandler{
 	@Override
 	public void handle(HttpExchange ex) throws IOException
 	{
-		ex.setAttribute("session", getActiveSession(ex));
-		if(!authenticate(ex))
+		try
 		{
-			sendHeader(ex);
-			sendResponse("MUST LOGIN", ex);
+			ex.setAttribute("session", getActiveSession(ex));
+			if(!authenticate(ex))
+			{
+				sendHeader(ex);
+				sendResponse("MUST LOGIN", ex);
+				finish(ex);
+				return;
+			}
+			if("GET".equals(ex.getRequestMethod()))
+			{
+				onGet(ex);
+			}
+			else if("POST".equals(ex.getRequestMethod()))
+			{
+				onPost(ex);
+			}
+		}
+		catch(Exception e)
+		{
+			sendResponse(e.getMessage(), ex);
+		}
+		finally
+		{
 			finish(ex);
-			return;
 		}
-		if("GET".equals(ex.getRequestMethod()))
-		{
-			onGet(ex);
-		}
-		else if("POST".equals(ex.getRequestMethod()))
-		{
-			onPost(ex);
-		}
-		finish(ex);
 	}
 
 	private static Session getActiveSession(HttpExchange ex)
@@ -58,12 +69,12 @@ public abstract class ServerHandler implements HttpHandler{
 		ex.close();
 	}
 
-	protected void onGet(HttpExchange ex) throws IOException
+	protected void onGet(HttpExchange ex) throws Exception
 	{
 
 	}
 
-	protected void onPost(HttpExchange ex) throws IOException
+	protected void onPost(HttpExchange ex) throws Exception
 	{
 
 	}
@@ -88,6 +99,7 @@ public abstract class ServerHandler implements HttpHandler{
 			throws IOException
 	{
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		sendResponse(mapper.writeValueAsString(object), ex);
 	}
 
