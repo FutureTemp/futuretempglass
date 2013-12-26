@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Login</title>
+<script
+	src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
+<script>
+	function submit() {
+		username = document.getElementById("username").value;
+		password = document.getElementById("password").value;
+		hash = CryptoJS.SHA256(username + password);
+		hash = String(hash).toUpperCase()
+		var req;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			req = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			req = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		req.open("GET", "/token?username=" + username, true);
+		req.send();
+
+	req.onreadystatechange = function() {
+			if (req.readyState == 4 && req.status == 200) {
+
+				responseText = req.responseText;
+				token = JSON.parse(responseText);
+				auth = CryptoJS.SHA256(token.token + hash);
+				document.getElementById("Authentication").value = String(auth).toUpperCase();
+				document.getElementById("loginForm").submit();
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="text" id="username" />
+	<br>
+	<input type="password" id="password" />
+	<form action="/login" id="loginForm">
+		<input type="hidden" id="Authentication" name="Authentication" />
+	</form>
+	<button onclick="javascript:submit();">Login</button>
+</body>
+</html>

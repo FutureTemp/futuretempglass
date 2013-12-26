@@ -2,10 +2,12 @@ package server.handlers;
 
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.util.List;
 
 import server.Server;
 import server.Session;
 import utils.AccountUtils;
+import utils.StringUtils;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
@@ -40,7 +42,16 @@ public class LoginHandler extends ServerHandler{
 	{
 		try
 		{
-			String hash = ex.getRequestHeaders().get("Authentication").get(0);
+			List<String> list = ex.getRequestHeaders().get("Authentication");
+			String hash = "";
+			if(list != null)
+			{
+				hash = list.get(0);
+			}
+			else
+			{
+				hash = getParameters(ex).get("Authentication");
+			}
 			if(AccountUtils.authenticate(hash))
 			{
 				return true;

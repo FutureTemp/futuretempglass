@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 
 import server.handlers.ItemsHandler;
 import server.handlers.LoginHandler;
+import server.handlers.LoginPageHandler;
 import server.handlers.LogoutHandler;
 import server.handlers.OrderHandler;
 import server.handlers.TokenHandler;
@@ -55,6 +56,7 @@ public class Server extends Window implements MouseListener{
 		server.createContext(LoginHandler.getContext(), new LoginHandler());
 		server.createContext(ItemsHandler.getContext(), new ItemsHandler());
 		server.createContext(LogoutHandler.getContext(), new LogoutHandler());
+		server.createContext(LoginPageHandler.getContext(), new LoginPageHandler());
 	}
 	
 	private void addLibraries()
