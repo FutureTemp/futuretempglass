@@ -74,6 +74,10 @@ public class JSONOrderLibrary extends OrderLibrary{
 		{
 			return false;
 		}
+		if(ordersMap.get(order.getOrderNumber()) != null)
+		{
+			return false;
+		}
 		orders.add(order);
 		orderNumbers.add(order.getOrderNumber());
 		ordersMap.put(order.getOrderNumber(), order);
@@ -112,6 +116,7 @@ public class JSONOrderLibrary extends OrderLibrary{
 		}
 		orders.remove(order);
 		orderNumbers.remove(orderId);
+		ordersMap.put(orderId, null);
 		save();
 		return true;
 	}

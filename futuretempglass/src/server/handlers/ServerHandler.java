@@ -37,6 +37,10 @@ public abstract class ServerHandler implements HttpHandler{
 			{
 				onPost(ex);
 			}
+			else if("PUT".equals(ex.getRequestMethod()))
+			{
+				onPut(ex);
+			}
 		}
 		catch(Exception e)
 		{
@@ -79,6 +83,11 @@ public abstract class ServerHandler implements HttpHandler{
 
 	}
 
+	protected void onPut(HttpExchange ex) throws Exception
+	{
+
+	}
+
 	protected boolean authenticate(HttpExchange ex)
 	{
 		return ex.getAttribute("session") != null;
@@ -112,8 +121,8 @@ public abstract class ServerHandler implements HttpHandler{
 		while (line != null)
 		{
 			builder.append(line);
+			line = reader.readLine();
 		}
-		reader.close();
 		return builder.toString();
 	}
 

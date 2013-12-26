@@ -59,7 +59,6 @@ public class HTTPUtils{
 
 			connection.setRequestProperty("Content-Length",
 					"" + Integer.toString(parameters.getBytes().length));
-			connection.setRequestProperty("Content-Language", "en-US");
 
 			connection.setUseCaches(false);
 			connection.setDoInput(true);
@@ -101,7 +100,7 @@ public class HTTPUtils{
 	}
 
 	public static String doPostRequest(String targetURL,
-			HashMap<String, String> parameters)
+			String content, HashMap<String, String> headerInfo)
 	{
 		URL url;
 		HttpURLConnection connection = null;
@@ -111,23 +110,27 @@ public class HTTPUtils{
 			url = new URL(targetURL);
 			connection = (HttpURLConnection)url.openConnection();
 			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-Type",
-					"application/x-www-form-urlencoded");
-
-			String parametersString = buildParametersString(parameters);
 
 			connection.setRequestProperty("Content-Length",
-					"" + Integer.toString(parametersString.getBytes().length));
-			connection.setRequestProperty("Content-Language", "en-US");
+					"" + Integer.toString(content.getBytes().length));
 
 			connection.setUseCaches(false);
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
 
+			// Add header information
+			if(headerInfo != null)
+			{
+				for(String key: headerInfo.keySet())
+				{
+					connection.setRequestProperty(key, headerInfo.get(key));
+				}
+			}
+			
 			// Send request
 			DataOutputStream wr = new DataOutputStream(
 					connection.getOutputStream());
-			wr.writeBytes(parametersString);
+			wr.writeBytes(content);
 			wr.flush();
 			wr.close();
 
@@ -162,12 +165,69 @@ public class HTTPUtils{
 		}
 	}
 
-	public static void main(String[] args) throws Exception
+	public static String doPutRequest(String targetURL,
+			String content, HashMap<String, String> headerInfo)
 	{
-		HashMap<String, String> parameters = new HashMap<String, String>();
-		parameters.put("username", "francesco");
-		System.out.println(doGetRequest("http://localhost:8080/token",
-				parameters, null));
-	}
+		URL url;
+		HttpURLConnection connection = null;
+		try
+		{
+			// Create connection
+			url = new URL(targetURL);
+			connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod("PUT");
 
+			connection.setRequestProperty("Content-Length",
+					"" + Integer.toString(content.getBytes().length));
+
+			connection.setUseCaches(false);
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+
+			// Add header information
+			if(headerInfo != null)
+			{
+				for(String key: headerInfo.keySet())
+				{
+					connection.setRequestProperty(key, headerInfo.get(key));
+				}
+			}
+			
+			// Send request
+			DataOutputStream wr = new DataOutputStream(
+					connection.getOutputStream());
+			wr.writeBytes(content);
+			wr.flush();
+			wr.close();
+
+			// Get Response
+			InputStream is = connection.getInputStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			String line;
+			StringBuffer response = new StringBuffer();
+			while ((line = rd.readLine()) != null)
+			{
+				response.append(line);
+				response.append('\r');
+			}
+			rd.close();
+			return response.toString();
+
+		}
+		catch(Exception e)
+		{
+
+			e.printStackTrace();
+			return null;
+
+		}
+		finally
+		{
+
+			if(connection != null)
+			{
+				connection.disconnect();
+			}
+		}
+	}
 }

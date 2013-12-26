@@ -1,8 +1,13 @@
 package orders;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class Order{
 
 	private String orderNumber;
@@ -11,7 +16,7 @@ public class Order{
 
 	private Calendar dueDate;
 
-	private List<String> itemIds;
+	private List<String> itemIds = new ArrayList<String>();
 
 	private boolean rush;
 

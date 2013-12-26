@@ -3,7 +3,6 @@ package server.handlers;
 import java.util.List;
 
 import orders.Order;
-import storage.database.DBOrderLibrary;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -52,11 +51,21 @@ public class OrderHandler extends ServerHandler{
 		}
 	}
 
-	public static void main(String[] args) throws Exception
+	@Override
+	protected void onPost(HttpExchange ex) throws Exception
 	{
+		super.onPost(ex);
+		sendHeader(ex);
 		ObjectMapper mapper = new ObjectMapper();
-		Order order = new DBOrderLibrary().getOrder("123");
-		System.out.println(order);
-		System.out.println(mapper.writeValueAsString(order));
+		Order order = mapper.readValue(getRequestData(ex), Order.class);
+		if(Application.getOrderLibrary().addOrder(order))
+		{
+			sendResponse("Added", ex);
+		}
+		else if(Application.getOrderLibrary().updateOrder(order))
+		{
+			sendResponse("Updated", ex);
+		}
 	}
+
 }
