@@ -127,7 +127,14 @@ public abstract class ServerHandler implements HttpHandler{
 			for(String query: queries)
 			{
 				String[] pair = query.split("=");
-				parameters.put(pair[0], pair[1]);
+				if(pair.length == 1)
+				{
+					parameters.put(pair[0], "");
+				}
+				else
+				{
+					parameters.put(pair[0], pair[1]);
+				}
 			}
 		}
 		ex.setAttribute("parameters", parameters);
