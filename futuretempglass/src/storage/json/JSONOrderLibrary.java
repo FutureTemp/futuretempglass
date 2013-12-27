@@ -160,4 +160,15 @@ public class JSONOrderLibrary extends OrderLibrary{
 		return null;
 	}
 
+	@Override
+	public List<Order> getOrders(List<String> orderNumbers) throws Exception
+	{
+		List<Order> orders = new ArrayList<Order>();
+		for(String orderNumber: orderNumbers)
+		{
+			orders.add(ordersMap.get(orderNumber));
+		}
+		return orders;
+	}
+
 }

@@ -132,6 +132,12 @@ public class XmlItemLibrary extends ItemLibrary{
 	}
 
 	@Override
+	public boolean addItems(List<Item> items) throws Exception
+	{
+		throw new Exception("MUST IMPLEMENT");
+	}
+	
+	@Override
 	public boolean updateItem(Item item)
 	{
 		if(item == null || item.getItemId() == null)
@@ -191,4 +197,5 @@ public class XmlItemLibrary extends ItemLibrary{
 		}
 		return items;
 	}
+
 }

@@ -193,4 +193,14 @@ public class DBItemLibrary extends ItemLibrary{
 
 		return dbResultsToItems(results);
 	}
+
+	@Override
+	public boolean addItems(List<Item> items) throws Exception
+	{
+		for(Item item: items)
+		{
+			addItem(item);
+		}
+		return true;// TODO optimize
+	}
 }

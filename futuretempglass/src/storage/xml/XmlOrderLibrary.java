@@ -278,4 +278,15 @@ public class XmlOrderLibrary extends OrderLibrary{
 		return filter.filter(new ArrayList<Order>(orders));
 	}
 
+	@Override
+	public List<Order> getOrders(List<String> orderNumbers) throws Exception
+	{
+		List<Order> orders = new ArrayList<Order>();
+		for(String orderNum: orderNumbers)
+		{
+			orders.add(getOrder(orderNum));
+		}
+		return orders;
+	}
+
 }

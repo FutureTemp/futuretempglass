@@ -156,4 +156,10 @@ public class DBOrderLibrary extends OrderLibrary{
 		return orders;
 	}
 
+	@Override
+	public List<Order> getOrders(List<String> orderNumbers) throws Exception
+	{
+		throw new Exception("MUST IMPLEMENT METHOD");
+	}
+
 }

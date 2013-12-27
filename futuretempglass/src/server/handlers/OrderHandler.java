@@ -1,8 +1,10 @@
 package server.handlers;
 
+import java.util.HashMap;
 import java.util.List;
 
 import orders.Order;
+import utils.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -24,16 +26,11 @@ public class OrderHandler extends ServerHandler{
 		super.onGet(ex);
 		try
 		{
-			String orderNum = getParameters(ex).get("order");
-			// Send all orders
-			if(orderNum == null)
-			{
-				List<Order> orders = Application.getOrderLibrary().getOrders();
-				sendHeader(ex);
-				sendResponse(orders, ex);
-			}
+			HashMap<String, String> parameters = getParameters(ex);
+			String orderNum = parameters.get("order");
+			List<String> orderNums = StringUtils.stringToList(parameters.get("orders"));
 			// Send one order
-			else
+			if(!StringUtils.isEmpty(orderNum))
 			{
 				Order order = Application.getOrderLibrary().getOrder(orderNum);
 				if(order == null)
@@ -43,6 +40,20 @@ public class OrderHandler extends ServerHandler{
 				}
 				sendHeader(ex);
 				sendResponse(order, ex);
+			}
+			// Send list of orders
+			else if(orderNums != null && orderNums.size() > 0)
+			{
+				List<Order> orders = Application.getOrderLibrary().getOrders(orderNums);
+				sendHeader(ex);
+				sendResponse(orders, ex);
+			}
+			// Send all orders
+			else
+			{
+				List<Order> orders = Application.getOrderLibrary().getOrders();
+				sendHeader(ex);
+				sendResponse(orders, ex);
 			}
 		}
 		catch(Exception e)

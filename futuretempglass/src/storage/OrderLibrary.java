@@ -20,6 +20,8 @@ public abstract class OrderLibrary{
 
 	public abstract List<Order> getOrders() throws Exception;
 	
+	public abstract List<Order> getOrders(List<String> orderNumbers) throws Exception;
+	
 	public abstract List<String> getOrderNumbers() throws Exception;
 
 	public abstract String getNextOrderNumber();

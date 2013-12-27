@@ -4,7 +4,6 @@ import items.Item;
 import items.ItemFilter;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,9 +12,7 @@ import orders.Order;
 import storage.ItemLibrary;
 import utils.StringUtils;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -101,6 +98,26 @@ public class JSONItemLibrary extends ItemLibrary{
 		}
 		items.add(item);
 		itemsMap.put(item.getItemId(), item);
+		save();
+		return true;
+	}
+	
+	@Override
+	public boolean addItems(List<Item> items) throws Exception
+	{
+		for(Item item: items)
+		{
+			if(item == null)
+			{
+				continue;
+			}
+			if(StringUtils.isEmpty(item.getItemId()))
+			{
+				item.setItemId(getAvailableId());
+			}
+			items.add(item);
+			itemsMap.put(item.getItemId(), item);
+		}
 		save();
 		return true;
 	}

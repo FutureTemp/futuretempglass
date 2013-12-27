@@ -2,9 +2,12 @@ package server.handlers;
 
 import items.Item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 
 import core.Application;
@@ -35,7 +38,8 @@ public class ItemsHandler extends ServerHandler{
 		// all items in an order
 		else if(orderId != null)
 		{
-			List<Item> items = Application.getItemLibrary().getItemsInOrder(orderId);
+			List<Item> items = Application.getItemLibrary().getItemsInOrder(
+					orderId);
 			sendResponse(items, ex);
 		}
 		// all items
@@ -46,4 +50,42 @@ public class ItemsHandler extends ServerHandler{
 		}
 	}
 
+	@Override
+	protected void onPost(HttpExchange ex) throws Exception
+	{
+		super.onPost(ex);
+		sendHeader(ex);
+		ObjectMapper mapper = new ObjectMapper();
+		String requestData = getRequestData(ex);
+		List<Item> items = null;
+		try
+		{
+			items = mapper.readValue(requestData,
+					new TypeReference<List<Item>>(){});
+		}
+		catch(Exception e)
+		{
+
+		}
+		if(items == null)
+		{
+			items = new ArrayList<Item>();
+			try
+			{
+				items.add(mapper.readValue(requestData, Item.class));
+			}
+			catch(Exception e)
+			{
+
+			}
+		}
+		if(items.size() == 1)
+		{
+			Application.getItemLibrary().updateItem(items.get(0));
+		}
+		else if(items.size() > 1)
+		{
+			Application.getItemLibrary().addItems(items);
+		}
+	}
 }

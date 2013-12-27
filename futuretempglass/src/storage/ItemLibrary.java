@@ -17,6 +17,8 @@ public abstract class ItemLibrary{
 
 	public abstract boolean addItem(Item item);
 
+	public abstract boolean addItems(List<Item> items) throws Exception;
+	
 	public abstract boolean updateItem(Item item);
 
 	public abstract boolean deleteItem(Item item);

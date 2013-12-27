@@ -1,7 +1,6 @@
 package utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StringUtils{
@@ -65,7 +64,7 @@ public class StringUtils{
 		{
 			return new ArrayList<String>();
 		}
-		String[] stringArray = string.split(", ");
+		String[] stringArray = string.split(" ?, ?");
 		List<String> stringList = new ArrayList<String>();
 		for(String s: stringArray)
 		{
