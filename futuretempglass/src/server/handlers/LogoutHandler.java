@@ -24,7 +24,7 @@ public class LogoutHandler extends ServerHandler{
 		sendHeader(ex);
 		for(int i = 0; i < activeSessions.size(); i++)
 		{
-			if(activeSessions.get(i).isMatchingSession(ex))
+			if(activeSessions.get(i).isMatchingAddress(ex))
 			{
 				activeSessions.remove(i);
 				sendResponse("Logout Successful", ex);

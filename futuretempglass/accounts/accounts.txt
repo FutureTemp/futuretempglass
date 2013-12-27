@@ -1,0 +1,13 @@
+[ {
+  "username" : "francesco",
+  "hashedPassword" : "85A53B975CF2EB3AE11CD1D8A0B33A83AA740CC858DFF19AFB7B9C91278C43C0",
+  "firstName" : "Francesco",
+  "lastName" : "Macchione",
+  "admin" : true
+}, {
+  "username" : "marco",
+  "hashedPassword" : "48917CDB96F6F62BFCE07CBB762C844A55DA2E0EAD66A1C4210F597E690AEC8A",
+  "firstName" : "Marco",
+  "lastName" : "Macchione",
+  "admin" : false
+} ]

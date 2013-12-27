@@ -6,8 +6,8 @@ import java.util.List;
 
 import server.Server;
 import server.Session;
+import server.objects.Account;
 import utils.AccountUtils;
-import utils.StringUtils;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
@@ -27,7 +27,20 @@ public class LoginHandler extends ServerHandler{
 		ex.sendResponseHeaders(200, 0);
 		if(authenticate(ex))
 		{
-			Session session = new Session(ex);
+			sendResponse("Must Logout First", ex);
+			finish(ex);
+			return;
+		}
+		Account account = authenticateLoginAndgetAccount(ex);
+
+		if(account != null)
+		{
+			Session session = getActiveSession(account.getUsername());
+			if(session == null)
+			{
+				session = new Session();
+			}
+			session.init(account, ex);
 			Server.getActiveSessions().add(session);
 			ex.getResponseBody().write("Login Successful".getBytes());
 		}
@@ -38,7 +51,7 @@ public class LoginHandler extends ServerHandler{
 		finish(ex);
 	}
 
-	protected boolean authenticate(HttpExchange ex)
+	protected Account authenticateLoginAndgetAccount(HttpExchange ex)
 	{
 		try
 		{
@@ -52,16 +65,14 @@ public class LoginHandler extends ServerHandler{
 			{
 				hash = getParameters(ex).get("Authentication");
 			}
-			if(AccountUtils.authenticate(hash))
-			{
-				return true;
-			}
+			Account account = AccountUtils.authenticate(hash);
+			return account;
 		}
 		catch(Exception e)
 		{
 
 		}
-		return false;
+		return null;
 	}
 
 	public static void main(String[] args) throws Exception

@@ -10,6 +10,7 @@ import storage.database.DBInventoryLibrary;
 import storage.database.DBItemLibrary;
 import storage.database.DBOrderLibrary;
 import storage.database.DBProductionStepsLibrary;
+import storage.json.JSONAccountLibrary;
 import storage.json.JSONItemLibrary;
 import storage.json.JSONOrderLibrary;
 import storage.xml.XmlAccountLibrary;
@@ -76,7 +77,7 @@ public class Application{
 	public static void setJSONLibraries()
 	{
 		inventoryLibrary = new XmlInventoryLibrary();
-		accountLibrary = new XmlAccountLibrary();
+		accountLibrary = new JSONAccountLibrary();
 		productionStepsLibrary = new XmlProductionStepsLibrary();
 		orderLibrary = new JSONOrderLibrary();
 		itemLibrary = new JSONItemLibrary();

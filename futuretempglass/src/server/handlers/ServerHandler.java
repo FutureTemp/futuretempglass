@@ -21,7 +21,6 @@ public abstract class ServerHandler implements HttpHandler{
 	{
 		try
 		{
-			ex.setAttribute("session", getActiveSession(ex));
 			if(!authenticate(ex))
 			{
 				sendHeader(ex);
@@ -57,7 +56,20 @@ public abstract class ServerHandler implements HttpHandler{
 		List<Session> activeSessions = Server.getActiveSessions();
 		for(Session session: activeSessions)
 		{
-			if(session.isMatchingSession(ex))
+			if(session.isMatchingAddress(ex))
+			{
+				return session;
+			}
+		}
+		return null;
+	}
+
+	protected static Session getActiveSession(String username)
+	{
+		List<Session> activeSessions = Server.getActiveSessions();
+		for(Session session: activeSessions)
+		{
+			if(session.getAccount().getUsername().equals(username))
 			{
 				return session;
 			}
@@ -90,6 +102,7 @@ public abstract class ServerHandler implements HttpHandler{
 
 	protected boolean authenticate(HttpExchange ex)
 	{
+		ex.setAttribute("session", getActiveSession(ex));
 		return ex.getAttribute("session") != null;
 	}
 
