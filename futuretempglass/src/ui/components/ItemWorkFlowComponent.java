@@ -13,7 +13,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import ui.views.Window;
-import core.Application;
+import utils.OrderUtils;
 
 public class ItemWorkFlowComponent extends Component{
 
@@ -25,9 +25,11 @@ public class ItemWorkFlowComponent extends Component{
 
 	/**
 	 * Create the panel.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
-	public ItemWorkFlowComponent(Item item, Window parentWindow) throws Exception
+	public ItemWorkFlowComponent(Item item, Window parentWindow)
+			throws Exception
 	{
 		super(parentWindow);
 
@@ -53,8 +55,8 @@ public class ItemWorkFlowComponent extends Component{
 		gbc_lblOrder.gridy = 0;
 		add(lblOrder, gbc_lblOrder);
 
-		JLabel lblItemName = new JLabel(Application.getOrderLibrary()
-				.getOrder(item.getOrderNumber()).getCustomer());
+		JLabel lblItemName = new JLabel(OrderUtils.getOrder(
+				item.getOrderNumber()).getCustomer());
 		GridBagConstraints gbc_lblItemName = new GridBagConstraints();
 		gbc_lblItemName.gridx = 0;
 		gbc_lblItemName.gridy = 1;

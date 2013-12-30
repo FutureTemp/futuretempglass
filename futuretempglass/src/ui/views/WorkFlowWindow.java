@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import ui.components.WorkFlowColumn;
+import utils.ItemUtils;
 import workflow.ProductionStep;
 import core.Application;
 
@@ -102,7 +103,7 @@ public class WorkFlowWindow extends Window{
 		{
 			itemLists.put(productionStep.getName(), new ArrayList<Item>());
 		}
-		List<Item> allItems = Application.getItemLibrary().getItems();
+		List<Item> allItems = ItemUtils.getItems();
 		for(Item item: allItems)
 		{
 			if(item.getCurrentStep() == null)

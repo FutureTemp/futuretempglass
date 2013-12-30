@@ -115,7 +115,7 @@ public class JSONItemLibrary extends ItemLibrary{
 			{
 				item.setItemId(getAvailableId());
 			}
-			items.add(item);
+			this.items.add(item);
 			itemsMap.put(item.getItemId(), item);
 		}
 		save();
@@ -134,16 +134,6 @@ public class JSONItemLibrary extends ItemLibrary{
 			return false;
 		}
 		return deleteItem(item.getItemId()) && addItem(item);
-	}
-
-	@Override
-	public boolean deleteItem(Item item)
-	{
-		if(item == null)
-		{
-			return false;
-		}
-		return deleteItem(item.getItemId());
 	}
 
 	@Override

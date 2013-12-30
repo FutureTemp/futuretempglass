@@ -176,10 +176,6 @@ public class EditItemWindow extends Window implements MouseListener{
 			}
 			else if(e.getSource().equals(doneButton))
 			{
-				if(Mode.NEW.equals(mode))
-				{
-					item.setItemId(Application.getItemLibrary().getAvailableId());
-				}
 				for(InputQuestion question: attributeQuestions)
 				{
 					item.setAttribute(question.getField(), question.getValue());

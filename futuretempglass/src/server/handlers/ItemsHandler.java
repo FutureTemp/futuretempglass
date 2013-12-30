@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import utils.ItemUtils;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -38,14 +40,13 @@ public class ItemsHandler extends ServerHandler{
 		// all items in an order
 		else if(orderId != null)
 		{
-			List<Item> items = Application.getItemLibrary().getItemsInOrder(
-					orderId);
+			List<Item> items = ItemUtils.getItemsInOrder(orderId);
 			sendResponse(items, ex);
 		}
 		// all items
 		else
 		{
-			List<Item> items = Application.getItemLibrary().getItems();
+			List<Item> items = ItemUtils.getItems();
 			sendResponse(items, ex);
 		}
 	}
@@ -81,11 +82,11 @@ public class ItemsHandler extends ServerHandler{
 		}
 		if(items.size() == 1)
 		{
-			Application.getItemLibrary().updateItem(items.get(0));
+			ItemUtils.updateItem(items.get(0));
 		}
 		else if(items.size() > 1)
 		{
-			Application.getItemLibrary().addItems(items);
+			ItemUtils.addItems(items);
 		}
 	}
 }

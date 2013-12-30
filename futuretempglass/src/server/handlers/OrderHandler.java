@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import orders.Order;
+import utils.OrderUtils;
 import utils.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,11 +29,12 @@ public class OrderHandler extends ServerHandler{
 		{
 			HashMap<String, String> parameters = getParameters(ex);
 			String orderNum = parameters.get("order");
-			List<String> orderNums = StringUtils.stringToList(parameters.get("orders"));
+			List<String> orderNums = StringUtils.stringToList(parameters
+					.get("orders"));
 			// Send one order
 			if(!StringUtils.isEmpty(orderNum))
 			{
-				Order order = Application.getOrderLibrary().getOrder(orderNum);
+				Order order = OrderUtils.getOrder(orderNum);
 				if(order == null)
 				{
 					ex.sendResponseHeaders(404, 0);
@@ -44,14 +46,14 @@ public class OrderHandler extends ServerHandler{
 			// Send list of orders
 			else if(orderNums != null && orderNums.size() > 0)
 			{
-				List<Order> orders = Application.getOrderLibrary().getOrders(orderNums);
+				List<Order> orders = OrderUtils.getOrders(orderNums);
 				sendHeader(ex);
 				sendResponse(orders, ex);
 			}
 			// Send all orders
 			else
 			{
-				List<Order> orders = Application.getOrderLibrary().getOrders();
+				List<Order> orders = OrderUtils.getOrders();
 				sendHeader(ex);
 				sendResponse(orders, ex);
 			}
@@ -69,14 +71,8 @@ public class OrderHandler extends ServerHandler{
 		sendHeader(ex);
 		ObjectMapper mapper = new ObjectMapper();
 		Order order = mapper.readValue(getRequestData(ex), Order.class);
-		if(Application.getOrderLibrary().addOrder(order))
-		{
-			sendResponse("Added", ex);
-		}
-		else if(Application.getOrderLibrary().updateOrder(order))
-		{
-			sendResponse("Updated", ex);
-		}
+		OrderUtils.addOrder(order);
+		sendResponse("Added", ex);
 	}
 
 }

@@ -158,18 +158,6 @@ public class XmlItemLibrary extends ItemLibrary{
 
 	@Override
 	@NotNull
-	public boolean deleteItem(Item item)
-	{
-		if(item == null || item.getItemId() == null)
-		{
-			return false;
-		}
-		deleteItem(item.getItemId());
-		return false;
-	}
-
-	@Override
-	@NotNull
 	public boolean deleteItem(String itemId)
 	{
 		if(itemId == null)

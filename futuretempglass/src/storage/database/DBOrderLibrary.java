@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.Application;
-
 import orders.Order;
 import orders.OrderFilter;
 import storage.OrderLibrary;
@@ -135,6 +134,12 @@ public class DBOrderLibrary extends OrderLibrary{
 		return null;
 	}
 
+	@Override
+	public List<Order> getOrders(List<String> orderNumbers) throws Exception
+	{
+		throw new Exception("MUST IMPLEMENT METHOD");
+	}
+
 	private static List<Order> dbResultsToOrders(DBResults results)
 			throws Exception
 	{
@@ -155,11 +160,4 @@ public class DBOrderLibrary extends OrderLibrary{
 
 		return orders;
 	}
-
-	@Override
-	public List<Order> getOrders(List<String> orderNumbers) throws Exception
-	{
-		throw new Exception("MUST IMPLEMENT METHOD");
-	}
-
 }

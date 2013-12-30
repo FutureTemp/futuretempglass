@@ -15,6 +15,9 @@ import javax.swing.JTextField;
 import orders.Order;
 import ui.Mode;
 import ui.components.ItemOrderComponent;
+import utils.ItemUtils;
+import utils.OrderUtils;
+import utils.StringUtils;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -85,22 +88,21 @@ public class EditOrderWindow extends Window{
 		{
 		case EDIT:
 			setTitle("Edit Order " + order.getOrderNumber());
-			items = Application.getItemLibrary().getItems(order.getItemIds());
+			items = ItemUtils.getItems(order.getItemIds());
 			break;
 		case NEW:
 			setTitle("Order Entry");
 			break;
 		}
 
-		getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-		}, new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
-				FormFactory.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
-		}));
+		getContentPane().setLayout(
+				new FormLayout(new ColumnSpec[] {
+						FormFactory.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("default:grow"), }, new RowSpec[] {
+						FormFactory.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("default:grow"),
+						FormFactory.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("default:grow"), }));
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -111,22 +113,14 @@ public class EditOrderWindow extends Window{
 		addItemButton = new JButton("Add Item");
 		addItemButton.addMouseListener(this);
 		informationPane.setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC,
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("96px:grow"),
-		}, new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.LINE_GAP_ROWSPEC,
-				RowSpec.decode("25px"),
-		}));
+				ColumnSpec.decode("96px:grow"), }, new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("25px"), }));
 
 		orderNumberLabel = new JLabel("Order #: ");
 		informationPane.add(orderNumberLabel, "2, 2, right, default");
@@ -135,11 +129,9 @@ public class EditOrderWindow extends Window{
 		informationPane.add(orderNumberField, "4, 2, fill, default");
 		orderNumberField.setColumns(10);
 
-		if(mode == Mode.NEW
-				&& Application.getOrderLibrary().isSequentialOrderNumbersUsed())
+		if(mode == Mode.NEW)
 		{
-			order.setOrderNumber(Application.getOrderLibrary()
-					.getNextOrderNumber());
+			order.setOrderNumber(OrderUtils.getNextOrderNumber());
 		}
 		orderNumberField.setText(order.getOrderNumber());
 
@@ -211,8 +203,7 @@ public class EditOrderWindow extends Window{
 
 		itemsPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-		}, rowSpec));
+				ColumnSpec.decode("default:grow"), }, rowSpec));
 
 		if(itemComponents != null)
 		{
@@ -262,33 +253,40 @@ public class EditOrderWindow extends Window{
 		switch (mode)
 		{
 		case NEW:
+			for(int i = 0; i < order.getItemIds().size(); i++)
+			{
+				if(order.getItemIds().get(i).startsWith("Temp-"))
+				{
+					order.getItemIds().remove(i);
+					i--;
+				}
+			}
 			for(Item item: newItems)
 			{
+				item.setItemId("");
 				item.setOrderNumber(order.getOrderNumber());
-				Application.getItemLibrary().addItem(item);
 			}
-			
-			Application.getOrderLibrary().addOrder(order);
-
+			OrderUtils.addOrder(order);
+			ItemUtils.addItems(newItems);
 
 			break;
 		case EDIT:
-			if(Application.getOrderLibrary().updateOrder(order))
+			OrderUtils.updateOrder(order);
+
+			for(Item item: newItems)
 			{
-				for(Item item: newItems)
-				{
-					item.setOrderNumber(order.getOrderNumber());
-					Application.getItemLibrary().addItem(item);
-				}
-				for(Item item: updateItems)
-				{
-					Application.getItemLibrary().updateItem(item);
-				}
-				for(Item item: deletedItems)
-				{
-					Application.getItemLibrary().deleteItem(item);
-				}
+				item.setOrderNumber(order.getOrderNumber());
+				ItemUtils.addItem(item);
 			}
+			for(Item item: updateItems)
+			{
+				ItemUtils.updateItem(item);
+			}
+			for(Item item: deletedItems)
+			{
+				ItemUtils.deleteItem(item.getItemId());
+			}
+
 			break;
 		}
 		if(getParent() != null)
@@ -326,7 +324,8 @@ public class EditOrderWindow extends Window{
 		{
 			if(item.getItemId() == null)
 			{
-				item.setItemId(Application.getItemLibrary().getAvailableId());
+				item.setItemId("Temp-"
+						+ StringUtils.getRandomStringOfLettersAndNumbers(8));
 			}
 			items.add(item);
 			newItems.add(item);

@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import orders.Order;
 import ui.Mode;
+import utils.OrderUtils;
 import core.Application;
 
 public class OrderSearchWindow extends Window{
@@ -45,7 +46,8 @@ public class OrderSearchWindow extends Window{
 
 	/**
 	 * Create the frame.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	public OrderSearchWindow(Window parentWindow) throws Exception
 	{
@@ -62,24 +64,10 @@ public class OrderSearchWindow extends Window{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] {
-				0,
-				0
-		};
-		gbl_contentPane.rowHeights = new int[] {
-				0,
-				0,
-				0
-		};
-		gbl_contentPane.columnWeights = new double[] {
-				1.0,
-				Double.MIN_VALUE
-		};
-		gbl_contentPane.rowWeights = new double[] {
-				0.2,
-				1.0,
-				Double.MIN_VALUE
-		};
+		gbl_contentPane.columnWidths = new int[] { 0, 0 };
+		gbl_contentPane.rowHeights = new int[] { 0, 0, 0 };
+		gbl_contentPane.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.2, 1.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
 		JPanel mainPane = new JPanel();
@@ -90,28 +78,11 @@ public class OrderSearchWindow extends Window{
 		gbc_mainPane.gridy = 0;
 		contentPane.add(mainPane, gbc_mainPane);
 		GridBagLayout gbl_mainPane = new GridBagLayout();
-		gbl_mainPane.columnWidths = new int[] {
-				0,
-				0
-		};
-		gbl_mainPane.rowHeights = new int[] {
-				0,
-				0,
-				0,
-				0,
-				0
-		};
-		gbl_mainPane.columnWeights = new double[] {
-				0.0,
-				Double.MIN_VALUE
-		};
-		gbl_mainPane.rowWeights = new double[] {
-				0.0,
-				0.0,
-				0.0,
-				0.0,
-				Double.MIN_VALUE
-		};
+		gbl_mainPane.columnWidths = new int[] { 0, 0 };
+		gbl_mainPane.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_mainPane.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
+		gbl_mainPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0,
+				Double.MIN_VALUE };
 		mainPane.setLayout(gbl_mainPane);
 
 		newOrderButton = new JButton("New Order");
@@ -151,8 +122,7 @@ public class OrderSearchWindow extends Window{
 		gbc_scrollPane.gridy = 1;
 		contentPane.add(scrollPane, gbc_scrollPane);
 
-		List<String> orderNumbers = Application.getOrderLibrary()
-				.getOrderNumbers();
+		List<String> orderNumbers = OrderUtils.getOrderNumbers();
 		if(orderNumbers == null)
 		{
 			orderNumbers = new ArrayList<String>();
@@ -169,8 +139,7 @@ public class OrderSearchWindow extends Window{
 	{
 		for(Object orderNumber: orderList.getSelectedValuesList())
 		{
-			Order order = Application.getOrderLibrary().getOrder(
-					(String)orderNumber);
+			Order order = OrderUtils.getOrder((String)orderNumber);
 			new EditOrderWindow(order, Mode.EDIT, this);
 		}
 	}
@@ -179,7 +148,7 @@ public class OrderSearchWindow extends Window{
 	{
 		for(Object orderNumber: orderList.getSelectedValuesList())
 		{
-			Application.getOrderLibrary().deleteOrder((String)orderNumber);
+			OrderUtils.deleteOrder((String)orderNumber);
 			refresh();
 		}
 	}

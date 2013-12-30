@@ -21,8 +21,6 @@ public abstract class ItemLibrary{
 	
 	public abstract boolean updateItem(Item item);
 
-	public abstract boolean deleteItem(Item item);
-
 	public abstract boolean deleteItem(String itemId);
 	
 	public abstract List<Item> getItemsInOrder(String orderNum) throws Exception;

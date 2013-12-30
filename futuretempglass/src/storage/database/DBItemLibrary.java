@@ -80,12 +80,6 @@ public class DBItemLibrary extends ItemLibrary{
 	}
 
 	@Override
-	public boolean deleteItem(Item item)
-	{
-		return deleteItem(item.getItemId());
-	}
-
-	@Override
 	public boolean deleteItem(String itemId)
 	{
 		String query = "DELETE FROM `" + database + "`.`" + table + "` WHERE `"
