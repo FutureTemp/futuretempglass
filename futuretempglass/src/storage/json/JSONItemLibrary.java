@@ -146,6 +146,7 @@ public class JSONItemLibrary extends ItemLibrary{
 			return false;
 		}
 		items.remove(itemsMap.remove(itemId));
+		save();
 		return true;
 	}
 
@@ -174,6 +175,17 @@ public class JSONItemLibrary extends ItemLibrary{
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean deleteItems(List<String> itemIds)
+	{
+		boolean result = true;
+		for(String itemId: itemIds)
+		{
+			result = result && deleteItem(itemId);
+		}
+		return result;
 	}
 
 }

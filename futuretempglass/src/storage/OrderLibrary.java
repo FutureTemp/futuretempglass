@@ -32,7 +32,7 @@ public abstract class OrderLibrary{
 	public abstract void setSequentialOrderNumbersUsed(boolean used);
 
 	public abstract List<Order> getOrdersWithFilter(OrderFilter filter);
-	
+
 	public boolean addItemToOrder(String itemId, String orderNumber)
 			throws Exception
 	{
@@ -62,4 +62,12 @@ public abstract class OrderLibrary{
 		return true;
 	}
 
+	public boolean removeItemsFromOrder(String itemId, String orderNumber)
+			throws Exception
+	{
+		Order order = getOrder(orderNumber);
+		order.getItemIds().remove(itemId);
+		updateOrder(order);
+		return true;
+	}
 }

@@ -23,6 +23,8 @@ public abstract class ItemLibrary{
 
 	public abstract boolean deleteItem(String itemId);
 	
+	public abstract boolean deleteItems(List<String> itemIds);
+	
 	public abstract List<Item> getItemsInOrder(String orderNum) throws Exception;
 	
 	public abstract List<Item> getItemsWithFilter(ItemFilter filter);

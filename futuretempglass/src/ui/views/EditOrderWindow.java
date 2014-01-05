@@ -250,17 +250,17 @@ public class EditOrderWindow extends Window{
 	{
 		order.setOrderNumber(orderNumberField.getText());
 		order.setCustomer(customerField.getText());
+		for(int i = 0; i < order.getItemIds().size(); i++)
+		{
+			if(order.getItemIds().get(i).startsWith("Temp-"))
+			{
+				order.getItemIds().remove(i);
+				i--;
+			}
+		}
 		switch (mode)
 		{
 		case NEW:
-			for(int i = 0; i < order.getItemIds().size(); i++)
-			{
-				if(order.getItemIds().get(i).startsWith("Temp-"))
-				{
-					order.getItemIds().remove(i);
-					i--;
-				}
-			}
 			for(Item item: newItems)
 			{
 				item.setItemId("");
@@ -275,6 +275,7 @@ public class EditOrderWindow extends Window{
 
 			for(Item item: newItems)
 			{
+				item.setItemId("");
 				item.setOrderNumber(order.getOrderNumber());
 				ItemUtils.addItem(item);
 			}

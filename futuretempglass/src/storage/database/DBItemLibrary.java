@@ -197,4 +197,11 @@ public class DBItemLibrary extends ItemLibrary{
 		}
 		return true;// TODO optimize
 	}
+
+	@Override
+	public boolean deleteItems(List<String> itemIds)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

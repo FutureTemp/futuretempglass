@@ -2,6 +2,8 @@ package utils;
 
 import items.Item;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import core.Application;
@@ -49,6 +51,24 @@ public class ItemUtils{
 			throw new Exception("Items cannot be null");
 		}
 		Application.getItemLibrary().addItems(items);
+		HashMap<String, List<String>> itemsMap = new HashMap<String, List<String>>();
+		for(Item item: items)
+		{
+			if(!StringUtils.isEmpty(item.getOrderNumber()))
+			{
+				List<String> itemsInOrder = itemsMap.get(item.getOrderNumber());
+				if(itemsInOrder == null)
+				{
+					itemsInOrder = new ArrayList<String>();
+					itemsMap.put(item.getOrderNumber(), itemsInOrder);
+				}
+				itemsInOrder.add(item.getItemId());
+			}
+		}
+		for(String orderNumber: itemsMap.keySet())
+		{
+			Application.getOrderLibrary().addItemsToOrder(itemsMap.get(orderNumber), orderNumber);
+		}
 	}
 
 	public static void updateItem(Item item) throws Exception
@@ -66,10 +86,14 @@ public class ItemUtils{
 
 	public static void deleteItem(String itemId) throws Exception
 	{
-		if(StringUtils.isEmpty(itemId)){
+		if(StringUtils.isEmpty(itemId))
+		{
 			throw new Exception("Invalid item ID");
 		}
+		Item item = Application.getItemLibrary().getItem(itemId);
 		Application.getItemLibrary().deleteItem(itemId);
+		Application.getOrderLibrary().removeItemsFromOrder(itemId,
+				item.getOrderNumber());
 	}
 
 	public static List<Item> getItemsInOrder(String orderNum) throws Exception

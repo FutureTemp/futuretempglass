@@ -186,4 +186,11 @@ public class XmlItemLibrary extends ItemLibrary{
 		return items;
 	}
 
+	@Override
+	public boolean deleteItems(List<String> itemIds)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

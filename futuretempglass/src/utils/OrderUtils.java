@@ -48,7 +48,9 @@ public class OrderUtils{
 		{
 			throw new Exception("Invalid order number");
 		}
+		Order order = Application.getOrderLibrary().getOrder(orderId);
 		Application.getOrderLibrary().deleteOrder(orderId);
+		Application.getItemLibrary().deleteItems(order.getItemIds());
 	}
 
 	public static List<Order> getOrders() throws Exception
