@@ -8,6 +8,7 @@ import java.util.List;
 import orders.Order;
 import orders.OrderFilter;
 import storage.OrderLibrary;
+import utils.FileUtils;
 import utils.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -51,6 +52,7 @@ public class JSONOrderLibrary extends OrderLibrary{
 	{
 		try
 		{
+			FileUtils.createDirectoryAndFile(ORDERS_PATH);
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.enable(SerializationFeature.INDENT_OUTPUT);
 			mapper.writeValue(new File(ORDERS_PATH), orders);

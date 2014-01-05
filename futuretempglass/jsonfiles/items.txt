@@ -1,0 +1,20 @@
+[ {
+  "itemName" : "Starfire",
+  "orderNumber" : "1",
+  "quantity" : 0,
+  "productionSteps" : [ {
+    "name" : "Polishing",
+    "dependencies" : [ ]
+  } ],
+  "currentStep" : {
+    "name" : "Polishing",
+    "dependencies" : [ ]
+  },
+  "attributeNames" : [ "thickness", "width", "height" ],
+  "attributes" : {
+    "height" : "",
+    "thickness" : "",
+    "width" : ""
+  },
+  "itemId" : "8X2x7cPT"
+} ]

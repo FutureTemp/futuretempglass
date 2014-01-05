@@ -16,7 +16,7 @@ public class FileUtils{
 		File file = new File(path);
 		return writeFile(file, contents);
 	}
-	
+
 	public static boolean writeFile(String path, String contents)
 	{
 		List<String> fileContents = new ArrayList<String>();
@@ -121,13 +121,13 @@ public class FileUtils{
 		}
 		return contents;
 	}
-	
+
 	public static boolean deleteFile(String path)
 	{
 		File file = new File(path);
 		return deleteFile(file);
 	}
-	
+
 	public static boolean deleteFile(File file)
 	{
 		if(!file.exists())
@@ -135,6 +135,34 @@ public class FileUtils{
 			return false;
 		}
 		return file.delete();
+	}
+
+	public static boolean createDirectoryAndFile(File file)
+	{
+		boolean result = false;
+		if(!file.exists())
+		{
+			File dir = file.getParentFile();
+			result = dir.mkdirs();
+			if(result)
+			{
+				try
+				{
+					file.createNewFile();
+					result = file.createNewFile();
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
+	}
+
+	public static boolean createDirectoryAndFile(String filePath)
+	{
+		return createDirectoryAndFile(new File(filePath));
 	}
 
 }

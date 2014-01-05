@@ -10,6 +10,7 @@ import java.util.List;
 
 import orders.Order;
 import storage.ItemLibrary;
+import utils.FileUtils;
 import utils.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -54,6 +55,7 @@ public class JSONItemLibrary extends ItemLibrary{
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		try
 		{
+			FileUtils.createDirectoryAndFile(ITEMS_PATH);
 			mapper.writeValue(new File(ITEMS_PATH), items);
 		}
 		catch(Exception e)
