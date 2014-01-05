@@ -66,12 +66,14 @@ public class JSONOrderLibrary extends OrderLibrary{
 	@Override
 	public Order getOrder(String orderId) throws Exception
 	{
+		init();
 		return ordersMap.get(orderId);
 	}
 
 	@Override
 	public boolean addOrder(Order order) throws Exception
 	{
+		init();
 		if(StringUtils.isEmpty(order.getOrderNumber()))
 		{
 			return false;
@@ -90,6 +92,7 @@ public class JSONOrderLibrary extends OrderLibrary{
 	@Override
 	public boolean updateOrder(Order order) throws Exception
 	{
+		init();
 		boolean result = deleteOrder(order.getOrderNumber()) && addOrder(order);
 		if(result)
 		{
@@ -101,6 +104,7 @@ public class JSONOrderLibrary extends OrderLibrary{
 	@Override
 	public boolean deleteOrder(Order order) throws Exception
 	{
+		init();
 		if(order == null)
 		{
 			return false;
@@ -111,6 +115,7 @@ public class JSONOrderLibrary extends OrderLibrary{
 	@Override
 	public boolean deleteOrder(String orderId) throws Exception
 	{
+		init();
 		Order order = ordersMap.get(orderId);
 		if(order == null)
 		{
@@ -126,12 +131,14 @@ public class JSONOrderLibrary extends OrderLibrary{
 	@Override
 	public List<Order> getOrders() throws Exception
 	{
+		init();
 		return orders;
 	}
 
 	@Override
 	public List<String> getOrderNumbers() throws Exception
 	{
+		init();
 		return orderNumbers;
 	}
 
@@ -165,6 +172,7 @@ public class JSONOrderLibrary extends OrderLibrary{
 	@Override
 	public List<Order> getOrders(List<String> orderNumbers) throws Exception
 	{
+		init();
 		List<Order> orders = new ArrayList<Order>();
 		for(String orderNumber: orderNumbers)
 		{

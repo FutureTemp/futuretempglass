@@ -19,6 +19,18 @@ public class OrderUtils{
 		}
 		Application.getOrderLibrary().addOrder(order);
 	}
+	
+	public static void addOrders(List<Order> orders) throws Exception
+	{
+		if(orders == null)
+		{
+			throw new Exception("Orders list cannot be null");
+		}
+		for(Order order: orders)
+		{
+			addOrder(order);
+		}
+	}
 
 	public static Order getOrder(String orderId) throws Exception
 	{

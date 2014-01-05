@@ -16,6 +16,8 @@ import com.sun.net.httpserver.HttpHandler;
 
 public abstract class ServerHandler implements HttpHandler{
 
+	private ThreadLocal<Boolean> headerSent = new ThreadLocal<Boolean>();
+	
 	@Override
 	public void handle(HttpExchange ex) throws IOException
 	{
@@ -43,6 +45,11 @@ public abstract class ServerHandler implements HttpHandler{
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
+			if(!Boolean.TRUE.equals(headerSent.get()))
+			{
+				sendHeader(ex);
+			}
 			sendResponse(e.getMessage(), ex);
 		}
 		finally
@@ -109,6 +116,7 @@ public abstract class ServerHandler implements HttpHandler{
 	protected void sendHeader(HttpExchange ex) throws IOException
 	{
 		ex.sendResponseHeaders(200, 0);
+		headerSent.set(true);
 	}
 
 	protected void sendResponse(String response, HttpExchange ex)

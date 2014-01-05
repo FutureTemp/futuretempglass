@@ -1,7 +1,6 @@
 package server.handlers;
 
 import java.io.IOException;
-import java.security.MessageDigest;
 import java.util.List;
 
 import server.Server;
@@ -10,7 +9,6 @@ import server.objects.Account;
 import utils.AccountUtils;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
 public class LoginHandler extends ServerHandler{
 
@@ -75,12 +73,4 @@ public class LoginHandler extends ServerHandler{
 		return null;
 	}
 
-	public static void main(String[] args) throws Exception
-	{
-		MessageDigest m = MessageDigest.getInstance("SHA-256");
-		m.update("Hello World".getBytes());
-		byte[] bytes = m.digest();
-		String hex = HexBin.encode(bytes);
-		System.out.println(hex);
-	}
 }

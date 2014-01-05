@@ -7,10 +7,10 @@ import orders.Order;
 import utils.OrderUtils;
 import utils.StringUtils;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
-
-import core.Application;
 
 public class OrderHandler extends ServerHandler{
 
@@ -70,8 +70,17 @@ public class OrderHandler extends ServerHandler{
 		super.onPost(ex);
 		sendHeader(ex);
 		ObjectMapper mapper = new ObjectMapper();
-		Order order = mapper.readValue(getRequestData(ex), Order.class);
-		OrderUtils.addOrder(order);
+		String requestData = getRequestData(ex);
+		try
+		{
+			Order order = mapper.readValue(requestData, Order.class);
+			OrderUtils.addOrder(order);
+		}
+		catch(JsonMappingException e)
+		{
+			List<Order> orders = mapper.readValue(requestData, new TypeReference<List<Order>>(){});
+			OrderUtils.addOrders(orders);
+		}
 		sendResponse("Added", ex);
 	}
 

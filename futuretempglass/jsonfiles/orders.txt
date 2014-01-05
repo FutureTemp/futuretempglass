@@ -1,1 +1,5 @@
-[ ]
+[ {
+  "orderNumber" : "12345",
+  "itemIds" : [ ],
+  "rush" : false
+} ]
