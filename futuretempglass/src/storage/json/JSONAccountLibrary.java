@@ -58,21 +58,6 @@ public class JSONAccountLibrary extends AccountLibrary{
 	}
 
 	@Override
-	public String getHashedPassword(String username)
-	{
-		if(StringUtils.isEmpty(username))
-		{
-			return null;
-		}
-		Account account = accountsMap.get(username);
-		if(account == null)
-		{
-			return null;
-		}
-		return account.getHashedPassword();
-	}
-
-	@Override
 	public boolean addAcount(Account account)
 	{
 		if(accountsMap.get(account.getUsername()) != null)
@@ -108,14 +93,4 @@ public class JSONAccountLibrary extends AccountLibrary{
 		return accountsMap.get(username);
 	}
 
-	public static void main(String[] args)
-	{
-		JSONAccountLibrary library = new JSONAccountLibrary();
-		Account account = new Account();
-		account.setFirstName("Marco");
-		account.setLastName("Macchione");
-		account.setUsername("marco");
-		account.setPassword("12345");
-		library.addAcount(account);
-	}
 }

@@ -1,53 +1,49 @@
 package utils;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import server.objects.Account;
-
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
-
+import storage.AccountLibrary;
+import storage.json.JSONAccountLibrary;
 import core.Application;
 
 public class AccountUtils{
 
 	/**
-	 * Maps expected authentication hashes to the username associated to it
+	 * Maps expected authentication tokens to the username associated to it
 	 */
-	private static HashMap<String, String> hashes = new HashMap<String, String>();
+	private static HashMap<String, String> usernames = new HashMap<String, String>();
 
-	public static Account authenticate(String hash)
+	public static Account authenticate(String token, String password)
 	{
-		return Application.getAccountLibrary().getAccount(hashes.remove(hash));
+		String username = usernames.get(token);
+		if(username == null)
+		{
+			return null;
+		}
+		Account account = Application.getAccountLibrary().getAccount(username);
+		if(account == null)
+		{
+			return null;
+		}
+		if(account.authenticate(password))
+		{
+			usernames.remove(token);
+			return account;
+		}
+		return null;
 	}
 
 	public static String getToken(String username)
 	{
+		if(Application.getAccountLibrary().getAccount(username) == null)
+		{
+			return null;
+		}
 		String token = StringUtils.getRandomStringOfLettersAndNumbers(10)
 				.toUpperCase();
-		try
-		{
-			MessageDigest m = MessageDigest.getInstance("SHA-256");
-			m.update(token.getBytes());
-			String hashedPassword = Application.getAccountLibrary()
-					.getHashedPassword(username);
-			if(hashedPassword == null)
-			{
-				return null;
-			}
-			m.update(hashedPassword.getBytes());
-			byte[] bytes = m.digest();
-			String hash = HexBin.encode(bytes);
-			hashes.put(hash.toUpperCase(), username);
-			return token;
-		}
-		catch(NoSuchAlgorithmException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		usernames.put(token, username);
+		return token;
 	}
 
 }

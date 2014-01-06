@@ -1,6 +1,7 @@
 package server.handlers;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import server.Server;
@@ -53,17 +54,21 @@ public class LoginHandler extends ServerHandler{
 	{
 		try
 		{
-			List<String> list = ex.getRequestHeaders().get("Authentication");
-			String hash = "";
+			List<String> list = ex.getRequestHeaders().get("token");
+			String token = "";
+			String password = "";
 			if(list != null)
 			{
-				hash = list.get(0);
+				token = list.get(0);
+				password = ex.getRequestHeaders().getFirst("password");
 			}
 			else
 			{
-				hash = getParameters(ex).get("Authentication");
+				HashMap<String, String> parameters = getParameters(ex);
+				token = parameters.get("token");
+				password = parameters.get("password");
 			}
-			Account account = AccountUtils.authenticate(hash);
+			Account account = AccountUtils.authenticate(token, password);
 			return account;
 		}
 		catch(Exception e)
@@ -72,5 +77,5 @@ public class LoginHandler extends ServerHandler{
 		}
 		return null;
 	}
-
+	
 }

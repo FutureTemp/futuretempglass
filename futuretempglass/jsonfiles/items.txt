@@ -1,1 +1,69 @@
-[ ]
+[ {
+  "itemName" : "Clear Glass1",
+  "orderNumber" : "11111",
+  "quantity" : 0,
+  "productionSteps" : [ {
+    "name" : "Cutting",
+    "dependencies" : [ ]
+  }, {
+    "name" : "Polishing",
+    "dependencies" : [ ]
+  }, {
+    "name" : "Tempering",
+    "dependencies" : [ ]
+  }, {
+    "name" : "Sandblasting",
+    "dependencies" : [ ]
+  } ],
+  "currentStep" : {
+    "name" : "Cutting",
+    "dependencies" : [ ]
+  },
+  "attributeNames" : [ "thickness", "width", "height", "thickness1", "width1", "height1", "thickness2", "width2", "height2", "thickness3", "width3", "height3", "thickness4", "width4", "height4", "thickness5", "width5", "height5", "thickness6", "width6", "height6", "thickness7", "width7", "height7" ],
+  "attributes" : {
+    "thickness" : "1",
+    "height7" : "4",
+    "height6" : "1",
+    "height5" : "8",
+    "height4" : "5",
+    "height3" : "2",
+    "height2" : "9",
+    "height1" : "6",
+    "height" : "3",
+    "thickness7" : "2",
+    "width" : "2",
+    "thickness6" : "9",
+    "thickness5" : "6",
+    "thickness4" : "3",
+    "width7" : "3",
+    "thickness3" : "0",
+    "thickness2" : "7",
+    "width6" : "0",
+    "thickness1" : "4",
+    "width5" : "7",
+    "width4" : "4",
+    "width3" : "1",
+    "width2" : "8",
+    "width1" : "5"
+  },
+  "itemId" : "lVBAwKFx"
+}, {
+  "itemName" : "Starfire",
+  "orderNumber" : "12345",
+  "quantity" : 0,
+  "productionSteps" : [ {
+    "name" : "Polishing",
+    "dependencies" : [ ]
+  } ],
+  "currentStep" : {
+    "name" : "Polishing",
+    "dependencies" : [ ]
+  },
+  "attributeNames" : [ "thickness", "width", "height" ],
+  "attributes" : {
+    "height" : "",
+    "thickness" : "",
+    "width" : ""
+  },
+  "itemId" : "jLIqszZC"
+} ]

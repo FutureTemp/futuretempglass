@@ -34,7 +34,7 @@ public class Account{
 	{
 		this.username = username;
 	}
-
+	
 	/**
 	 * @return the hashedPassword
 	 */
@@ -66,6 +66,24 @@ public class Account{
 		messageDigest.update(password.getBytes());
 		byte[] bytes = messageDigest.digest();
 		hashedPassword = HexBin.encode(bytes);
+	}
+	
+	public boolean authenticate(String password)
+	{
+		try
+		{
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+			messageDigest.update(getUsername().getBytes());
+			messageDigest.update(password.getBytes());
+			byte[] bytes = messageDigest.digest();
+			String hash = HexBin.encode(bytes);
+			return hash.equals(hashedPassword);
+		}
+		catch(NoSuchAlgorithmException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	/**
