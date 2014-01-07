@@ -8,6 +8,7 @@ import java.util.List;
 
 import server.Server;
 import server.Session;
+import utils.HTTPUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -153,29 +154,22 @@ public abstract class ServerHandler implements HttpHandler{
 	}
 
 	@SuppressWarnings("unchecked")
-	protected HashMap<String, String> getParameters(HttpExchange ex)
+	protected HashMap<String, String> getParameters(HttpExchange ex) throws IOException
 	{
-		HashMap<String, String> parameters = new HashMap<String, String>();
-		if(ex.getRequestURI().getQuery() != null)
+		String parametersString = "";
+		if("GET".equals(ex.getRequestMethod()) && ex.getRequestURI().getQuery() != null)
 		{
-			String[] queries = ex.getRequestURI().getQuery().split("&");
-			for(String query: queries)
-			{
-				String[] pair = query.split("=");
-				if(pair.length == 1)
-				{
-					parameters.put(pair[0], "");
-				}
-				else
-				{
-					parameters.put(pair[0], pair[1]);
-				}
-			}
+			parametersString = ex.getRequestURI().getQuery();
 		}
-		ex.setAttribute("parameters", parameters);
+		else if("POST".equals(ex.getRequestMethod()))
+		{
+			parametersString = getRequestData(ex);
+		}
+		ex.setAttribute("parameters", HTTPUtils.parameterStringToHashMap(parametersString));
 		return (HashMap<String, String>)ex.getAttribute("parameters");
 	}
 
+	
 	protected <T> T getObjectFromRequestBody(Class<T> clazz, HttpExchange ex)
 			throws IOException
 	{

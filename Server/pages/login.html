@@ -31,7 +31,7 @@
 <body>
 	<input type="text" id="username" />
 	<br>
-	<form action="/login" id="loginForm">
+	<form action="/login" method="POST" id="loginForm">
 		<input type="password" name="password" id="password" /> <input type="hidden" id="token" name="token" />
 	</form>
 	<button onclick="javascript:submit();">Login</button>

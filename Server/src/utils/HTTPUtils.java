@@ -10,6 +10,25 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 
 public class HTTPUtils{
+	
+	public static HashMap<String, String> parameterStringToHashMap(String parametersString)
+	{
+		HashMap<String, String> parameters = new HashMap<String, String>();
+		String[] assignmentStrings = parametersString.split("&");
+		for(String assignmentString: assignmentStrings)
+		{
+			String[] pair = assignmentString.split("=");
+			if(pair.length == 2)
+			{
+				parameters.put(pair[0], pair[1]);
+			}
+			else if(pair.length == 1)
+			{
+				parameters.put(pair[0], "");
+			}
+		}
+		return parameters;
+	}
 
 	public static String buildParametersString(
 			HashMap<String, String> parameters) throws Exception
