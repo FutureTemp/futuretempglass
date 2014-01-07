@@ -41,6 +41,8 @@ public class JSONOrderLibrary extends OrderLibrary{
 		{
 			orders = new ArrayList<Order>();
 		}
+		orderNumbers.clear();
+		ordersMap.clear();
 		for(Order order: orders)
 		{
 			orderNumbers.add(order.getOrderNumber());

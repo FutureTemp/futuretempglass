@@ -1,10 +1,6 @@
 [ {
-  "orderNumber" : "11111",
-  "customer" : "Sample Customer",
-  "itemIds" : [ "lVBAwKFx" ],
-  "rush" : false
-}, {
-  "orderNumber" : "12345",
-  "itemIds" : [ "jLIqszZC" ],
+  "orderNumber" : "1423",
+  "customer" : "",
+  "itemIds" : [ "xDRQlR3q", "2r9hKZ4J" ],
   "rush" : false
 } ]

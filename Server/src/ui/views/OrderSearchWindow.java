@@ -18,7 +18,6 @@ import javax.swing.border.EmptyBorder;
 import orders.Order;
 import ui.Mode;
 import utils.OrderUtils;
-import core.Application;
 
 public class OrderSearchWindow extends Window{
 

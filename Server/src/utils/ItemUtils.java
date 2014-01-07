@@ -42,6 +42,11 @@ public class ItemUtils{
 			throw new Exception("Item cannot be null");
 		}
 		Application.getItemLibrary().addItem(item);
+		if(!StringUtils.isEmpty(item.getOrderNumber()))
+		{
+			Application.getOrderLibrary().addItemToOrder(item.getItemId(),
+					item.getOrderNumber());
+		}
 	}
 
 	public static void addItems(List<Item> items) throws Exception
@@ -67,7 +72,8 @@ public class ItemUtils{
 		}
 		for(String orderNumber: itemsMap.keySet())
 		{
-			Application.getOrderLibrary().addItemsToOrder(itemsMap.get(orderNumber), orderNumber);
+			Application.getOrderLibrary().addItemsToOrder(
+					itemsMap.get(orderNumber), orderNumber);
 		}
 	}
 
@@ -81,7 +87,10 @@ public class ItemUtils{
 		{
 			throw new Exception("Item must have a valid ID");
 		}
-		Application.getItemLibrary().updateItem(item);
+		if(!Application.getItemLibrary().updateItem(item))
+		{
+			throw new Exception("Failed to update item");
+		}
 	}
 
 	public static void deleteItem(String itemId) throws Exception

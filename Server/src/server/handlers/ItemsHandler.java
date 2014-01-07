@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import utils.ItemUtils;
+import utils.StringUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -82,7 +83,16 @@ public class ItemsHandler extends ServerHandler{
 		}
 		if(items.size() == 1)
 		{
-			ItemUtils.updateItem(items.get(0));
+			if(StringUtils.isEmpty(items.get(0).getItemId()))
+			{
+				ItemUtils.addItem(items.get(0));
+				sendResponse("Added", ex);
+			}
+			else
+			{
+				ItemUtils.updateItem(items.get(0));
+				sendResponse("Updated", ex);
+			}
 		}
 		else if(items.size() > 1)
 		{
