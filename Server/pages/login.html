@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Login</title>
+<script>
+	function submit() {
+		username = document.getElementById("username").value;
+		var req;
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			req = new XMLHttpRequest();
+		} else {// code for IE6, IE5
+			req = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		req.open("GET", "/token?username=" + username, true);
+		req.send();
+
+	req.onreadystatechange = function() {
+			if (req.readyState == 4 && req.status == 200) {
+				responseText = req.responseText;
+				console.log(responseText);
+				token = JSON.parse(responseText);
+				document.getElementById("token").value = String(token.token);
+				document.getElementById("loginForm").submit();
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="text" id="username" />
+	<br>
+	<form action="/login" id="loginForm">
+		<input type="password" name="password" id="password" /> <input type="hidden" id="token" name="token" />
+	</form>
+	<button onclick="javascript:submit();">Login</button>
+</body>
+</html>
