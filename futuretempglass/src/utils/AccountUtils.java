@@ -1,10 +1,9 @@
 package utils;
 
 import java.util.HashMap;
+import java.util.List;
 
 import server.objects.Account;
-import storage.AccountLibrary;
-import storage.json.JSONAccountLibrary;
 import core.Application;
 
 public class AccountUtils{
@@ -45,5 +44,15 @@ public class AccountUtils{
 		usernames.put(token, username);
 		return token;
 	}
+	
+	public static Account getAccount(String username)
+	{
+		return Application.getAccountLibrary().getAccount(username);
+	}
 
+	public static List<Account> getAccounts()
+	{
+		return Application.getAccountLibrary().getAccounts();
+	}
+	
 }

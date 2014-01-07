@@ -93,4 +93,9 @@ public class JSONAccountLibrary extends AccountLibrary{
 		return accountsMap.get(username);
 	}
 
+	@Override
+	public List<Account> getAccounts()
+	{
+		return accounts;
+	}
 }

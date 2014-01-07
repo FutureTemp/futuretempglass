@@ -2,6 +2,7 @@ package storage.xml;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
@@ -29,6 +30,13 @@ public class XmlAccountLibrary extends AccountLibrary{
 	{
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<Account> getAccounts()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

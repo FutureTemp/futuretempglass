@@ -2,6 +2,7 @@ package storage.database;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
@@ -26,6 +27,13 @@ public class DBAccountLibrary extends AccountLibrary{
 
 	@Override
 	public Account getAccount(String username)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Account> getAccounts()
 	{
 		// TODO Auto-generated method stub
 		return null;

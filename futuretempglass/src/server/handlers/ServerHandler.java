@@ -113,6 +113,11 @@ public abstract class ServerHandler implements HttpHandler{
 		return ex.getAttribute("session") != null;
 	}
 
+	protected Session getSession(HttpExchange ex)
+	{
+		return (Session)ex.getAttribute("session");
+	}
+	
 	protected void sendHeader(HttpExchange ex) throws IOException
 	{
 		ex.sendResponseHeaders(200, 0);

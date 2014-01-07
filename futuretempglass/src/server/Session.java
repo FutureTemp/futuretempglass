@@ -27,6 +27,7 @@ public class Session{
 	public void init(Account account, HttpExchange ex)
 	{
 		setIp(ex.getRemoteAddress().getAddress().getHostAddress());
+		setAccount(account);
 	}
 	
 	public boolean isMatchingAddress(HttpExchange ex)
