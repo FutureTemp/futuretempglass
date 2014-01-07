@@ -44,7 +44,7 @@ public class AccountUtils{
 		usernames.put(token, username);
 		return token;
 	}
-	
+
 	public static Account getAccount(String username)
 	{
 		return Application.getAccountLibrary().getAccount(username);
@@ -54,5 +54,20 @@ public class AccountUtils{
 	{
 		return Application.getAccountLibrary().getAccounts();
 	}
-	
+
+	public static void addAccount(Account account) throws Exception
+	{
+		if(Application.getAccountLibrary().getAccount(account.getUsername()) == null)
+		{
+			if(!Application.getAccountLibrary().addAcount(account))
+			{
+				throw new Exception("Failed to add account");
+			}
+		}
+		else
+		{
+			throw new Exception("Username already taken");
+		}
+	}
+
 }

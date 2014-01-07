@@ -7,6 +7,7 @@ import server.objects.Account;
 import utils.AccountUtils;
 import utils.StringUtils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 
 public class AccountHandler extends ServerHandler{
@@ -22,7 +23,7 @@ public class AccountHandler extends ServerHandler{
 	protected void onGet(HttpExchange ex) throws Exception
 	{
 		super.onGet(ex);
-		if(!getSession(ex).getAccount().isAdmin())
+		if(!isAdmin(ex))
 		{
 			ex.sendResponseHeaders(403, 0);
 			return;
@@ -37,6 +38,22 @@ public class AccountHandler extends ServerHandler{
 			allUsers(ex);
 			return;
 		}
+	}
+	
+	@Override
+	protected void onPost(HttpExchange ex) throws Exception
+	{
+		super.onPost(ex);
+		if(!isAdmin(ex))
+		{
+			ex.sendResponseHeaders(403, 0);
+			return;
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		Account account = mapper.readValue(getRequestData(ex), Account.class);
+		AccountUtils.addAccount(account);
+		sendHeader(ex);
+		sendResponse("Added", ex);
 	}
 	
 	private void oneUser(HttpExchange ex) throws IOException

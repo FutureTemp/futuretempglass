@@ -17,8 +17,6 @@ import com.sun.net.httpserver.HttpHandler;
 
 public abstract class ServerHandler implements HttpHandler{
 
-	private ThreadLocal<Boolean> headerSent = new ThreadLocal<Boolean>();
-	
 	@Override
 	public void handle(HttpExchange ex) throws IOException
 	{
@@ -47,11 +45,11 @@ public abstract class ServerHandler implements HttpHandler{
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			if(!Boolean.TRUE.equals(headerSent.get()))
+			if(!"true".equalsIgnoreCase(getParameters(ex).get("headerSent")))
 			{
 				sendHeader(ex);
 			}
-			sendResponse(e.getMessage(), ex);
+			sendResponse(e.toString(), ex);
 		}
 		finally
 		{
@@ -122,7 +120,7 @@ public abstract class ServerHandler implements HttpHandler{
 	protected void sendHeader(HttpExchange ex) throws IOException
 	{
 		ex.sendResponseHeaders(200, 0);
-		headerSent.set(true);
+		ex.setAttribute("headerSent", "true");
 	}
 
 	protected void sendResponse(String response, HttpExchange ex)
@@ -169,6 +167,10 @@ public abstract class ServerHandler implements HttpHandler{
 		return (HashMap<String, String>)ex.getAttribute("parameters");
 	}
 
+	protected boolean isAdmin(HttpExchange ex)
+	{
+		return getSession(ex).getAccount().isAdmin();
+	}
 	
 	protected <T> T getObjectFromRequestBody(Class<T> clazz, HttpExchange ex)
 			throws IOException
