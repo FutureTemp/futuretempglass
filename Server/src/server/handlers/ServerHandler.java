@@ -85,6 +85,7 @@ public abstract class ServerHandler implements HttpHandler{
 
 	protected void finish(HttpExchange ex) throws IOException
 	{
+		ex.setAttribute("requestData", null);
 		ex.getRequestBody().close();
 		ex.getResponseBody().flush();
 		ex.getResponseBody().close();
@@ -139,6 +140,11 @@ public abstract class ServerHandler implements HttpHandler{
 
 	protected String getRequestData(HttpExchange ex) throws IOException
 	{
+		String requestData = (String)ex.getAttribute("requestData");
+		if(requestData != null)
+		{
+			return requestData;
+		}
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				ex.getRequestBody()));
 		StringBuilder builder = new StringBuilder();
@@ -148,7 +154,9 @@ public abstract class ServerHandler implements HttpHandler{
 			builder.append(line);
 			line = reader.readLine();
 		}
-		return builder.toString();
+		requestData = builder.toString();
+		ex.setAttribute("requestData", requestData);
+		return requestData;
 	}
 
 	@SuppressWarnings("unchecked")

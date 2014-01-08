@@ -5,6 +5,7 @@ import storage.InventoryLibrary;
 import storage.ItemLibrary;
 import storage.OrderLibrary;
 import storage.ProductionStepsLibrary;
+import storage.TaskLibrary;
 import storage.database.DBAccountLibrary;
 import storage.database.DBInventoryLibrary;
 import storage.database.DBItemLibrary;
@@ -13,6 +14,7 @@ import storage.database.DBProductionStepsLibrary;
 import storage.json.JSONAccountLibrary;
 import storage.json.JSONItemLibrary;
 import storage.json.JSONOrderLibrary;
+import storage.json.JSONTaskLibrary;
 import storage.xml.XmlAccountLibrary;
 import storage.xml.XmlInventoryLibrary;
 import storage.xml.XmlItemLibrary;
@@ -30,6 +32,8 @@ public class Application{
 	private static OrderLibrary orderLibrary;
 
 	private static AccountLibrary accountLibrary;
+	
+	private static TaskLibrary taskLibrary;
 
 	public static ItemLibrary getItemLibrary()
 	{
@@ -56,6 +60,11 @@ public class Application{
 		return accountLibrary;
 	}
 
+	public static TaskLibrary getTaskLibrary()
+	{
+		return taskLibrary;
+	}
+	
 	public static void setDBLibraries()
 	{
 		itemLibrary = new DBItemLibrary();
@@ -81,5 +90,6 @@ public class Application{
 		productionStepsLibrary = new XmlProductionStepsLibrary();
 		orderLibrary = new JSONOrderLibrary();
 		itemLibrary = new JSONItemLibrary();
+		taskLibrary = new JSONTaskLibrary();
 	}
 }

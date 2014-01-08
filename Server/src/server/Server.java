@@ -21,6 +21,7 @@ import server.handlers.LoginHandler;
 import server.handlers.LoginPageHandler;
 import server.handlers.LogoutHandler;
 import server.handlers.OrderHandler;
+import server.handlers.TaskHandler;
 import server.handlers.TokenHandler;
 import ui.views.Window;
 
@@ -61,6 +62,7 @@ public class Server extends Window implements MouseListener{
 		server.createContext(LoginPageHandler.getContext(), new LoginPageHandler());
 		server.createContext(AccountHandler.getContext(), new AccountHandler());
 		server.createContext(InventoryHandler.getContext(), new InventoryHandler());
+		server.createContext(TaskHandler.getContext(), new TaskHandler());
 	}
 	
 	private void addLibraries()
