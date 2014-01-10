@@ -18,53 +18,71 @@ public class Order{
 
 	private List<String> itemIds = new ArrayList<String>();
 
-	private boolean rush;
-
+	/**
+	 * @return orderNumber
+	 */
 	public String getOrderNumber()
 	{
 		return orderNumber;
 	}
 
+	/**
+	 * Sets the order number
+	 * @param orderNumber
+	 */
 	public void setOrderNumber(String orderNumber)
 	{
 		this.orderNumber = orderNumber;
 	}
 
+	/**
+	 * Returns the list of itemId's associated with this order
+	 * @return itemIds
+	 */
 	public List<String> getItemIds()
 	{
 		return itemIds;
 	}
 
+	/**
+	 * Sets the list of associated itemId's
+	 * @param itemIds
+	 */
 	public void setItemIds(List<String> itemIds)
 	{
 		this.itemIds = itemIds;
 	}
 
-	public boolean isRush()
-	{
-		return rush;
-	}
-
-	public void setRush(boolean rush)
-	{
-		this.rush = rush;
-	}
-
+	/**
+	 * @return dueDate
+	 */
 	public Calendar getDueDate()
 	{
 		return dueDate;
 	}
 
+	/**
+	 * Sets the due date
+	 * @param dueDate
+	 */
 	public void setDueDate(Calendar dueDate)
 	{
 		this.dueDate = dueDate;
 	}
 
+	/**
+	 * Returns the customer associated with this order
+	 * @return customer
+	 */
 	public String getCustomer()
 	{
 		return customer;
 	}
 
+	/**
+	 * Sets the customer associated with this order
+	 * @param customer
+	 */
 	public void setCustomer(String customer)
 	{
 		this.customer = customer;

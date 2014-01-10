@@ -11,6 +11,12 @@ import java.util.HashMap;
 
 public class HTTPUtils{
 	
+	/**
+	 * Turns a parameter String (what appears at the end of a URL)
+	 * into a HashMap mapping the parameter names and values
+	 * @param parametersString
+	 * @return HashMap<String, String>
+	 */
 	public static HashMap<String, String> parameterStringToHashMap(String parametersString)
 	{
 		HashMap<String, String> parameters = new HashMap<String, String>();
@@ -30,6 +36,13 @@ public class HTTPUtils{
 		return parameters;
 	}
 
+	/**
+	 * Builds the parameter string as appears in GET request
+	 * using the HashMap of parameters provided
+	 * @param parameters
+	 * @return String with the parameters
+	 * @throws Exception
+	 */
 	public static String buildParametersString(
 			HashMap<String, String> parameters) throws Exception
 	{
@@ -52,6 +65,14 @@ public class HTTPUtils{
 		return builder.toString();
 	}
 
+	/**
+	 * Does a get request to the provided target URL, with the provided parameters
+	 * and with the header information provided.
+	 * @param targetURL
+	 * @param urlParameters
+	 * @param headerInfo
+	 * @return the response as a String
+	 */
 	public static String doGetRequest(String targetURL,
 			HashMap<String, String> urlParameters,
 			HashMap<String, String> headerInfo)
@@ -118,6 +139,14 @@ public class HTTPUtils{
 		}
 	}
 
+	/**
+	 * Does a POST request to the provided target URL with the provided
+	 * content and header information
+	 * @param targetURL
+	 * @param content
+	 * @param headerInfo
+	 * @return the response as a String
+	 */
 	public static String doPostRequest(String targetURL,
 			String content, HashMap<String, String> headerInfo)
 	{
@@ -184,6 +213,14 @@ public class HTTPUtils{
 		}
 	}
 
+	/**
+	 * Does a PUT request to the provided target URL with the
+	 * provided content and header information
+	 * @param targetURL
+	 * @param content
+	 * @param headerInfo
+	 * @return
+	 */
 	public static String doPutRequest(String targetURL,
 			String content, HashMap<String, String> headerInfo)
 	{

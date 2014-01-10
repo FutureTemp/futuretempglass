@@ -52,6 +52,9 @@ public class Server extends Window implements MouseListener{
 	
 	private static List<Session> activeSessions = new ArrayList<Session>();
 
+	/**
+	 * Adds all the Handler objects for the server
+	 */
 	private void addHandlers()
 	{
 		server.createContext(OrderHandler.getContext(), new OrderHandler());
@@ -65,11 +68,18 @@ public class Server extends Window implements MouseListener{
 		server.createContext(TaskHandler.getContext(), new TaskHandler());
 	}
 	
+	/**
+	 * Sets the libraries in Application
+	 */
 	private void addLibraries()
 	{
 		Application.setJSONLibraries();
 	}
 	
+	/**
+	 * Finds the local IP
+	 * @return local ip
+	 */
 	public static String getLocalIp()
 	{
 		String ip = null;

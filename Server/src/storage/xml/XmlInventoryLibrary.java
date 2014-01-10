@@ -45,7 +45,7 @@ public class XmlInventoryLibrary extends InventoryLibrary{
 	{
 		Item item = new Item();
 		Item masterItem = itemsMap.get(itemName);
-		item.setName(masterItem.getItemName());
+		item.setItemName(masterItem.getItemName());
 		item.setAttributeNames(masterItem.getAttributeNames());
 		return item;
 	}

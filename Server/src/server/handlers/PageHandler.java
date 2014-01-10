@@ -9,6 +9,12 @@ import com.sun.net.httpserver.HttpExchange;
 
 public abstract class PageHandler extends ServerHandler{
 
+	/**
+	 * Sends a response through the HttpExchange object provided
+	 * which contains the bytes for a page passed in as File.
+	 * @param file
+	 * @param ex
+	 */
 	protected void sendPage(File file, HttpExchange ex)
 	{
 		FileInputStream fis = null;
@@ -43,6 +49,12 @@ public abstract class PageHandler extends ServerHandler{
 		}
 	}
 	
+	/**
+	 * Sends a response through the HttpExchange object provided
+	 * which contains the bytes for a page at the specified filePath.
+	 * @param filePath
+	 * @param ex
+	 */
 	protected void sendPage(String filePath, HttpExchange ex)
 	{
 		sendPage(new File(filePath), ex);

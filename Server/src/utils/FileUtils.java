@@ -11,12 +11,25 @@ import java.util.List;
 
 public class FileUtils{
 
+	/**
+	 * Writes a file at the given path with the contents provided. The contents
+	 * is a List of Strings, each String representing a line in the file.
+	 * @param path
+	 * @param contents
+	 * @return true if successful, false otherwise
+	 */
 	public static boolean writeFile(String path, List<String> contents)
 	{
 		File file = new File(path);
 		return writeFile(file, contents);
 	}
 
+	/**
+	 * Writes the contents to a file at the path specified
+	 * @param path
+	 * @param contents
+	 * @return true if successful, false otherwise
+	 */
 	public static boolean writeFile(String path, String contents)
 	{
 		List<String> fileContents = new ArrayList<String>();
@@ -24,6 +37,13 @@ public class FileUtils{
 		return writeFile(path, fileContents);
 	}
 
+	/**
+	 * Writes to the file provided with the contents provided. The contents
+	 * is a List of String where each String is a line in the file
+	 * @param file
+	 * @param contents
+	 * @return true if successful, false otherwise
+	 */
 	public static boolean writeFile(File file, List<String> contents)
 	{
 		BufferedWriter writer = null;
@@ -69,12 +89,24 @@ public class FileUtils{
 		return true;
 	}
 
+	/**
+	 * Gets the file contents at the path specified, and returns
+	 * it as a list of Strings where each String is a line in the file
+	 * @param path
+	 * @return List of Strings
+	 */
 	public static List<String> getFileContents(String path)
 	{
 		File file = new File(path);
 		return getFileContents(file);
 	}
 
+	/**
+	 * Gets the file contents of the file provided and returns
+	 * it as a list of Strings where each String is a line in the file
+	 * @param file
+	 * @return List of Strings
+	 */
 	public static List<String> getFileContents(File file)
 	{
 		if(!file.exists())
@@ -122,12 +154,22 @@ public class FileUtils{
 		return contents;
 	}
 
+	/**
+	 * Deletes the file at the specified path
+	 * @param path
+	 * @return true if successful, false otherwise
+	 */
 	public static boolean deleteFile(String path)
 	{
 		File file = new File(path);
 		return deleteFile(file);
 	}
 
+	/**
+	 * Deletes the file provided
+	 * @param file
+	 * @return true if successful, false otherwise
+	 */
 	public static boolean deleteFile(File file)
 	{
 		if(!file.exists())
@@ -137,6 +179,11 @@ public class FileUtils{
 		return file.delete();
 	}
 
+	/**
+	 * Creates the file provided and the directory as will if needed
+	 * @param file
+	 * @return true if successful, false otherwise
+	 */
 	public static boolean createDirectoryAndFile(File file)
 	{
 		boolean result = false;
@@ -160,6 +207,12 @@ public class FileUtils{
 		return result;
 	}
 
+	/**
+	 * Creates a file at the filePath provided. Also creates
+	 * the directory if necessary
+	 * @param filePath
+	 * @return true if successful, false otherwise
+	 */
 	public static boolean createDirectoryAndFile(String filePath)
 	{
 		return createDirectoryAndFile(new File(filePath));

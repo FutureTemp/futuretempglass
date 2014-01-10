@@ -17,6 +17,7 @@ public abstract class Component extends JComponent implements MouseListener{
 		this.parent = parent;
 	}
 
+	@Override
 	public Window getParent()
 	{
 		return parent;

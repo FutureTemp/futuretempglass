@@ -24,12 +24,23 @@ public class Session{
 		init(account, ex);
 	}
 
+	/**
+	 * Sets the account and ip associated with this Session
+	 * @param account
+	 * @param ex
+	 */
 	public void init(Account account, HttpExchange ex)
 	{
 		setIp(ex.getRemoteAddress().getAddress().getHostAddress());
 		setAccount(account);
 	}
 	
+	/**
+	 * Checks if the address in the HttpExchange matches the
+	 * IP in the Session
+	 * @param ex
+	 * @return
+	 */
 	public boolean isMatchingAddress(HttpExchange ex)
 	{
 		if(isLocal(ex.getRemoteAddress().getAddress().getHostAddress())
@@ -61,6 +72,12 @@ public class Session{
 		this.ip = ip;
 	}
 
+	/**
+	 * Returns whether an IP address is the localhost address
+	 * (for both IPv4 and IPv6)
+	 * @param address
+	 * @return
+	 */
 	private static boolean isLocal(String address)
 	{
 		return LOCALHOST_IPV4.equals(address) || LOCALHOST_IPV6.equals(address);

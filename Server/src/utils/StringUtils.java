@@ -5,6 +5,11 @@ import java.util.List;
 
 public class StringUtils{
 
+	/**
+	 * Gets a random letter or number, could be lowercase
+	 * as well as uppercase
+	 * @return char
+	 */
 	public static char getRandomLetterOrNumber()
 	{
 		int randomNum = (int)(Math.random() * 62) + 1;
@@ -24,6 +29,12 @@ public class StringUtils{
 		// 10+26+26
 	}
 
+	/**
+	 * Gets a String of random letters (upper and lower case)
+	 * and numbers with the specified length
+	 * @param length
+	 * @return String of random letters and numbers
+	 */
 	public static String getRandomStringOfLettersAndNumbers(int length)
 	{
 		String random = "";
@@ -34,6 +45,12 @@ public class StringUtils{
 		return random;
 	}
 	
+	/**
+	 * Converts a list of objects to one string containing 
+	 * all the objects as a string with a comma delimiter
+	 * @param list
+	 * @return String representing the list of objects provided
+	 */
 	public static String listToString(List<?> list)
 	{
 		if(list == null)
@@ -54,6 +71,12 @@ public class StringUtils{
 		return builder.toString();
 	}
 	
+	/**
+	 * Turns a String into a list of Strings be spliting everything at 
+	 * commas with optional spaces between the commas
+	 * @param string
+	 * @return List of Strings
+	 */
 	public static List<String> stringToList(String string)
 	{
 		if(string == null)
@@ -73,6 +96,12 @@ public class StringUtils{
 		return stringList;
 	}
 	
+	/**
+	 * Check whether the String only contains white space
+	 * of is null
+	 * @param string
+	 * @return true if String is null or only contains white space, false otherwise
+	 */
 	public static boolean isEmpty(String string)
 	{
 		if(string == null)

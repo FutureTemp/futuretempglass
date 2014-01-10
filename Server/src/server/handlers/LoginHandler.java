@@ -50,6 +50,14 @@ public class LoginHandler extends ServerHandler{
 		finish(ex);
 	}
 
+	/**
+	 * Gets the token that was given from the HttpExchange object,
+	 * finds the account associated with it, and checks to make sure the
+	 * password matches. If it does it returns the Account object of that 
+	 * account, otherwise it returns null.
+	 * @param ex
+	 * @return account, or null if fails authentication
+	 */
 	protected Account authenticateLoginAndgetAccount(HttpExchange ex)
 	{
 		try

@@ -27,7 +27,7 @@ public class DBInventoryLibrary extends InventoryLibrary{
 		DBResults results = DBHelper.queryDb("SELECT * FROM " + database + "."
 				+ table + " WHERE name='" + itemName + "'");
 		Item item = new Item();
-		item.setName(itemName);
+		item.setItemName(itemName);
 		results.next();
 		String attributes = results.getString(attributesRow);
 		if(attributes == null)

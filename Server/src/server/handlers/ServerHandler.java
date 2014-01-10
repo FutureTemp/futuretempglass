@@ -57,6 +57,12 @@ public abstract class ServerHandler implements HttpHandler{
 		}
 	}
 
+	/**
+	 * Gets the active Session object associated with the IP given
+	 * in the HttpExchange object
+	 * @param ex
+	 * @return Session
+	 */
 	private static Session getActiveSession(HttpExchange ex)
 	{
 		List<Session> activeSessions = Server.getActiveSessions();
@@ -70,6 +76,11 @@ public abstract class ServerHandler implements HttpHandler{
 		return null;
 	}
 
+	/**
+	 * Gets the acive Session object associated with the given username
+	 * @param username
+	 * @return Session
+	 */
 	protected static Session getActiveSession(String username)
 	{
 		List<Session> activeSessions = Server.getActiveSessions();
@@ -83,6 +94,12 @@ public abstract class ServerHandler implements HttpHandler{
 		return null;
 	}
 
+	/**
+	 * finishes the handling of a request by closing all the streams
+	 * and removing certain HttpExchange attributes.
+	 * @param ex
+	 * @throws IOException
+	 */
 	protected void finish(HttpExchange ex) throws IOException
 	{
 		ex.setAttribute("requestData", null);
@@ -92,44 +109,90 @@ public abstract class ServerHandler implements HttpHandler{
 		ex.close();
 	}
 
+	/**
+	 * Is called when handling a GET request
+	 * @param ex
+	 * @throws Exception
+	 */
 	protected void onGet(HttpExchange ex) throws Exception
 	{
 
 	}
 
+	/**
+	 * Is called when handling a POST request
+	 * @param ex
+	 * @throws Exception
+	 */
 	protected void onPost(HttpExchange ex) throws Exception
 	{
 
 	}
 
+	/**
+	 * Is called when handling a PUT request
+	 * @param ex
+	 * @throws Exception
+	 */
 	protected void onPut(HttpExchange ex) throws Exception
 	{
 
 	}
 
+	/**
+	 * Authenticates the HttpExchange object by checking for
+	 * an active session associated with its IP. If found
+	 * it is put into the HttpExchange attribute "session".
+	 * @param ex
+	 * @return true if authenticated correctly, and false otherwise
+	 */
 	protected boolean authenticate(HttpExchange ex)
 	{
 		ex.setAttribute("session", getActiveSession(ex));
 		return ex.getAttribute("session") != null;
 	}
 
+	/**
+	 * Gets the session associated with the HttpExchange by 
+	 * grabbing it from its attributes, under "session"
+	 * @param ex
+	 * @return Session
+	 */
 	protected Session getSession(HttpExchange ex)
 	{
 		return (Session)ex.getAttribute("session");
 	}
 	
+	/**
+	 * Sends the header with a 200 code and sets an attribute
+	 * to indicate that it has been sent
+	 * @param ex
+	 * @throws IOException
+	 */
 	protected void sendHeader(HttpExchange ex) throws IOException
 	{
 		ex.sendResponseHeaders(200, 0);
 		ex.setAttribute("headerSent", "true");
 	}
 
+	/**
+	 * Sends the string provided as the response
+	 * @param response
+	 * @param ex
+	 * @throws IOException
+	 */
 	protected void sendResponse(String response, HttpExchange ex)
 			throws IOException
 	{
 		ex.getResponseBody().write(response.getBytes());
 	}
 
+	/**
+	 * Sends the object provided in JSON format as the response
+	 * @param object
+	 * @param ex
+	 * @throws IOException
+	 */
 	protected void sendResponse(Object object, HttpExchange ex)
 			throws IOException
 	{
@@ -138,6 +201,12 @@ public abstract class ServerHandler implements HttpHandler{
 		sendResponse(mapper.writeValueAsString(object), ex);
 	}
 
+	/**
+	 * Returns the String of data in the request body
+	 * @param ex
+	 * @return requestData
+	 * @throws IOException
+	 */
 	protected String getRequestData(HttpExchange ex) throws IOException
 	{
 		String requestData = (String)ex.getAttribute("requestData");
@@ -159,6 +228,14 @@ public abstract class ServerHandler implements HttpHandler{
 		return requestData;
 	}
 
+	/**
+	 * Gets the request parameters from the HttpExchange attributes
+	 * if it already exists, otherwise it generates the HashMap containing
+	 * the parameters and stores it in the attributes.
+	 * @param ex
+	 * @return HashMap containing the request parameters
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
 	protected HashMap<String, String> getParameters(HttpExchange ex) throws IOException
 	{
@@ -175,11 +252,25 @@ public abstract class ServerHandler implements HttpHandler{
 		return (HashMap<String, String>)ex.getAttribute("parameters");
 	}
 
+	/**
+	 * Checks whether the user sending the HttpExchange is an
+	 * admin or not.
+	 * @param ex
+	 * @return whether the user is an admin or not
+	 */
 	protected boolean isAdmin(HttpExchange ex)
 	{
 		return getSession(ex).getAccount().isAdmin();
 	}
 	
+	/**
+	 * Assumes the request data is in JSON form and returns that object, 
+	 * given the class and the HttpExchange object containing the request.
+	 * @param clazz
+	 * @param ex
+	 * @return
+	 * @throws IOException
+	 */
 	protected <T> T getObjectFromRequestBody(Class<T> clazz, HttpExchange ex)
 			throws IOException
 	{

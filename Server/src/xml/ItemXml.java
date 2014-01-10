@@ -64,7 +64,7 @@ public class ItemXml{
 	{
 		Item item = new Item(null);
 		item.setItemId(id);
-		item.setName(name);
+		item.setItemName(name);
 		item.setQuantity(quantity);
 		for(ItemAttributeXml itemAttribute: attributes)
 		{

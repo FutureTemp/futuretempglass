@@ -56,6 +56,12 @@ public class AccountHandler extends ServerHandler{
 		sendResponse("Added", ex);
 	}
 	
+	/**
+	 * Sends a response containing only one user using
+	 * the HttpExchange object to get the username of that user
+	 * @param ex
+	 * @throws IOException
+	 */
 	private void oneUser(HttpExchange ex) throws IOException
 	{
 		String username = getParameters(ex).get("username");
@@ -64,6 +70,12 @@ public class AccountHandler extends ServerHandler{
 		sendResponse(account, ex);
 	}
 	
+	/**
+	 * Uses the HttpExchange object to send a response containing
+	 * all the users
+	 * @param ex
+	 * @throws IOException
+	 */
 	private void allUsers(HttpExchange ex) throws IOException
 	{
 		List<Account> accounts = AccountUtils.getAccounts();

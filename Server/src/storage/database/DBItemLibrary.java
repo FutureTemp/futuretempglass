@@ -103,7 +103,7 @@ public class DBItemLibrary extends ItemLibrary{
 			Item item = new Item();
 			item.setItemId(results.getString(idCol));
 			item.setOrderNumber(results.getString(orderNumCol));
-			item.setName(results.getString(nameCol));
+			item.setItemName(results.getString(nameCol));
 			item = stringToAttributes(results.getString(attributesCol), item);
 
 			List<ProductionStep> productionSteps = Application

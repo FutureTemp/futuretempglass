@@ -44,7 +44,9 @@ public class Account{
 	}
 
 	/**
-	 * @param hashedPassword the hashedPassword to set
+	 * Sets the password by taking the given password
+	 * and hashing it.
+	 * @param password the password to set
 	 */
 	public void setPassword(String password)
 	{
@@ -68,6 +70,12 @@ public class Account{
 		hashedPassword = HexBin.encode(bytes);
 	}
 	
+	/**
+	 * Authenticates by checking if the password is correct. The password is correct
+	 * if hashing it results in a matching hashed password.
+	 * @param password
+	 * @return true if the password was correct and false otherwise
+	 */
 	public boolean authenticate(String password)
 	{
 		try

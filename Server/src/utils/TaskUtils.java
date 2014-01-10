@@ -7,11 +7,21 @@ import core.Application;
 
 public class TaskUtils{
 
+	/**
+	 * Gets a list of all the tasks from storage
+	 * @return List of Tasks
+	 */
 	public static List<Task> getAllTasks()
 	{
 		return Application.getTaskLibrary().getAllTasks();
 	}
 
+	/**
+	 * Gets a task from storage with the provided task ID
+	 * @param taskId
+	 * @return Task
+	 * @throws Exception
+	 */
 	public static Task getTask(String taskId) throws Exception
 	{
 		Task task = Application.getTaskLibrary().getTask(taskId);
@@ -22,6 +32,11 @@ public class TaskUtils{
 		return task;
 	}
 
+	/**
+	 * Adds the task provided into storage and populates it with a valid ID
+	 * @param task
+	 * @throws Exception
+	 */
 	public static void addTask(Task task) throws Exception
 	{
 		if(!StringUtils.isEmpty(task.getTaskId())
@@ -33,6 +48,12 @@ public class TaskUtils{
 		Application.getTaskLibrary().addTask(task);
 	}
 
+	/**
+	 * Updates a task in storage to match the task provided. The
+	 * task provided must contain the ID of the task to update
+	 * @param task
+	 * @throws Exception
+	 */
 	public static void updateTask(Task task) throws Exception
 	{
 		if(StringUtils.isEmpty(task.getTaskId()))
@@ -45,6 +66,12 @@ public class TaskUtils{
 		}
 	}
 
+	/**
+	 * Gets all the tasks with the assignee provided
+	 * @param assignee
+	 * @return List of Tasks
+	 * @throws Exception
+	 */
 	public static List<Task> getTasksAssignedTo(String assignee)
 			throws Exception
 	{

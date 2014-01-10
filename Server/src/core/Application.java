@@ -35,36 +35,63 @@ public class Application{
 	
 	private static TaskLibrary taskLibrary;
 
+	/**
+	 * Returns the Item Library used for the application
+	 * @return
+	 */
 	public static ItemLibrary getItemLibrary()
 	{
 		return itemLibrary;
 	}
 
+	/**
+	 * Returns the Production Steps Library used for the application
+	 * @return
+	 */
 	public static ProductionStepsLibrary getProductionStepsLibrary()
 	{
 		return productionStepsLibrary;
 	}
 
+	/**
+	 * Returns the Inventory Library used for the application
+	 * @return
+	 */
 	public static InventoryLibrary getInventoryLibrary()
 	{
 		return inventoryLibrary;
 	}
 
+	/**
+	 * Returns the Order Library used for the application
+	 * @return
+	 */
 	public static OrderLibrary getOrderLibrary()
 	{
 		return orderLibrary;
 	}
 
+	/**
+	 * Returns the Account Library used for the application
+	 * @return
+	 */
 	public static AccountLibrary getAccountLibrary()
 	{
 		return accountLibrary;
 	}
 
+	/**
+	 * Returns the Task Library used for the application
+	 * @return
+	 */
 	public static TaskLibrary getTaskLibrary()
 	{
 		return taskLibrary;
 	}
 	
+	/**
+	 * Populates the libraries with DB library implementations
+	 */
 	public static void setDBLibraries()
 	{
 		itemLibrary = new DBItemLibrary();
@@ -74,6 +101,9 @@ public class Application{
 		productionStepsLibrary = new DBProductionStepsLibrary();
 	}
 
+	/**
+	 * Populates the libraries with XML library implementations
+	 */
 	public static void setXMLLibraries()
 	{
 		itemLibrary = new XmlItemLibrary();
@@ -83,6 +113,9 @@ public class Application{
 		productionStepsLibrary = new XmlProductionStepsLibrary();
 	}
 	
+	/**
+	 * Populates the libraries with JSON library implementations
+	 */
 	public static void setJSONLibraries()
 	{
 		inventoryLibrary = new XmlInventoryLibrary();
