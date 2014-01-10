@@ -47,9 +47,9 @@ public class Server extends Window implements MouseListener{
 	private JButton stopServerButton;
 
 	private JTextArea textArea;
-	
+
 	private HttpServer server;
-	
+
 	private static List<Session> activeSessions = new ArrayList<Session>();
 
 	/**
@@ -62,12 +62,14 @@ public class Server extends Window implements MouseListener{
 		server.createContext(LoginHandler.getContext(), new LoginHandler());
 		server.createContext(ItemsHandler.getContext(), new ItemsHandler());
 		server.createContext(LogoutHandler.getContext(), new LogoutHandler());
-		server.createContext(LoginPageHandler.getContext(), new LoginPageHandler());
+		server.createContext(LoginPageHandler.getContext(),
+				new LoginPageHandler());
 		server.createContext(AccountHandler.getContext(), new AccountHandler());
-		server.createContext(InventoryHandler.getContext(), new InventoryHandler());
+		server.createContext(InventoryHandler.getContext(),
+				new InventoryHandler());
 		server.createContext(TaskHandler.getContext(), new TaskHandler());
 	}
-	
+
 	/**
 	 * Sets the libraries in Application
 	 */
@@ -75,9 +77,10 @@ public class Server extends Window implements MouseListener{
 	{
 		Application.setJSONLibraries();
 	}
-	
+
 	/**
 	 * Finds the local IP
+	 * 
 	 * @return local ip
 	 */
 	public static String getLocalIp()
@@ -113,36 +116,51 @@ public class Server extends Window implements MouseListener{
 	public Server() throws Exception
 	{
 		super(null);
-		setTitle(getLocalIp());
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		getContentPane().setLayout(
-				new FormLayout(new ColumnSpec[] {
-						FormFactory.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("default:grow"), }, new RowSpec[] {
-						FormFactory.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("default:grow"),
-						FormFactory.RELATED_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC, }));
-
-		textArea = new JTextArea();
-		getContentPane().add(textArea, "2, 2, fill, fill");
-
-		stopServerButton = new JButton("Stop Server");
-		stopServerButton.addMouseListener(this);
-		getContentPane().add(stopServerButton, "2, 4");
-		pack();
-		setVisible(true);
-
-		addLibraries();
-		server = HttpServer.create(new InetSocketAddress(PORT), 0);
-		addHandlers();
-		server.start();
-		while (!stop)
+		try
 		{
-			Thread.sleep(1000);
+			setTitle(getLocalIp());
+			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			getContentPane().setLayout(
+					new FormLayout(new ColumnSpec[] {
+							FormFactory.RELATED_GAP_COLSPEC,
+							ColumnSpec.decode("default:grow"), },
+							new RowSpec[] { FormFactory.RELATED_GAP_ROWSPEC,
+									RowSpec.decode("default:grow"),
+									FormFactory.RELATED_GAP_ROWSPEC,
+									FormFactory.DEFAULT_ROWSPEC, }));
+
+			textArea = new JTextArea();
+			getContentPane().add(textArea, "2, 2, fill, fill");
+
+			stopServerButton = new JButton("Stop Server");
+			stopServerButton.addMouseListener(this);
+			getContentPane().add(stopServerButton, "2, 4");
+			pack();
+			setVisible(true);
+
+			addLibraries();
+			server = HttpServer.create(new InetSocketAddress(PORT), 0);
+			addHandlers();
+			server.start();
+			while (!stop)
+			{
+				Thread.sleep(1000);
+			}
 		}
-		server.stop(0);
-		dispose();
+		catch(Exception e)
+		{
+			if(server != null)
+			{
+				server.stop(0);
+			}
+			dispose();
+			throw e;
+		}
+		finally
+		{
+			server.stop(0);
+			dispose();
+		}
 	}
 
 	@Override
@@ -184,9 +202,9 @@ public class Server extends Window implements MouseListener{
 
 	public static void main(String[] args) throws Exception
 	{/*
-		Application.itemLibrary = new ServerItemLibrary();
-		Application.productionStepsLibrary = new ServerProductionStepsLibrary();
-*/
+	 * Application.itemLibrary = new ServerItemLibrary();
+	 * Application.productionStepsLibrary = new ServerProductionStepsLibrary();
+	 */
 		new Server();
 
 		return;
@@ -201,7 +219,8 @@ public class Server extends Window implements MouseListener{
 	}
 
 	/**
-	 * @param activeSessions the activeSessions to set
+	 * @param activeSessions
+	 *            the activeSessions to set
 	 */
 	public static void setActiveSessions(List<Session> activeSessions)
 	{
