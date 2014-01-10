@@ -13,6 +13,8 @@ public class Task{
 	private String description = "";
 
 	private Date dueDate = null;
+	
+	private boolean complete = false;
 
 	/**
 	 * @return the taskId
@@ -96,6 +98,22 @@ public class Task{
 	public void setDueDate(Date dueDate)
 	{
 		this.dueDate = dueDate;
+	}
+
+	/**
+	 * @return the complete
+	 */
+	public boolean isComplete()
+	{
+		return complete;
+	}
+
+	/**
+	 * @param complete the complete to set
+	 */
+	public void setComplete(boolean complete)
+	{
+		this.complete = complete;
 	}
 
 }
