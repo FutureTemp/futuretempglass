@@ -28,11 +28,9 @@ public class LogoutHandler extends ServerHandler{
 			{
 				activeSessions.remove(i);
 				sendResponse("Logout Successful", ex);
-				finish(ex);
 				return;
 			}
 		}
 		sendResponse("Error trying to logout", ex);
-		finish(ex);
 	}
 }
