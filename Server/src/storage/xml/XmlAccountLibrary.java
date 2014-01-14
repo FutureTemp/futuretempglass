@@ -1,10 +1,6 @@
 package storage.xml;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
 import server.objects.Account;
 import storage.AccountLibrary;

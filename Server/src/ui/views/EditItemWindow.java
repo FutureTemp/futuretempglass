@@ -27,8 +27,6 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-import core.Application;
-
 public class EditItemWindow extends Window implements MouseListener{
 
 	/**

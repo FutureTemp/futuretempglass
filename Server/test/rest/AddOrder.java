@@ -1,8 +1,9 @@
 package rest;
 
+import orders.Order;
+
 import org.junit.Test;
 
-import orders.Order;
 import utils.HTTPUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

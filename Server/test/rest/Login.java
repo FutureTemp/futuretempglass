@@ -1,8 +1,7 @@
 package rest;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
 
-import java.security.MessageDigest;
 import java.util.HashMap;
 
 import org.junit.Test;
@@ -11,7 +10,6 @@ import server.objects.Token;
 import utils.HTTPUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
 public class Login{
 

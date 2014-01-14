@@ -13,9 +13,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import core.Application;
-
 import workflow.ProductionStep;
+import core.Application;
 
 public class ProductionStepsSelectWindow extends Window{
 

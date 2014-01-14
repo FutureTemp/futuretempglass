@@ -3,9 +3,9 @@ package server.objects;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
-
 import utils.StringUtils;
+
+import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
 public class Account{
 
