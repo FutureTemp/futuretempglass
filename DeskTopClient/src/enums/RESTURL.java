@@ -1,10 +1,13 @@
 package enums;
 
+import core.Application;
+import core.Application.Property;
+
 public enum RESTURL{
 
-	TASKS("/tasks");
-	
-	private static String baseUrl = "";
+	TASKS("/tasks"),
+	TOKEN("/token"),
+	LOGIN("/login");
 	
 	private String relativeUrl = "";
 	
@@ -13,8 +16,13 @@ public enum RESTURL{
 		this.relativeUrl = relativeUrl;
 	}
 	
+	private String getBaseUrl()
+	{
+		return Application.getProperties().get(Property.BASE_URL.getPropertyName());
+	}
+	
 	public String getUrl()
 	{
-		return baseUrl + relativeUrl;
+		return getBaseUrl() + relativeUrl;
 	}
 }
