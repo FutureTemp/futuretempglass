@@ -1,0 +1,13 @@
+.error {
+	color: red;
+	font-family: Helvetica;
+}
+
+body {
+	background-color: #E0E0E0;
+}
+
+#header {
+	background-color: #D0D0D0;
+	width: 100%;
+}

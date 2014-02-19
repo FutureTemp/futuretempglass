@@ -22,6 +22,7 @@ public abstract class ServerHandler implements HttpHandler{
 	{
 		try
 		{
+			ex.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
 			if(!authenticate(ex))
 			{
 				sendHeader(ex);

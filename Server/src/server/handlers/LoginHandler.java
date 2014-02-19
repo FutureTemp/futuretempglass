@@ -23,6 +23,7 @@ public class LoginHandler extends ServerHandler{
 	@Override
 	public void handle(HttpExchange ex) throws IOException
 	{
+		ex.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
 		ex.sendResponseHeaders(200, 0);
 		if(authenticate(ex))
 		{

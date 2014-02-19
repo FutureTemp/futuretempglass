@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="common.js"></script>
+		<script src="login.js"></script>
+	</head>
+	<body>
+		<form action="javascript:login(document.getElementById('username').value, document.getElementById('password').value);">
+			<span>Username: </span>
+			<input type="text" name="username" id="username">
+			<br>
+			<span>Password: </span>
+			<input type="password" name="password" id="password">
+			<br>
+			<input type="submit">
+		</form>
+		<p id="error" class="error"></p>
+	</body>
+</html>

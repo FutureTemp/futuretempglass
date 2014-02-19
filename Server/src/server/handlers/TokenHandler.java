@@ -20,6 +20,7 @@ public class TokenHandler extends ServerHandler{
 	@Override
 	public void handle(HttpExchange ex) throws IOException
 	{
+		ex.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
 		HashMap<String, String> parameters = getParameters(ex);
 		sendHeader(ex);
 		if(StringUtils.isEmpty(parameters.get("username")))
