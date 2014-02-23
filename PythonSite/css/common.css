@@ -3,6 +3,10 @@
 	font-family: Helvetica;
 }
 
+html {
+	font-family: Verdana;
+}
+
 body {
 	background-color: #E0E0E0;
 }
