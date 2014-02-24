@@ -8,3 +8,8 @@
 #selectedTask {
 	font-size: 25px;
 }
+
+#newTaskTextArea {
+	width: 12em;
+	height: 20em;
+}

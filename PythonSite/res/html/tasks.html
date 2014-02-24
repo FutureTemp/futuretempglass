@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="common.css"></link>
 <link rel="stylesheet" type="text/css" href="tasks.css"></link>
 <script src="jquery.js"></script>
+<script src="common.js"></script>
 <script src="tasks.js"></script>
 </head>
 
@@ -21,7 +22,12 @@
 <div id="framecontentRight">
 <div class="innertube">
 
-<h3></h3>
+<h3>Add New Task</h3>
+<form id="newTaskForm" method="POST">
+	<input type="hidden" id="taskInfo" name="taskInfo">
+	<textarea id="newTaskTextArea"></textarea>
+	<button onclick="javascript:submitNewTask()">Add Task</button>
+</form>
 
 </div>
 </div>

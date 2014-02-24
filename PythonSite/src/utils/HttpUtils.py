@@ -16,4 +16,12 @@ def doGetRequest(url, parameters, headerData):
             req.add_header(key, headerData[key])
     response = urllib2.urlopen(url)
     return response.read()
+
+def doPostRequest(url, data, headerData):
+    req = urllib2.Request(url, data)
+    if not headerData == None:
+        for key in headerData:
+            req.add_header(key, headerData[key])
+    response = urllib2.urlopen(req)
+    return response.read()
     

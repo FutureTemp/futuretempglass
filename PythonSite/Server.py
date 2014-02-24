@@ -52,6 +52,14 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
         except Exception as e:
             print e
             self.wfile.write("Page does not exist at path: " + self.path)
+    
+    def do_POST(self):
+        self.send_response(200)
+        self.end_headers()
+        try:
+            getResponse(self.path, "POST", self)
+        except Exception as e:
+            print e
 
 Server = BaseHTTPServer.HTTPServer
 server = Server((IP, PORT), Handler)

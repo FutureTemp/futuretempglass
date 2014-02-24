@@ -1,6 +1,8 @@
 package server.handlers;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URLDecoder;
 import java.util.List;
 
 import utils.StringUtils;
@@ -58,7 +60,8 @@ public class TaskHandler extends ServerHandler{
 		catch(IOException e)
 		{
 			ObjectMapper mapper = new ObjectMapper();
-			tasks = mapper.readValue(getRequestData(ex),
+			String requestData = URLDecoder.decode(getRequestData(ex), "UTF-8");
+			tasks = mapper.readValue(requestData,
 					new TypeReference<List<Task>>(){});
 		}
 		if(task != null)

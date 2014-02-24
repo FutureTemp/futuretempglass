@@ -19,6 +19,12 @@ class TasksController(Controller):
         for taskElement in taskElements:
             taskListContent += taskElement.getHTML()
         handler.wfile.write(htmlFile.read().replace("$taskListContent", taskListContent))
+    
+    def onPOST(self, handler):
+        taskInfo = handler.rfile.read(int(handler.headers.getheader('Content-Length')))
+        taskInfo = taskInfo[taskInfo.find("=") + 1: len(taskInfo)]
+        response = HttpUtils.doPostRequest("http://localhost:8080/tasks", taskInfo, None)
+        handler.wfile.write(response)
 
 class TasksListElement(object):
     

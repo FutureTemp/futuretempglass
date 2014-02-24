@@ -12,3 +12,12 @@ var displayTask = function(taskId)
 	selectedTask = document.getElementById("selectedTask");
 	selectedTask.innerHTML = document.getElementById("TASK-" + taskId).innerHTML;
 }
+
+var submitNewTask = function()
+{
+	textArea = document.getElementById("newTaskTextArea");
+	taskInfo = document.getElementById("taskInfo");
+	taskInfo.value = textArea.value;
+	form = document.getElementById("newTaskForm");
+	form.submit();
+}

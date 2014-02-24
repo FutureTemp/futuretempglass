@@ -3,6 +3,7 @@ package server.handlers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -276,7 +277,8 @@ public abstract class ServerHandler implements HttpHandler{
 			throws IOException
 	{
 		ObjectMapper mapper = new ObjectMapper();
-		return mapper.readValue(getRequestData(ex), clazz);
+		String requestData = URLDecoder.decode(getRequestData(ex), "UTF-8");
+		return mapper.readValue(requestData, clazz);
 	}
 
 }

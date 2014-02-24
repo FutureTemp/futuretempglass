@@ -23,10 +23,11 @@ border-radius:10px;
 #framecontentRight{
 left: auto;
 right: 0; 
-width: 25%px; /*Width of right frame div*/
+width: 22%; /*Width of right frame div*/
 overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
 border: 1px solid;
 border-radius:10px;
+padding-left: 1em;
 }
 
 #framecontentTop{
