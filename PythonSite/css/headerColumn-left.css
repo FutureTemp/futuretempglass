@@ -35,18 +35,19 @@ top: 0;
 left: 25%; /*Set left value to WidthOfLeftFrameDiv*/
 right: 25%; /*Set right value to WidthOfRightFrameDiv*/
 width: auto;
-height: 50%; /*Height of top frame div*/
+height: 20%; /*Height of top frame div*/
 overflow: auto;
 margin: 0.5em;
 margin-left: 1em;
 margin-right: 1em;
+padding-left: 1em;
 border: 1px solid;
 border-radius:10px;
 }
 
 #maincontent{
 position: fixed; 
-top: 120px; /*Set top value to HeightOfTopFrameDiv*/
+top: 20%; /*Set top value to HeightOfTopFrameDiv*/
 left: 25%; /*Set left value to WidthOfLeftFrameDiv*/
 right: 25%; /*Set right value to WidthOfRightFrameDiv*/
 bottom: 0;
@@ -54,6 +55,7 @@ overflow: auto;
 margin: 0.5em;
 margin-left: 1em;
 margin-right: 1em;
+padding-left: 1em;
 border: 1px solid;
 border-radius:10px;
 }

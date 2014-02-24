@@ -1,0 +1,10 @@
+.taskListElement{
+	margin: 1em;
+	background-color: #F0F0F0;
+	border-radius: 1em;
+	padding: 0.5em;
+}
+
+#selectedTask {
+	font-size: 25px;
+}

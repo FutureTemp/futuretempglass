@@ -29,7 +29,7 @@ def getFile(path, handler):
     except:
         pass
     try:
-        f = open(path, "rb")
+        f = open(path, "r")
         handler.wfile.write(f.read())
     except:
         handler.wfile.write("Could not read file at " + path + "\n")
@@ -49,7 +49,8 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             return
         try:
             getResponse(self.path, "GET", self)
-        except:
+        except Exception as e:
+            print e
             self.wfile.write("Page does not exist at path: " + self.path)
 
 Server = BaseHTTPServer.HTTPServer
