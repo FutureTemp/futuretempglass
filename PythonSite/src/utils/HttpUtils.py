@@ -6,10 +6,11 @@ def dictToUrlParam(parameters):
         urlParams += key + "=" + parameters[key]
         urlParams += "&"
     urlParams = urlParams[0:len(urlParams) - 1]
+    return urlParams
 
 def doGetRequest(url, parameters, headerData):
     if not parameters == None:
-        url += dictToUrlParam(parameters)
+        url += "?" + dictToUrlParam(parameters)
     req = urllib2.Request(url)
     if not headerData == None:
         for key in headerData:

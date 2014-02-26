@@ -1,6 +1,7 @@
-window.baseUrl = "http://localhost:8080/";
-
-document.write('<link rel="stylesheet" type="text/css" href="common.css">');
+if (!window.location.origin)
+{
+  window.location.origin = window.location.protocol+"//"+window.location.host;
+}
 
 var getRequest = function(method, url)
 {
@@ -27,13 +28,15 @@ var getRequest = function(method, url)
 
     	// Otherwise, CORS is not supported by the browser.
     	xhr = null;
+      alert("Browser is not supported");
   	}
+
   	return xhr;
 }
 
 var logout = function()
 {
-	logoutRequest = getRequest("GET", window.baseUrl + "logout");
+	logoutRequest = getRequest("GET", window.location.origin + "/logout");
 	logoutRequest.onreadystatechange = function()
 	{
 		if(logoutRequest.readyState==4 && logoutRequest.status==200)

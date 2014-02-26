@@ -1,13 +1,15 @@
 import BaseHTTPServer
 from src.controllers.LoginController import LoginController
 from src.controllers.TasksController import TasksController
+from src.controllers.LogoutController import LogoutController
 
 IP = "0.0.0.0"
 PORT = 80
 
 controllers = {
     "/login" : LoginController(),
-    "/tasks" : TasksController()
+    "/tasks" : TasksController(),
+    "/logout" : LogoutController()
 }
 
 def getResponse(path, method, handler):
@@ -24,7 +26,7 @@ def getResponse(path, method, handler):
     
 def getFile(path, handler):
     try:
-        extension = path[path.find(".") + 1: len(path)]
+        extension = path[path.rfind(".") + 1: len(path)]
         path = extension + path
     except:
         pass
@@ -57,6 +59,8 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
         try:
+            if self.path[len(self.path) - 1] == "?":
+                self.path = self.path[0: len(self.path) - 1]
             getResponse(self.path, "POST", self)
         except Exception as e:
             print e

@@ -1,20 +1,78 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="common.css"></link>
-		<script src="common.js"></script>
-		<script src="login.js"></script>
+
 	</head>
 	<body>
-		<form action="javascript:login(document.getElementById('username').value, document.getElementById('password').value);">
-			<span>Username: </span>
-			<input type="text" name="username" id="username">
-			<br>
-			<span>Password: </span>
-			<input type="password" name="password" id="password">
-			<br>
-			<input type="submit">
-		</form>
+		<div class="row-fluid">
+			<div class="span4 offset3">
+				<form class="form-horizontal" action="javascript:login(document.getElementById('username').value, document.getElementById('password').value);">
+					<div class="control-group">
+						<label class="control-label" for="username">Username</label>
+						<div class="controls">
+							<input type="text" id="username" placeholder="Username">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="password">Password</label>
+						<div class="controls">
+							<input type="password" id="password" placeholder="Password">
+						</div>
+					</div>
+					<div class="control-group">
+		    			<div class="controls">
+		      				<button type="submit" class="btn btn-primary">Sign in</button>
+		    			</div>
+		  			</div>
+				</form>
+	  		</div>
+		</div>
 		<p id="error" class="error"></p>
 	</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  		<link rel="stylesheet" type="text/css" href="common.css"></link>
+		<link rel="stylesheet" type="text/css" href="bootstrap.min.css"></link>
+		<script src="jquery.js"></script>
+		<script src="common.js"></script>
+		<script src="login.js"></script>
+		<script src="bootstrap.min.js"></script>
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+	    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+	    <title>Please Sign In</title>
+
+	    <!-- Bootstrap core CSS -->
+	    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+	    <!-- Custom styles for this template -->
+	    <link href="signin.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin" role="form" action="javascript:login($('#username').val(), $('#password').val());">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autofocus>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+      <div class="alert alert-danger" id="error" hidden></div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
 </html>

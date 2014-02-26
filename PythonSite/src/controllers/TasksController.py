@@ -1,6 +1,7 @@
 from src.controllers.Controller import Controller
 from src.utils import HttpUtils
 import json
+from src.htmlobjects.TaskListPanel import TaskListPanel
 
 class TasksController(Controller):
     
@@ -14,31 +15,15 @@ class TasksController(Controller):
         tasks = json.loads(tasks)
         taskElements = []
         for task in tasks:
-            taskElements.append(TasksListElement(task))
+            element = TaskListPanel(task["taskId"], task["title"], task["assignee"], task["description"])
+            taskElements.append(element)
         taskListContent = ""
         for taskElement in taskElements:
-            taskListContent += taskElement.getHTML()
-        handler.wfile.write(htmlFile.read().replace("$taskListContent", taskListContent))
+            taskListContent += taskElement.toHTML()
+        handler.wfile.write(htmlFile.read().replace("$taskListPanels", taskListContent))
     
     def onPOST(self, handler):
-        taskInfo = handler.rfile.read(int(handler.headers.getheader('Content-Length')))
+        taskInfo = self.getRequestBody(handler)
         taskInfo = taskInfo[taskInfo.find("=") + 1: len(taskInfo)]
         response = HttpUtils.doPostRequest("http://localhost:8080/tasks", taskInfo, None)
         handler.wfile.write(response)
-
-class TasksListElement(object):
-    
-    def __init__(self, taskDictionary):
-        self.taskId = taskDictionary["taskId"]
-        self.title = taskDictionary["title"]
-        self.assignee = taskDictionary["assignee"]
-        self.description = taskDictionary["description"]
-    
-    def getHTML(self):
-        html = "<div id='TASK-" + self.taskId + "' class='taskListElement'>"
-        html += "Task ID: " + self.taskId
-        html += "<br>Title: " + self.title
-        html += "<br>Assignee: " + self.assignee
-        html += "<br>Description: " + self.description 
-        html += "</div>"
-        return html

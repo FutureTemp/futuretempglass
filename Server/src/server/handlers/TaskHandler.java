@@ -1,7 +1,6 @@
 package server.handlers;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.util.List;
 

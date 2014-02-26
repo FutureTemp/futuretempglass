@@ -3,55 +3,62 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Tasks</title>
-<link rel="stylesheet" type="text/css" href="headerColumn-left.css"></link>
 <link rel="stylesheet" type="text/css" href="common.css"></link>
 <link rel="stylesheet" type="text/css" href="tasks.css"></link>
+<link rel="stylesheet" type="text/css" href="bootstrap.min.css" media="screen"></link>
 <script src="jquery.js"></script>
 <script src="common.js"></script>
 <script src="tasks.js"></script>
+<script src="bootstrap.min.js"></script>
 </head>
 
 <body>
+<div class="container-fluid">
+	<div class="row">
+		<div id="framecontentLeft" class="col-md-4 fill well" color="blue">
+			<div class="list-group">
+				$taskListPanels
+			</div>
+		</div>
 
-<div id="framecontentLeft">
+		<div class="col-md-6">
+			<div id="framecontentTop">
+			<div class="innertube">
 
-	$taskListContent
+			<h3>Active Tasks</h3>
 
+			</div>
+			</div>
+
+
+			<div id="maincontent">
+			<div class="innertube">
+
+			<h1>Task Information</h1>
+			<div id="selectedTask">
+			</div>
+			</div>
+			</div>
+		</div>
+
+		<div id="framecontentRight" class="col-md-2">
+		<div class="innertube">
+
+		<h3>Add New Task</h3>
+		<form id="newTaskForm" method="POST">
+			<input type="hidden" id="taskInfo" name="taskInfo">
+			<div class="container">
+			<textarea id="newTaskTextArea"></textarea>
+			<br>
+			<button class="btn btn-primary" onclick="javascript:submitNewTask()">Add Task</button>
+			</div>
+		</form>
+
+		</div>
+		</div>
+
+	</div>
 </div>
-
-<div id="framecontentRight">
-<div class="innertube">
-
-<h3>Add New Task</h3>
-<form id="newTaskForm" method="POST">
-	<input type="hidden" id="taskInfo" name="taskInfo">
-	<textarea id="newTaskTextArea"></textarea>
-	<button onclick="javascript:submitNewTask()">Add Task</button>
-</form>
-
-</div>
-</div>
-
-<div id="framecontentTop">
-<div class="innertube">
-
-<h3>Active Tasks</h3>
-
-</div>
-</div>
-
-
-<div id="maincontent">
-<div class="innertube">
-
-<h1>Task Information</h1>
-<div id="selectedTask">
-</div>
-
-
-</div>
-</div>
-
 
 </body>
 </html>

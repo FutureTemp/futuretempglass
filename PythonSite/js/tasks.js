@@ -1,6 +1,6 @@
 window.onload = function()
 {
-	tasks = document.getElementsByClassName("taskListElement");
+	tasks = document.getElementsByClassName("taskListPanel");
 	for(var i = 0; i < tasks.length; i++)
 	{
 		tasks[i].setAttribute("onclick", "javascript: displayTask('"+ tasks[i].id.substring(5) + "');");
@@ -10,7 +10,13 @@ window.onload = function()
 var displayTask = function(taskId)
 {
 	selectedTask = document.getElementById("selectedTask");
-	selectedTask.innerHTML = document.getElementById("TASK-" + taskId).innerHTML;
+
+	taskPanels = $(".taskListPanel");
+	taskPanels.removeClass("active");
+
+	clickedTask = $("#TASK-" + taskId);
+	selectedTask.innerHTML = clickedTask.html();
+	clickedTask.addClass("active");
 }
 
 var submitNewTask = function()
