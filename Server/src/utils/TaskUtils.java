@@ -2,6 +2,7 @@ package utils;
 
 import java.util.List;
 
+import storage.TaskLibrary;
 import workflow.Task;
 import core.Application;
 
@@ -84,5 +85,15 @@ public class TaskUtils{
 							+ assignee + "]");
 		}
 		return assignedTasks;
+	}
+	
+	/**
+	 * Deletes the task with the given task ID
+	 * @param taskId
+	 * @throws Exception
+	 */
+	public static void removeTask(String taskId) throws Exception
+	{
+		Application.getTaskLibrary().removeTask(taskId);
 	}
 }

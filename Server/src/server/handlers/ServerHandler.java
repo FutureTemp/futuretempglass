@@ -43,6 +43,10 @@ public abstract class ServerHandler implements HttpHandler{
 			{
 				onPut(ex);
 			}
+			else if("DELETE".equals(ex.getRequestMethod()))
+			{
+				onDelete(ex);
+			}
 		}
 		catch(Exception e)
 		{
@@ -137,6 +141,16 @@ public abstract class ServerHandler implements HttpHandler{
 	 * @throws Exception
 	 */
 	protected void onPut(HttpExchange ex) throws Exception
+	{
+
+	}
+	
+	/**
+	 * Is called when handling a DELETE request
+	 * @param ex
+	 * @throws Exception
+	 */
+	protected void onDelete(HttpExchange ex) throws Exception
 	{
 
 	}

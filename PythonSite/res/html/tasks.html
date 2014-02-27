@@ -15,9 +15,20 @@
 <body>
 <div class="container-fluid">
 	<div class="row">
-		<div id="framecontentLeft" class="col-md-4 fill well" color="blue">
-			<div class="list-group">
-				$taskListPanels
+		<div class="col-md-12 text-center">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h1>Active Tasks</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 fill well">
+			<div id="framecontentLeft">
+				<div class="list-group">
+					$taskListPanels
+				</div>
 			</div>
 		</div>
 
@@ -35,7 +46,12 @@
 			<div class="innertube">
 
 			<h1>Task Information</h1>
-			<div id="selectedTask">
+				<div class="panel panel-default selectedTaskTools" hidden>
+					<div id="selectedTask" class="panel-body">
+					</div>
+				</div>
+			<div class="selectedTaskTools" hidden>
+				<button type="button" id="deleteButton" class="btn btn-danger">Delete</button>
 			</div>
 			</div>
 			</div>

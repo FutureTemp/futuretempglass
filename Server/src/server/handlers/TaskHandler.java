@@ -84,4 +84,14 @@ public class TaskHandler extends ServerHandler{
 			throw new Exception("Adding multiple tasks at once is not yet implemented");
 		}
 	}
+	
+	@Override
+	protected void onDelete(HttpExchange ex) throws Exception
+	{
+		super.onPut(ex);
+		sendHeader(ex);
+		String taskId = getRequestData(ex);
+		TaskUtils.removeTask(taskId);
+	}
+	
 }

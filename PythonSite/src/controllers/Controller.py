@@ -19,6 +19,12 @@ class Controller(object):
     
     def onPOST(self, handler):
         pass
+    
+    def onPUT(self, handler):
+        pass
+    
+    def onDELETE(self, handler):
+        pass
      
     @staticmethod
     def getHTMLFile(path):

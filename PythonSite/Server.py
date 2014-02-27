@@ -23,6 +23,10 @@ def getResponse(path, method, handler):
         controller.onGET(handler)
     elif method == "POST":
         controller.onPOST(handler)
+    elif method == "PUT":
+        controller.onPUT(handler)
+    elif method == "DELETE":
+        controller.onDELETE(handler)
     
 def getFile(path, handler):
     try:
@@ -62,6 +66,22 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             if self.path[len(self.path) - 1] == "?":
                 self.path = self.path[0: len(self.path) - 1]
             getResponse(self.path, "POST", self)
+        except Exception as e:
+            print e
+    
+    def do_PUT(self):
+        self.send_response(200)
+        self.end_headers()
+        try:
+            getResponse(self.path, "PUT", self)
+        except Exception as e:
+            print e
+    
+    def do_DELETE(self):
+        self.send_response(200)
+        self.end_headers()
+        try:
+            getResponse(self.path, "DELETE", self)
         except Exception as e:
             print e
 

@@ -1,7 +1,8 @@
 from src.controllers.Controller import Controller
-from src.utils import HttpUtils
-import json
 from src.htmlobjects.TaskListPanel import TaskListPanel
+from src.rest import TasksAccessor
+from src.utils import HttpUtils
+
 
 class TasksController(Controller):
     
@@ -11,8 +12,7 @@ class TasksController(Controller):
         htmlFile = Controller.getHTMLFile(TasksController.htmlPath)
         if(htmlFile == None):
             handler.wfile.write("Could not find html file " + TasksController.htmlPath + "\n")
-        tasks = HttpUtils.doGetRequest("http://localhost:8080/tasks", None, None)
-        tasks = json.loads(tasks)
+        tasks = TasksAccessor.getAllTasks()
         taskElements = []
         for task in tasks:
             element = TaskListPanel(task["taskId"], task["title"], task["assignee"], task["description"])
@@ -26,4 +26,10 @@ class TasksController(Controller):
         taskInfo = self.getRequestBody(handler)
         taskInfo = taskInfo[taskInfo.find("=") + 1: len(taskInfo)]
         response = HttpUtils.doPostRequest("http://localhost:8080/tasks", taskInfo, None)
+        handler.wfile.write(response)
+
+    def onDELETE(self, handler):
+        Controller.onDELETE(self, handler)
+        taskId = self.getRequestBody(handler)
+        response = TasksAccessor.removeTask(taskId)
         handler.wfile.write(response)
