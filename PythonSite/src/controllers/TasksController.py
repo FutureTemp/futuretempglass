@@ -24,6 +24,7 @@ class TasksController(Controller):
     
     def onPOST(self, handler):
         taskInfo = self.getPOSTParameters(handler)
+        print taskInfo
         response = TasksAccessor.addTask(taskInfo)
         handler.wfile.write(response)
 

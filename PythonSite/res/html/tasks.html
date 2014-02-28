@@ -23,6 +23,7 @@
       </div>
       <div class="modal-body">
         <form id="taskForm" action="" method="POST" role="form">
+          <input type="hidden" id="modalTaskId" name="taskId">
 		  <div class="form-group">
 		    <label for="modalTaskTitle">Title</label>
 		    <input type="text" class="form-control" id="modalTaskTitle" name="title" placeholder="Enter Title">
@@ -104,6 +105,7 @@
 						</div>
 					</div>
 					<div class="selectedTaskTools" align="right" hidden>
+						<button type="button" id="editButton" class="btn btn-default">Edit</button>
 						<button type="button" id="deleteButton" class="btn btn-danger">Delete</button>
 					</div>
 				</div>

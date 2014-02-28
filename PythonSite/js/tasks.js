@@ -8,6 +8,7 @@ window.onload = function()
 		tasks[i].setAttribute("onclick", "javascript: displayTask('"+ tasks[i].id.substring(5) + "');");
 	}
 	$("#deleteButton").click(deleteSelectedTask);
+	$("#editButton").click(function(){openEditTaskModal(displayedTask)});
 }
 
 var deleteSelectedTask = function()
@@ -64,6 +65,7 @@ var deleteTask = function(taskId)
 var openCreateNewTaskModal = function()
 {
 	$("#editTaskModalTitle").html("Create New Task");
+	$("#modalTaskId").val("");
 	$("#modalTaskTitle").val("");
 	$("#modalTaskAssignee").val("");
 	$("#modalTaskDescription").val("");
@@ -72,7 +74,13 @@ var openCreateNewTaskModal = function()
 
 var openEditTaskModal = function(taskId)
 {
-
+	$("#editTaskModalTitle").html("Edit Task");
+	task = $("#TASK-" + taskId);
+	$("#modalTaskId").val(task.data("task-id"));
+	$("#modalTaskTitle").val(task.data("title"));
+	$("#modalTaskAssignee").val(task.data("assignee"));
+	$("#modalTaskDescription").val(task.data("description"));
+	$("#editTaskModal").modal("show");
 }
 
 var getTaskInfo = function(taskId)
