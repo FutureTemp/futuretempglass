@@ -13,6 +13,38 @@
 </head>
 
 <body>
+
+<div id="editTaskModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 id="editTaskModalTitle" class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="taskForm" action="" method="POST" role="form">
+		  <div class="form-group">
+		    <label for="modalTaskTitle">Title</label>
+		    <input type="text" class="form-control" id="modalTaskTitle" name="title" placeholder="Enter Title">
+		  </div>
+		  <div class="form-group">
+		    <label for="modalTaskAssignee">Assignee</label>
+		    <input type="text" class="form-control" id="modalTaskAssignee" name="assignee" placeholder="Enter Assignee">
+		  </div>
+		  <div class="form-group">
+		  	<label for="modalTaskDescription">Desription</label>
+		  	<textarea id="modalTaskDescription" class="form-control" name="description" rows="3" placeholder="Write Description..."></textarea>
+		  </div>
+		</form>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" onclick="submitTaskForm()" class="btn btn-primary">Save</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12 col-sm-12 text-center">
@@ -32,47 +64,51 @@
 			</div>
 		</div>
 
-		<div class="col-md-6 col-sm-6 col-xs-6">
-			<div id="framecontentTop">
-			<div class="innertube">
+		<div class="col-md-8 col-sm-6 col-xs-6">
+			<div class="row">
+				<div class="col-md-4">
+					<div id="maincontent">
+					<div class="innertube">
 
-			<h3>Active Tasks</h3>
-
-			</div>
-			</div>
-
-
-			<div id="maincontent">
-			<div class="innertube">
-
-			<h1>Task Information</h1>
-				<div class="panel panel-default selectedTaskTools" hidden>
-					<div id="selectedTask" class="panel-body">
+					<h1>Task Information</h1>
+						
+					</div>
 					</div>
 				</div>
-			<div class="selectedTaskTools" hidden>
-				<button type="button" id="deleteButton" class="btn btn-danger">Delete</button>
+
+				<div class="col-md-4">
+					<div id="framecontentTop">
+						<div class="btn-group">
+						  <button type="button" class="btn btn-default">Active Tasks</button>
+						  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						  	<span class="glyphicon glyphicon-wrench"></span>
+						    <span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+						  </button>
+						  <ul class="dropdown-menu" role="menu">
+						    <li><a href="javascript:openCreateNewTaskModal();">New Task</a></li>
+						    <li class="divider selectedTaskTools" hidden></li>
+						    <li class="selectedTaskTools" hidden><a href="#">Edit Task</a></li>
+						    <li class="selectedTaskTools" hidden><a href="javascript:deleteSelectedTask();">Delete Task</a></li>
+						    <li class="divider"></li>
+						    <li><a href="javascript:location.reload();">Refresh</a></li>
+						  </ul>
+						</div>
+					</div>
+				</div>
 			</div>
-			</div>
+			<div class="row">
+				<div class="col-md-8 col-sm-6">
+					<div class="panel panel-default selectedTaskTools" hidden>
+						<div id="selectedTask" class="panel-body">
+						</div>
+					</div>
+					<div class="selectedTaskTools" align="right" hidden>
+						<button type="button" id="deleteButton" class="btn btn-danger">Delete</button>
+					</div>
+				</div>
 			</div>
 		</div>
-
-		<div id="framecontentRight" class="col-md-2 hidden-sm hidden-xs">
-		<div class="innertube">
-
-		<h3>Add New Task</h3>
-		<form id="newTaskForm" method="POST">
-			<input type="hidden" id="taskInfo" name="taskInfo">
-			<div class="container">
-			<textarea id="newTaskTextArea"></textarea>
-			<br>
-			<button class="btn btn-primary" onclick="javascript:submitNewTask()">Add Task</button>
-			</div>
-		</form>
-
-		</div>
-		</div>
-
 	</div>
 </div>
 

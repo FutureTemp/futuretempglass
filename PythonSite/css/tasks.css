@@ -5,6 +5,10 @@
 }
 
 #framecontentLeft {
-	height: 50em;
+	height: 35em;
 	overflow: auto;
+}
+
+#framecontentTop {
+	height: 20%;
 }

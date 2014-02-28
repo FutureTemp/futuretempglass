@@ -29,13 +29,16 @@ def getResponse(path, method, handler):
         controller.onDELETE(handler)
     
 def getFile(path, handler):
+    if path.find("fonts") == -1:  
+        try:
+            extension = path[path.rfind(".") + 1: len(path)]
+            path = extension + path
+        except:
+            pass
+    else:
+    	path = path[1:len(path)]
     try:
-        extension = path[path.rfind(".") + 1: len(path)]
-        path = extension + path
-    except:
-        pass
-    try:
-        f = open(path, "r")
+        f = open(path, "rb")
         handler.wfile.write(f.read())
     except:
         handler.wfile.write("Could not read file at " + path + "\n")

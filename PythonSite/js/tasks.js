@@ -7,13 +7,15 @@ window.onload = function()
 	{
 		tasks[i].setAttribute("onclick", "javascript: displayTask('"+ tasks[i].id.substring(5) + "');");
 	}
-	$("#deleteButton").click(function()
+	$("#deleteButton").click(deleteSelectedTask);
+}
+
+var deleteSelectedTask = function()
+{
+	if(displayedTask != "")
 	{
-		if(displayedTask != "")
-		{
-			deleteTask(displayedTask);
-		}
-	});
+		deleteTask(displayedTask);
+	}
 }
 
 var displayTask = function(taskId)
@@ -32,13 +34,16 @@ var displayTask = function(taskId)
 	clickedTask.addClass("active");
 }
 
-var submitNewTask = function()
+var submitTaskForm = function()
 {
-	textArea = document.getElementById("newTaskTextArea");
-	taskInfo = document.getElementById("taskInfo");
-	taskInfo.value = textArea.value;
-	form = document.getElementById("newTaskForm");
-	form.submit();
+	console.log("before submit");
+	$("#taskForm").ajaxSubmit({url:"", success: function()
+	{
+		console.log("after response");
+		location.reload();
+	}});
+	console.log("after submit");
+	$("#editTaskModal").modal("hide");
 }
 
 var deleteTask = function(taskId)
@@ -54,4 +59,23 @@ var deleteTask = function(taskId)
   		}
   	}
 	request.send(taskId);
+}
+
+var openCreateNewTaskModal = function()
+{
+	$("#editTaskModalTitle").html("Create New Task");
+	$("#modalTaskTitle").val("");
+	$("#modalTaskAssignee").val("");
+	$("#modalTaskDescription").val("");
+	$("#editTaskModal").modal("show");
+}
+
+var openEditTaskModal = function(taskId)
+{
+
+}
+
+var getTaskInfo = function(taskId)
+{
+
 }

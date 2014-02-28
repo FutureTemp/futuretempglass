@@ -23,9 +23,8 @@ class TasksController(Controller):
         handler.wfile.write(htmlFile.read().replace("$taskListPanels", taskListContent))
     
     def onPOST(self, handler):
-        taskInfo = self.getRequestBody(handler)
-        taskInfo = taskInfo[taskInfo.find("=") + 1: len(taskInfo)]
-        response = HttpUtils.doPostRequest("http://localhost:8080/tasks", taskInfo, None)
+        taskInfo = self.getPOSTParameters(handler)
+        response = TasksAccessor.addTask(taskInfo)
         handler.wfile.write(response)
 
     def onDELETE(self, handler):

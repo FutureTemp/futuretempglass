@@ -13,3 +13,8 @@ def getAllTasks():
 def removeTask(taskId):
     response = HttpUtils.doDeleteRequest(tasksURL, taskId, None)
     return response
+
+def addTask(task):
+    taskJSON = json.dumps(task)
+    response = HttpUtils.doPostRequest(tasksURL, taskJSON, None)
+    return response
