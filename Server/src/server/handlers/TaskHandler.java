@@ -69,14 +69,13 @@ public class TaskHandler extends ServerHandler{
 			{
 				// Add new task
 				TaskUtils.addTask(task);
-				sendResponse("Added", ex);
 			}
 			else
 			{
 				// Update task
 				TaskUtils.updateTask(task);
-				sendResponse("Updated", ex);
 			}
+			sendResponse(task, ex);
 		}
 		else
 		{
@@ -92,6 +91,7 @@ public class TaskHandler extends ServerHandler{
 		sendHeader(ex);
 		String taskId = getRequestData(ex);
 		TaskUtils.removeTask(taskId);
+		sendResponse("Deleted", ex);
 	}
 	
 }

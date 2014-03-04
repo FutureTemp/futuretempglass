@@ -5,7 +5,7 @@
 }
 
 #framecontentLeft {
-	height: 35em;
+	max-height: 35em;
 	overflow: auto;
 }
 
