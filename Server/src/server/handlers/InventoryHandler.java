@@ -1,12 +1,18 @@
 package server.handlers;
 
 import items.Item;
+import server.Server;
 import utils.InventoryUtils;
 import utils.StringUtils;
 
 import com.sun.net.httpserver.HttpExchange;
 
 public class InventoryHandler extends ServerHandler{
+
+	public InventoryHandler(Server server)
+	{
+		super(server);
+	}
 
 	private static String context = "/inventory";
 	

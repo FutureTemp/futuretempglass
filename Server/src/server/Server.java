@@ -1,5 +1,6 @@
 package server;
 
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.InetAddress;
@@ -12,15 +13,17 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import server.handlers.AccountHandler;
 import server.handlers.InventoryHandler;
 import server.handlers.ItemsHandler;
 import server.handlers.LoginHandler;
-import server.handlers.LoginPageHandler;
 import server.handlers.LogoutHandler;
 import server.handlers.OrderHandler;
+import server.handlers.PageHandler;
 import server.handlers.TaskHandler;
 import server.handlers.TokenHandler;
 import ui.views.Window;
@@ -40,7 +43,7 @@ public class Server extends Window implements MouseListener{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static int PORT = 8080;
+	private static int PORT = 80;
 
 	private static boolean stop = false;
 
@@ -57,17 +60,18 @@ public class Server extends Window implements MouseListener{
 	 */
 	private void addHandlers()
 	{
-		server.createContext(OrderHandler.getContext(), new OrderHandler());
-		server.createContext(TokenHandler.getContext(), new TokenHandler());
-		server.createContext(LoginHandler.getContext(), new LoginHandler());
-		server.createContext(ItemsHandler.getContext(), new ItemsHandler());
-		server.createContext(LogoutHandler.getContext(), new LogoutHandler());
-		server.createContext(LoginPageHandler.getContext(),
-				new LoginPageHandler());
-		server.createContext(AccountHandler.getContext(), new AccountHandler());
+		server.createContext(OrderHandler.getContext(), new OrderHandler(this));
+		server.createContext(TokenHandler.getContext(), new TokenHandler(this));
+		server.createContext(LoginHandler.getContext(), new LoginHandler(this));
+		server.createContext(ItemsHandler.getContext(), new ItemsHandler(this));
+		server.createContext(LogoutHandler.getContext(),
+				new LogoutHandler(this));
+		server.createContext(PageHandler.getContext(), new PageHandler(this));
+		server.createContext(AccountHandler.getContext(), new AccountHandler(
+				this));
 		server.createContext(InventoryHandler.getContext(),
-				new InventoryHandler());
-		server.createContext(TaskHandler.getContext(), new TaskHandler());
+				new InventoryHandler(this));
+		server.createContext(TaskHandler.getContext(), new TaskHandler(this));
 	}
 
 	/**
@@ -120,7 +124,8 @@ public class Server extends Window implements MouseListener{
 		{
 			setTitle(getLocalIp());
 			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-			getContentPane().setLayout(
+			JPanel mainPanel = new JPanel();
+			mainPanel.setLayout(
 					new FormLayout(new ColumnSpec[] {
 							FormFactory.RELATED_GAP_COLSPEC,
 							ColumnSpec.decode("default:grow"), },
@@ -130,11 +135,14 @@ public class Server extends Window implements MouseListener{
 									FormFactory.DEFAULT_ROWSPEC, }));
 
 			textArea = new JTextArea();
-			getContentPane().add(textArea, "2, 2, fill, fill");
+			JScrollPane scrollTextPane = new JScrollPane(textArea);
+			mainPanel.add(scrollTextPane, "2, 2, fill, fill");
 
 			stopServerButton = new JButton("Stop Server");
 			stopServerButton.addMouseListener(this);
-			getContentPane().add(stopServerButton, "2, 4");
+			mainPanel.add(stopServerButton, "2, 4");
+			getContentPane().add(mainPanel);
+			getContentPane().setPreferredSize(new Dimension(300, 300));
 			pack();
 			setVisible(true);
 
@@ -158,9 +166,33 @@ public class Server extends Window implements MouseListener{
 		}
 		finally
 		{
-			server.stop(0);
+			if(server != null)
+			{
+				server.stop(0);
+			}
 			dispose();
 		}
+	}
+
+	/**
+	 * Prints text to the server log
+	 * 
+	 * @param string
+	 */
+	public void print(String string)
+	{
+		this.textArea.append(string);
+		pack();
+	}
+
+	/**
+	 * Prints text to the server log and goes to the next line after
+	 * 
+	 * @param string
+	 */
+	public void println(String string)
+	{
+		this.print(string + "\n");
 	}
 
 	@Override

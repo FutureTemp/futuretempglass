@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.List;
 
+import server.Server;
 import utils.StringUtils;
 import utils.TaskUtils;
 import workflow.Task;
@@ -13,6 +14,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 
 public class TaskHandler extends ServerHandler{
+
+	public TaskHandler(Server server)
+	{
+		super(server);
+	}
 
 	private static String context = "/tasks";
 

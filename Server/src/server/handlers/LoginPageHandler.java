@@ -2,9 +2,16 @@ package server.handlers;
 
 import java.io.IOException;
 
+import server.Server;
+
 import com.sun.net.httpserver.HttpExchange;
 
 public class LoginPageHandler extends PageHandler{
+
+	public LoginPageHandler(Server server)
+	{
+		super(server);
+	}
 
 	private static final String context = "/loginPage";
 	

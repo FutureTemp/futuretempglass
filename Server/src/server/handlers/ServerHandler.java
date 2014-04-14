@@ -18,11 +18,19 @@ import com.sun.net.httpserver.HttpHandler;
 
 public abstract class ServerHandler implements HttpHandler{
 
+	protected Server server;
+	
+	public ServerHandler(Server server)
+	{
+		this.server = server;
+	}
+
 	@Override
 	public void handle(HttpExchange ex) throws IOException
 	{
 		try
 		{
+			server.println(ex.getRequestURI().getPath() + " : " + ex.getRequestMethod());
 			ex.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
 			if(!authenticate(ex))
 			{

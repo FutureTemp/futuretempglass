@@ -3,12 +3,18 @@ package server.handlers;
 import java.io.IOException;
 import java.util.HashMap;
 
+import server.Server;
 import utils.AccountUtils;
 import utils.StringUtils;
 
 import com.sun.net.httpserver.HttpExchange;
 
 public class TokenHandler extends ServerHandler{
+
+	public TokenHandler(Server server)
+	{
+		super(server);
+	}
 
 	private static String context = "/token";
 	

@@ -10,6 +10,11 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class LogoutHandler extends ServerHandler{
 
+	public LogoutHandler(Server server)
+	{
+		super(server);
+	}
+
 	private static String context = "/logout";
 	
 	public static String getContext()

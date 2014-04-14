@@ -5,13 +5,37 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import server.Server;
+
 import com.sun.net.httpserver.HttpExchange;
 
-public abstract class PageHandler extends ServerHandler{
+public class PageHandler extends ServerHandler{
+
+	public PageHandler(Server server)
+	{
+		super(server);
+	}
+
+	private final static String context = "/pages";
+
+	public static String getContext()
+	{
+		return context;
+	}
+
+	@Override
+	public void handle(HttpExchange ex) throws IOException
+	{
+		server.println(ex.getRequestURI().getPath());
+		sendHeader(ex);
+		sendPage(ex.getRequestURI().getPath().substring(1), ex);
+		finish(ex);
+	}
 
 	/**
-	 * Sends a response through the HttpExchange object provided
-	 * which contains the bytes for a page passed in as File.
+	 * Sends a response through the HttpExchange object provided which contains
+	 * the bytes for a page passed in as File.
+	 * 
 	 * @param file
 	 * @param ex
 	 */
@@ -23,7 +47,7 @@ public abstract class PageHandler extends ServerHandler{
 			fis = new FileInputStream(file);
 			OutputStream out = ex.getResponseBody();
 			int next = fis.read();
-			while(next != -1)
+			while (next != -1)
 			{
 				out.write(next);
 				next = fis.read();
@@ -48,10 +72,11 @@ public abstract class PageHandler extends ServerHandler{
 			}
 		}
 	}
-	
+
 	/**
-	 * Sends a response through the HttpExchange object provided
-	 * which contains the bytes for a page at the specified filePath.
+	 * Sends a response through the HttpExchange object provided which contains
+	 * the bytes for a page at the specified filePath.
+	 * 
 	 * @param filePath
 	 * @param ex
 	 */
@@ -59,5 +84,5 @@ public abstract class PageHandler extends ServerHandler{
 	{
 		sendPage(new File(filePath), ex);
 	}
-	
+
 }
