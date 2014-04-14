@@ -3,6 +3,7 @@ package server.handlers;
 import java.io.IOException;
 import java.util.List;
 
+import server.Server;
 import server.objects.Account;
 import utils.AccountUtils;
 import utils.StringUtils;
@@ -11,6 +12,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 
 public class AccountHandler extends ServerHandler{
+
+	public AccountHandler(Server server)
+	{
+		super(server);
+	}
 
 	private static String context = "/users";
 	

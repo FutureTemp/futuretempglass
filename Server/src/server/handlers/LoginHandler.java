@@ -13,6 +13,11 @@ import com.sun.net.httpserver.HttpExchange;
 
 public class LoginHandler extends ServerHandler{
 
+	public LoginHandler(Server server)
+	{
+		super(server);
+	}
+
 	private static String context = "/login";
 
 	public static String getContext()

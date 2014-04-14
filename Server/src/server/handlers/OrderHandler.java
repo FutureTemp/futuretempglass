@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import orders.Order;
+import server.Server;
 import utils.OrderUtils;
 import utils.StringUtils;
 
@@ -13,6 +14,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 
 public class OrderHandler extends ServerHandler{
+
+	public OrderHandler(Server server)
+	{
+		super(server);
+	}
 
 	private static String context = "/orders";
 

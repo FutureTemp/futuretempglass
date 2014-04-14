@@ -1,0 +1,14 @@
+
+#newTaskTextArea {
+	width: 12em;
+	height: 25em;
+}
+
+#framecontentLeft {
+	max-height: 35em;
+	overflow: auto;
+}
+
+#framecontentTop {
+	height: 20%;
+}

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import server.Server;
 import utils.ItemUtils;
 import utils.StringUtils;
 
@@ -16,6 +17,11 @@ import com.sun.net.httpserver.HttpExchange;
 import core.Application;
 
 public class ItemsHandler extends ServerHandler{
+
+	public ItemsHandler(Server server)
+	{
+		super(server);
+	}
 
 	private static String context = "/items";
 
