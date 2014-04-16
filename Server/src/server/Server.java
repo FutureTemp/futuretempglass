@@ -86,7 +86,6 @@ public class Server extends Window implements MouseListener{
 
 	/**
 	 * Finds the local IP
-	 * 
 	 * @return local ip
 	 */
 	public static String getLocalIp()

@@ -42,6 +42,16 @@ public class Account{
 	{
 		return hashedPassword;
 	}
+	
+	/**
+	 * Sets the hashedPassword directly
+	 * @param hashedPassword
+	 * @return
+	 */
+	public void setHashedPassword(String hashedPassword)
+	{
+		this.hashedPassword = hashedPassword;
+	}
 
 	/**
 	 * Sets the password by taking the given password

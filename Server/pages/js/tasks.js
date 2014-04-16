@@ -4,6 +4,15 @@ window.onload = function() {
     refreshTasks();
     $("#deleteButton").click(deleteSelectedTask);
     $("#editButton").click(editSelectedTask);
+    getCurrentUser();
+}
+
+var onCurrentUserFetched = function(user) {
+    $("#userButton").html(user.firstName + " " + user.lastName);
+    $("#userButton").attr("name", user.username);
+    if(user.admin){
+	$(".admin-option").show();
+    }
 }
 
 var deleteSelectedTask = function() {
@@ -128,4 +137,9 @@ var TaskListPanel = function(info) {
 			this.title).replace(/\$assignee/g, this.assignee)
 		.replace(/\$description/g, this.description);
     }
+}
+
+var goToEditCurrentUser = function() {
+    var username = $("#userButton").attr("name");
+    window.location = getBaseUrl() + "/pages/user?user=" + username + "&action=edit";
 }

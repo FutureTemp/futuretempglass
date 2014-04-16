@@ -50,3 +50,27 @@ var logout = function() {
     }
     logoutRequest.send();
 }
+
+var getUrlParameter = function(paramName){
+    var urlParamString = window.location.search.substring(1);
+    var urlParams = urlParamString.split('&');
+    for(var i = 0; i < urlParams.length; i++){
+	var pair = urlParams[i].split('=');
+	if(pair[0] == paramName){
+	    return pair[1];
+	}
+    }
+    return null;
+}
+
+var getCurrentUser = function(){
+    var request = getRequest("GET", getBaseUrl() + "/users?current=true");
+    request.onResponse = function(){
+	if(onCurrentUserFetched != undefined){
+	    var responseText = request.responseText;
+	    var user = JSON.parse(responseText);
+	    onCurrentUserFetched(user);
+	}
+    }
+    request.send();
+}

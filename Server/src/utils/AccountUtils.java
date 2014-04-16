@@ -97,5 +97,33 @@ public class AccountUtils{
 			throw new Exception("Username already taken");
 		}
 	}
+	
+	/**
+	 * Updates a previously existing account with new information.
+	 * If any fields are blank, they are set as the previous values
+	 * @param account
+	 * @throws Exception
+	 */
+	public static void updateAccount(Account account) throws Exception
+	{
+		Account old = Application.getAccountLibrary().getAccount(account.getUsername());
+		if(old == null)
+		{
+			throw new Exception("Account does not exist");
+		}
+		if(StringUtils.isEmpty(account.getHashedPassword()))
+		{
+			account.setHashedPassword(old.getHashedPassword());
+		}
+		if(StringUtils.isEmpty(account.getFirstName()))
+		{
+			account.setFirstName(old.getFirstName());
+		}
+		if(StringUtils.isEmpty(account.getLastName()))
+		{
+			account.setLastName(old.getLastName());
+		}
+		Application.getAccountLibrary().updateAccount(account);
+	}
 
 }

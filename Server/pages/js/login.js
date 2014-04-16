@@ -26,7 +26,7 @@ var login = function(username, password) {
 		    responseText = loginRequest.responseText;
 		    console.log(responseText);
 		    if (responseText == "Login Successful") {
-			window.location = "tasks.html";
+			window.location = "tasks";
 		    } else {
 			showError(responseText);
 		    }

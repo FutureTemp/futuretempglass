@@ -16,6 +16,13 @@ public abstract class AccountLibrary{
 	public abstract boolean addAcount(Account account);
 	
 	/**
+	 * Updates an existing account. Returns false if unsuccessful
+	 * @param account
+	 * @return true if account was successfully updated
+	 */
+	public abstract boolean updateAccount(Account account);
+	
+	/**
 	 * Returns the Account object associated with the given username.
 	 * @param username
 	 * @return the Account, null if there is no account with the given username

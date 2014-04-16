@@ -10,6 +10,7 @@ import java.util.List;
 import server.Server;
 import server.Session;
 import utils.HTTPUtils;
+import utils.StringUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -19,7 +20,7 @@ import com.sun.net.httpserver.HttpHandler;
 public abstract class ServerHandler implements HttpHandler{
 
 	protected Server server;
-	
+
 	public ServerHandler(Server server)
 	{
 		this.server = server;
@@ -30,7 +31,11 @@ public abstract class ServerHandler implements HttpHandler{
 	{
 		try
 		{
-			server.println(ex.getRequestURI().getPath() + " : " + ex.getRequestMethod());
+			String path = ex.getRequestURI().getPath();
+			String query = ex.getRequestURI().getQuery();
+			String method = ex.getRequestMethod();
+			server.println(path + (StringUtils.isEmpty(query) ? "" : query)
+					+ " : " + method);
 			ex.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
 			if(!authenticate(ex))
 			{
@@ -72,8 +77,9 @@ public abstract class ServerHandler implements HttpHandler{
 	}
 
 	/**
-	 * Gets the active Session object associated with the IP given
-	 * in the HttpExchange object
+	 * Gets the active Session object associated with the IP given in the
+	 * HttpExchange object
+	 * 
 	 * @param ex
 	 * @return Session
 	 */
@@ -92,6 +98,7 @@ public abstract class ServerHandler implements HttpHandler{
 
 	/**
 	 * Gets the acive Session object associated with the given username
+	 * 
 	 * @param username
 	 * @return Session
 	 */
@@ -109,8 +116,9 @@ public abstract class ServerHandler implements HttpHandler{
 	}
 
 	/**
-	 * finishes the handling of a request by closing all the streams
-	 * and removing certain HttpExchange attributes.
+	 * finishes the handling of a request by closing all the streams and
+	 * removing certain HttpExchange attributes.
+	 * 
 	 * @param ex
 	 * @throws IOException
 	 */
@@ -125,6 +133,7 @@ public abstract class ServerHandler implements HttpHandler{
 
 	/**
 	 * Is called when handling a GET request
+	 * 
 	 * @param ex
 	 * @throws Exception
 	 */
@@ -135,6 +144,7 @@ public abstract class ServerHandler implements HttpHandler{
 
 	/**
 	 * Is called when handling a POST request
+	 * 
 	 * @param ex
 	 * @throws Exception
 	 */
@@ -145,6 +155,7 @@ public abstract class ServerHandler implements HttpHandler{
 
 	/**
 	 * Is called when handling a PUT request
+	 * 
 	 * @param ex
 	 * @throws Exception
 	 */
@@ -152,9 +163,10 @@ public abstract class ServerHandler implements HttpHandler{
 	{
 
 	}
-	
+
 	/**
 	 * Is called when handling a DELETE request
+	 * 
 	 * @param ex
 	 * @throws Exception
 	 */
@@ -164,9 +176,10 @@ public abstract class ServerHandler implements HttpHandler{
 	}
 
 	/**
-	 * Authenticates the HttpExchange object by checking for
-	 * an active session associated with its IP. If found
-	 * it is put into the HttpExchange attribute "session".
+	 * Authenticates the HttpExchange object by checking for an active session
+	 * associated with its IP. If found it is put into the HttpExchange
+	 * attribute "session".
+	 * 
 	 * @param ex
 	 * @return true if authenticated correctly, and false otherwise
 	 */
@@ -177,8 +190,9 @@ public abstract class ServerHandler implements HttpHandler{
 	}
 
 	/**
-	 * Gets the session associated with the HttpExchange by 
-	 * grabbing it from its attributes, under "session"
+	 * Gets the session associated with the HttpExchange by grabbing it from its
+	 * attributes, under "session"
+	 * 
 	 * @param ex
 	 * @return Session
 	 */
@@ -186,10 +200,11 @@ public abstract class ServerHandler implements HttpHandler{
 	{
 		return (Session)ex.getAttribute("session");
 	}
-	
+
 	/**
-	 * Sends the header with a 200 code and sets an attribute
-	 * to indicate that it has been sent
+	 * Sends the header with a 200 code and sets an attribute to indicate that
+	 * it has been sent
+	 * 
 	 * @param ex
 	 * @throws IOException
 	 */
@@ -201,6 +216,7 @@ public abstract class ServerHandler implements HttpHandler{
 
 	/**
 	 * Sends the string provided as the response
+	 * 
 	 * @param response
 	 * @param ex
 	 * @throws IOException
@@ -213,6 +229,7 @@ public abstract class ServerHandler implements HttpHandler{
 
 	/**
 	 * Sends the object provided in JSON format as the response
+	 * 
 	 * @param object
 	 * @param ex
 	 * @throws IOException
@@ -227,6 +244,7 @@ public abstract class ServerHandler implements HttpHandler{
 
 	/**
 	 * Returns the String of data in the request body
+	 * 
 	 * @param ex
 	 * @return requestData
 	 * @throws IOException
@@ -253,18 +271,21 @@ public abstract class ServerHandler implements HttpHandler{
 	}
 
 	/**
-	 * Gets the request parameters from the HttpExchange attributes
-	 * if it already exists, otherwise it generates the HashMap containing
-	 * the parameters and stores it in the attributes.
+	 * Gets the request parameters from the HttpExchange attributes if it
+	 * already exists, otherwise it generates the HashMap containing the
+	 * parameters and stores it in the attributes.
+	 * 
 	 * @param ex
 	 * @return HashMap containing the request parameters
 	 * @throws IOException
 	 */
 	@SuppressWarnings("unchecked")
-	protected HashMap<String, String> getParameters(HttpExchange ex) throws IOException
+	protected HashMap<String, String> getParameters(HttpExchange ex)
+			throws IOException
 	{
 		String parametersString = "";
-		if("GET".equals(ex.getRequestMethod()) && ex.getRequestURI().getQuery() != null)
+		if("GET".equals(ex.getRequestMethod())
+				&& ex.getRequestURI().getQuery() != null)
 		{
 			parametersString = ex.getRequestURI().getQuery();
 		}
@@ -272,13 +293,14 @@ public abstract class ServerHandler implements HttpHandler{
 		{
 			parametersString = getRequestData(ex);
 		}
-		ex.setAttribute("parameters", HTTPUtils.parameterStringToHashMap(parametersString));
+		ex.setAttribute("parameters",
+				HTTPUtils.parameterStringToHashMap(parametersString));
 		return (HashMap<String, String>)ex.getAttribute("parameters");
 	}
 
 	/**
-	 * Checks whether the user sending the HttpExchange is an
-	 * admin or not.
+	 * Checks whether the user sending the HttpExchange is an admin or not.
+	 * 
 	 * @param ex
 	 * @return whether the user is an admin or not
 	 */
@@ -286,10 +308,11 @@ public abstract class ServerHandler implements HttpHandler{
 	{
 		return getSession(ex).getAccount().isAdmin();
 	}
-	
+
 	/**
-	 * Assumes the request data is in JSON form and returns that object, 
-	 * given the class and the HttpExchange object containing the request.
+	 * Assumes the request data is in JSON form and returns that object, given
+	 * the class and the HttpExchange object containing the request.
+	 * 
 	 * @param clazz
 	 * @param ex
 	 * @return

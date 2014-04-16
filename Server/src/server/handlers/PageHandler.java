@@ -28,7 +28,12 @@ public class PageHandler extends ServerHandler{
 	{
 		server.println(ex.getRequestURI().getPath());
 		sendHeader(ex);
-		sendPage(ex.getRequestURI().getPath().substring(1), ex);
+		String path = ex.getRequestURI().getPath().substring(1);
+		if(path.indexOf(".") == -1)
+		{
+			path += ".html";
+		}
+		sendPage(path, ex);
 		finish(ex);
 	}
 

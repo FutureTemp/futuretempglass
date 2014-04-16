@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"
+	media="screen"></link>
+<link rel="stylesheet" type="text/css" href="css/users.css"></link>
+<script src="js/jquery.js"></script>
+<script src="js/common.js"></script>
+<script src="js/users.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<title>Accounts</title>
+</head>
+<body>
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="col-md-10 col-sm-8 col-xs-7 text-center">
+					<h1>User Accounts</h1>
+				</div>
+				<div class="col-md-2 col-sm-4 col-xs-5 btn-group">
+					<button onclick="window.location='/pages/user?action=new';" type="button"
+						class="btn btn-primary">New Account</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Username</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Admin</th>
+			</tr>
+		</thead>
+		<tbody id="accountsTable">
+		</tbody>
+	</table>
+</body>
+</html>

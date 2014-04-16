@@ -35,4 +35,11 @@ public class XmlAccountLibrary extends AccountLibrary{
 		return null;
 	}
 
+	@Override
+	public boolean updateAccount(Account account)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

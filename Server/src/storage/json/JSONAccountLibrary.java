@@ -71,6 +71,21 @@ public class JSONAccountLibrary extends AccountLibrary{
 	}
 
 	@Override
+	public boolean updateAccount(Account account)
+	{
+		Account old = accountsMap.get(account.getUsername());
+		if(old == null)
+		{
+			return false;
+		}
+		accountsMap.put(account.getUsername(), account);
+		accounts.remove(old);
+		accounts.add(account);
+		save();
+		return true;
+	}
+
+	@Override
 	public boolean deleteAccount(String username)
 	{
 		Account account = accountsMap.remove(username);
