@@ -2,7 +2,7 @@ package utils;
 
 import java.util.List;
 
-import storage.TaskLibrary;
+import notifications.TaskNotification;
 import workflow.Task;
 import core.Application;
 
@@ -47,6 +47,8 @@ public class TaskUtils{
 					+ "] already exists");
 		}
 		Application.getTaskLibrary().addTask(task);
+		TaskNotification taskNotification = new TaskNotification(task);
+		NotificationUtils.addNotification(taskNotification);
 	}
 
 	/**

@@ -32,6 +32,7 @@ public class AccountHandler extends ServerHandler{
 		if("true".equalsIgnoreCase(getParameters(ex).get("current")))
 		{
 			currentUser(ex);
+			return;
 		}
 		if(!StringUtils.isEmpty(getParameters(ex).get("username")))
 		{

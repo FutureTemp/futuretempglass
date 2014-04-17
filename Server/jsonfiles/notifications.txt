@@ -1,0 +1,15 @@
+{
+  "francesco" : [ {
+    "notificationId" : "kpfe7kZe",
+    "user" : "francesco",
+    "message" : "\"asdf\" was assigned to you.",
+    "type" : "task",
+    "read" : false
+  }, {
+    "notificationId" : "FmvGSe54",
+    "user" : "francesco",
+    "message" : "\"asdf\" was assigned to you.",
+    "type" : "task",
+    "read" : true
+  } ]
+}

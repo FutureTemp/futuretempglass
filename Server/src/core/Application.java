@@ -3,6 +3,7 @@ package core;
 import storage.AccountLibrary;
 import storage.InventoryLibrary;
 import storage.ItemLibrary;
+import storage.NotificationLibrary;
 import storage.OrderLibrary;
 import storage.ProductionStepsLibrary;
 import storage.TaskLibrary;
@@ -13,6 +14,7 @@ import storage.database.DBOrderLibrary;
 import storage.database.DBProductionStepsLibrary;
 import storage.json.JSONAccountLibrary;
 import storage.json.JSONItemLibrary;
+import storage.json.JSONNotificationLibrary;
 import storage.json.JSONOrderLibrary;
 import storage.json.JSONTaskLibrary;
 import storage.xml.XmlAccountLibrary;
@@ -34,6 +36,8 @@ public class Application{
 	private static AccountLibrary accountLibrary;
 	
 	private static TaskLibrary taskLibrary;
+	
+	private static NotificationLibrary notificationLibrary;
 
 	/**
 	 * Returns the Item Library used for the application
@@ -90,6 +94,15 @@ public class Application{
 	}
 	
 	/**
+	 * Returns the Notification Library used for the application
+	 * @return
+	 */
+	public static NotificationLibrary getNotificationLibrary()
+	{
+		return notificationLibrary;
+	}
+	
+	/**
 	 * Populates the libraries with DB library implementations
 	 */
 	public static void setDBLibraries()
@@ -99,6 +112,7 @@ public class Application{
 		inventoryLibrary = new DBInventoryLibrary();
 		accountLibrary = new DBAccountLibrary();
 		productionStepsLibrary = new DBProductionStepsLibrary();
+		notificationLibrary = new JSONNotificationLibrary();
 	}
 
 	/**
@@ -111,6 +125,7 @@ public class Application{
 		inventoryLibrary = new XmlInventoryLibrary();
 		accountLibrary = new XmlAccountLibrary();
 		productionStepsLibrary = new XmlProductionStepsLibrary();
+		notificationLibrary = new JSONNotificationLibrary();
 	}
 	
 	/**
@@ -124,5 +139,6 @@ public class Application{
 		orderLibrary = new JSONOrderLibrary();
 		itemLibrary = new JSONItemLibrary();
 		taskLibrary = new JSONTaskLibrary();
+		notificationLibrary = new JSONNotificationLibrary();
 	}
 }

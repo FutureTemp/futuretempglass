@@ -10,6 +10,7 @@
 <script src="js/jquery.js"></script>
 <script src="js/common.js"></script>
 <script src="js/tasks.js"></script>
+<script src="js/notifications.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </head>
 
@@ -62,20 +63,38 @@
 					<div class="col-md-10 col-sm-8 col-xs-7 text-center">
 						<h1>Active Tasks</h1>
 					</div>
-					<div class="col-md-2 col-sm-4 col-xs-5 btn-group">
-						<button id="userButton"
-							onclick="javascript:goToEditCurrentUser();" type="button"
-							class="btn btn-primary"></button>
-						<button type="button" class="btn btn-primary dropdown-toggle"
-							data-toggle="dropdown">
-							<span class="caret"></span> <span class="sr-only">Toggle
-								Dropdown</span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="javascript:goToEditCurrentUser();">Edit Account</a></li>
-							<li hidden class="divider admin-option"></li>
-							<li hidden class="admin-option"><a href="/pages/users">View Accounts</a></li>
-						</ul>
+					<div class="container col-md-2 col col-sm-4 col-xs-5">
+						<div class="row">
+							<div class="btn-group">
+								<button id="userButton"
+									onclick="javascript:goToEditCurrentUser();" type="button"
+									class="btn btn-primary"></button>
+								<button type="button" class="btn btn-primary dropdown-toggle"
+									data-toggle="dropdown">
+									<span class="caret"></span> <span class="sr-only">Toggle
+										Dropdown</span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="javascript:goToEditCurrentUser();">Edit
+											Account</a></li>
+									<li hidden class="divider admin-option"></li>
+									<li hidden class="admin-option"><a href="/pages/users">View
+											Accounts</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="row">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle"
+									data-toggle="dropdown">
+									Notifications <span id="notificationsBadge" class="badge"></span>
+									<span class="caret"></span> <span class="sr-only">Toggle
+										Dropdown</span>
+								</button>
+								<ul id="notificationsList" class="dropdown-menu" role="menu">
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

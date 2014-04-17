@@ -10,10 +10,4 @@
   "firstName" : "Marco",
   "lastName" : "Macchione",
   "admin" : false
-}, {
-  "username" : "SomeUsername",
-  "hashedPassword" : "061D90BAA39D29DB3A32ADF5A5C9EDD8D1FAAE160576697B8DCCAEC48FC9F0EB",
-  "firstName" : "Francesco",
-  "lastName" : "Macchione",
-  "admin" : false
 } ]

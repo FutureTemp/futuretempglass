@@ -18,11 +18,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import server.handlers.AccountHandler;
+import server.handlers.DefaultHandler;
 import server.handlers.FileHandler;
 import server.handlers.InventoryHandler;
 import server.handlers.ItemsHandler;
 import server.handlers.LoginHandler;
 import server.handlers.LogoutHandler;
+import server.handlers.NotificationHandler;
 import server.handlers.OrderHandler;
 import server.handlers.PageHandler;
 import server.handlers.TaskHandler;
@@ -61,6 +63,7 @@ public class Server extends Window implements MouseListener{
 	 */
 	private void addHandlers()
 	{
+		server.createContext("/", new DefaultHandler(this));
 		server.createContext(OrderHandler.getContext(), new OrderHandler(this));
 		server.createContext(TokenHandler.getContext(), new TokenHandler(this));
 		server.createContext(LoginHandler.getContext(), new LoginHandler(this));
@@ -74,6 +77,7 @@ public class Server extends Window implements MouseListener{
 				new InventoryHandler(this));
 		server.createContext(TaskHandler.getContext(), new TaskHandler(this));
 		server.createContext(FileHandler.getContext(), new FileHandler(this));
+		server.createContext(NotificationHandler.getContext(), new NotificationHandler(this));
 	}
 
 	/**

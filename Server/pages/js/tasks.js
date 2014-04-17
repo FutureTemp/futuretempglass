@@ -2,6 +2,7 @@ var displayedTask = "";
 
 window.onload = function() {
     refreshTasks();
+    setInterval(refreshTasks, 10000);
     $("#deleteButton").click(deleteSelectedTask);
     $("#editButton").click(editSelectedTask);
     getCurrentUser();
@@ -39,6 +40,7 @@ var displayTask = function(taskId) {
 var refreshTasks = function() {
     var tasksRequest = getRequest("GET", getBaseUrl() + "/tasks");
     tasksRequest.onResponse = function() {
+	var activeTaskId = $("#tasksList").find(".active").data("task-id");
 	var tasksInfo = JSON.parse(tasksRequest.responseText);
 	var html = "";
 	for (var i = 0; i < tasksInfo.length; i++) {
@@ -46,6 +48,9 @@ var refreshTasks = function() {
 	    html += task.getHTML();
 	}
 	$("#tasksList").html(html);
+	if(activeTaskId != undefined){
+	    displayTask(activeTaskId);
+	}
     }
     tasksRequest.send();
 }
@@ -126,7 +131,7 @@ var TaskListPanel = function(info) {
     this.title = info.title;
     this.assignee = info.assignee;
     this.description = info.description;
-
+    
     this.getHTML = function() {
 	return '<a href="#" onclick="javascript: displayTask(this.dataset.taskId);" id="TASK-$taskId" data-task-id="$taskId" data-title="$title" data-assignee="$assignee" data-description="$description" class="list-group-item taskListPanel">\
 	<p><strong id="TASK-$taskId-title">$title</strong></p>\
