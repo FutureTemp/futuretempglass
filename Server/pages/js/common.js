@@ -42,13 +42,18 @@ var getBaseUrl = function() {
 }
 
 var logout = function() {
-    logoutRequest = getRequest("GET", window.serverlocation + "/logout");
+    logoutRequest = getRequest("GET", getBaseUrl() + "/logout");
     logoutRequest.onreadystatechange = function() {
 	if (logoutRequest.readyState == 4 && logoutRequest.status == 200) {
 	    console.log(logoutRequest.responseText);
 	}
     }
     logoutRequest.send();
+}
+
+var onLogoutPressed = function(){
+    logout();
+    window.location = getBaseUrl();
 }
 
 var getUrlParameter = function(paramName) {

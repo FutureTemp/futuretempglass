@@ -17,7 +17,14 @@ public class DefaultHandler extends PageHandler{
 	public void handle(HttpExchange ex) throws IOException
 	{
 		sendHeader(ex);
-		sendPage("pages/login.html", ex);
+		if(authenticate(ex))
+		{
+			sendPage("pages/tasks.html", ex);
+		}
+		else
+		{
+			sendPage("pages/login.html", ex);
+		}
 		finish(ex);
 	}
 }
