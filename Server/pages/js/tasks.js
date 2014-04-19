@@ -11,7 +11,7 @@ window.onload = function() {
 var onCurrentUserFetched = function(user) {
     $("#userButton").html(user.firstName + " " + user.lastName);
     $("#userButton").attr("name", user.username);
-    if(user.admin){
+    if (user.admin) {
 	$(".admin-option").show();
     }
 }
@@ -48,7 +48,7 @@ var refreshTasks = function() {
 	    html += task.getHTML();
 	}
 	$("#tasksList").html(html);
-	if(activeTaskId != undefined){
+	if (activeTaskId != undefined) {
 	    displayTask(activeTaskId);
 	}
     }
@@ -129,22 +129,26 @@ var TaskListPanel = function(info) {
 
     this.taskId = info.taskId;
     this.title = info.title;
+    this.creator = info.creator;
     this.assignee = info.assignee;
     this.description = info.description;
-    
+
     this.getHTML = function() {
 	return '<a href="#" onclick="javascript: displayTask(this.dataset.taskId);" id="TASK-$taskId" data-task-id="$taskId" data-title="$title" data-assignee="$assignee" data-description="$description" class="list-group-item taskListPanel">\
 	<p><strong id="TASK-$taskId-title">$title</strong></p>\
+	<p>Creator: <span i="TASK-$taskId-creator">$creator</span></p>\
 	<p>Assignee: <span id="TASK-$taskId-assignee">$assignee</span></p>\
 	<p id="TASK-$taskId-description">$description</p>\
 	</a>'
 		.replace(/\$taskId/g, this.taskId).replace(/\$title/g,
-			this.title).replace(/\$assignee/g, this.assignee)
-		.replace(/\$description/g, this.description);
+			this.title).replace(/\$creator/g, this.creator)
+		.replace(/\$assignee/g, this.assignee).replace(
+			/\$description/g, this.description);
     }
 }
 
 var goToEditCurrentUser = function() {
     var username = $("#userButton").attr("name");
-    window.location = getBaseUrl() + "/pages/user?user=" + username + "&action=edit";
+    window.location = getBaseUrl() + "/pages/user?user=" + username
+	    + "&action=edit";
 }

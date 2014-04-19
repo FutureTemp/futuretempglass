@@ -74,6 +74,7 @@ public class TaskHandler extends ServerHandler{
 			if(StringUtils.isEmpty(task.getTaskId()))
 			{
 				// Add new task
+				task.setCreator(getSession(ex).getAccount().getUsername());
 				TaskUtils.addTask(task);
 			}
 			else

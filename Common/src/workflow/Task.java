@@ -8,6 +8,8 @@ public class Task{
 
 	private String title = "";
 	
+	private String creator = null;
+	
 	private String assignee = "";
 
 	private String description = "";
@@ -114,6 +116,22 @@ public class Task{
 	public void setComplete(boolean complete)
 	{
 		this.complete = complete;
+	}
+
+	/**
+	 * @return the creator
+	 */
+	public String getCreator()
+	{
+		return creator;
+	}
+
+	/**
+	 * @param creator the creator to set
+	 */
+	public void setCreator(String creator)
+	{
+		this.creator = creator;
 	}
 
 }
