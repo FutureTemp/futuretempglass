@@ -10,6 +10,7 @@ public class TaskUtils{
 
 	/**
 	 * Gets a list of all the tasks from storage
+	 * 
 	 * @return List of Tasks
 	 */
 	public static List<Task> getAllTasks()
@@ -19,6 +20,7 @@ public class TaskUtils{
 
 	/**
 	 * Gets a task from storage with the provided task ID
+	 * 
 	 * @param taskId
 	 * @return Task
 	 * @throws Exception
@@ -35,6 +37,7 @@ public class TaskUtils{
 
 	/**
 	 * Adds the task provided into storage and populates it with a valid ID
+	 * 
 	 * @param task
 	 * @throws Exception
 	 */
@@ -52,8 +55,9 @@ public class TaskUtils{
 	}
 
 	/**
-	 * Updates a task in storage to match the task provided. The
-	 * task provided must contain the ID of the task to update
+	 * Updates a task in storage to match the task provided. The task provided
+	 * must contain the ID of the task to update
+	 * 
 	 * @param task
 	 * @throws Exception
 	 */
@@ -63,7 +67,23 @@ public class TaskUtils{
 		{
 			throw new Exception("Not a valid task ID");
 		}
-		if(!Application.getTaskLibrary().updateTask(task))
+		Task original = getTask(task.getTaskId());
+
+		// Update only populated fields
+		if(!StringUtils.isEmpty(task.getTitle()))
+		{
+			original.setTitle(task.getTitle());
+		}
+		if(!StringUtils.isEmpty(task.getAssignee()))
+		{
+			original.setAssignee(task.getAssignee());
+		}
+		if(!StringUtils.isEmpty(task.getDescription()))
+		{
+			original.setDescription(task.getDescription());
+		}
+
+		if(!Application.getTaskLibrary().updateTask(original))
 		{
 			throw new Exception("Task could not be updated");
 		}
@@ -71,6 +91,7 @@ public class TaskUtils{
 
 	/**
 	 * Gets all the tasks with the assignee provided
+	 * 
 	 * @param assignee
 	 * @return List of Tasks
 	 * @throws Exception
@@ -88,14 +109,30 @@ public class TaskUtils{
 		}
 		return assignedTasks;
 	}
-	
+
 	/**
 	 * Deletes the task with the given task ID
+	 * 
 	 * @param taskId
 	 * @throws Exception
 	 */
 	public static void removeTask(String taskId) throws Exception
 	{
 		Application.getTaskLibrary().removeTask(taskId);
+	}
+
+	/**
+	 * Updates a tasks "complete" field to true
+	 * @param taskId
+	 * @throws Exception
+	 */
+	public static void completeTask(String taskId) throws Exception
+	{
+		Task task = getTask(taskId);
+		task.setComplete(true);
+		if(!Application.getTaskLibrary().updateTask(task))
+		{
+			throw new Exception("Unable to update task [" + taskId + "]");
+		}
 	}
 }

@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.util.List;
 
 import server.Server;
+import server.objects.Account;
 import utils.StringUtils;
 import utils.TaskUtils;
 import workflow.Task;
@@ -69,36 +70,115 @@ public class TaskHandler extends ServerHandler{
 			tasks = mapper.readValue(requestData,
 					new TypeReference<List<Task>>(){});
 		}
+		Action action = Action.getAction(getUrlParameters(ex).get("action"));
 		if(task != null)
 		{
-			if(StringUtils.isEmpty(task.getTaskId()))
+			if(action == null)
 			{
-				// Add new task
+				throw new Exception("Incorrect action");
+			}
+
+			switch (action)
+			{
+			case ADD:
 				task.setCreator(getSession(ex).getAccount().getUsername());
 				TaskUtils.addTask(task);
+				break;
+
+			case EDIT:
+				onEditTask(task, ex);
+				break;
+
+			case COMPLETE:
+				onCompleteTask(task.getTaskId(), ex);
+				break;
 			}
-			else
-			{
-				// Update task
-				TaskUtils.updateTask(task);
-			}
-			sendResponse(task, ex);
+
+			sendResponse(TaskUtils.getTask(task.getTaskId()), ex);
 		}
 		else
 		{
 			// Add/update list of tasks list of tasks
-			throw new Exception("Adding multiple tasks at once is not yet implemented");
+			throw new Exception(
+					"Adding multiple tasks at once is not yet implemented");
 		}
 	}
-	
+
 	@Override
 	protected void onDelete(HttpExchange ex) throws Exception
 	{
 		super.onPut(ex);
 		sendHeader(ex);
 		String taskId = getRequestData(ex);
-		TaskUtils.removeTask(taskId);
-		sendResponse("Deleted", ex);
+		Task existing = TaskUtils.getTask(taskId);
+		Account account = getSession(ex).getAccount();
+		if(account.isAdmin()
+				|| account.getUsername().equals(existing.getCreator()))
+		{
+			TaskUtils.removeTask(taskId);
+			sendResponse("Deleted", ex);
+		}
+		else
+		{
+			throw new Exception("You do not have permission to delete task ["
+					+ taskId + "]");
+		}
 	}
-	
+
+	private void onEditTask(Task task, HttpExchange ex) throws Exception
+	{
+		Task existing = TaskUtils.getTask(task.getTaskId());
+		if(getSession(ex).getAccount().isAdmin()
+				|| getSession(ex).getAccount().getUsername()
+						.equals(existing.getCreator()))
+		{
+			TaskUtils.updateTask(task);
+		}
+		else
+		{
+			throw new Exception("You do not have permission to edit task ["
+					+ task.getTaskId() + "]");
+		}
+	}
+
+	private void onCompleteTask(String taskId, HttpExchange ex)
+			throws Exception
+	{
+		Task existing = TaskUtils.getTask(taskId);
+		if(!getSession(ex).getAccount().getUsername()
+				.equals(existing.getAssignee()))
+		{
+			throw new Exception("Only the assignee of task [" + taskId
+					+ "] can complete it");
+		}
+		TaskUtils.completeTask(taskId);
+	}
+
+	private enum Action{
+		ADD("add"), EDIT("edit"), COMPLETE("complete");
+
+		private String description;
+
+		private Action(String description)
+		{
+			this.description = description;
+		}
+
+		public String getDescription()
+		{
+			return this.description;
+		}
+
+		public static Action getAction(String description)
+		{
+			for(Action action: values())
+			{
+				if(description.equals(action.getDescription()))
+				{
+					return action;
+				}
+			}
+			return null;
+		}
+	}
 }

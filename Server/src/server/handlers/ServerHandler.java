@@ -68,7 +68,7 @@ public abstract class ServerHandler implements HttpHandler{
 			{
 				sendHeader(ex);
 			}
-			sendResponse(e.toString(), ex);
+			sendResponse("ERROR: " + e.toString(), ex);
 		}
 		finally
 		{
@@ -296,6 +296,18 @@ public abstract class ServerHandler implements HttpHandler{
 		ex.setAttribute("parameters",
 				HTTPUtils.parameterStringToHashMap(parametersString));
 		return (HashMap<String, String>)ex.getAttribute("parameters");
+	}
+
+	/**
+	 * Gets the parameters from the URL query
+	 * 
+	 * @param ex
+	 * @return
+	 */
+	protected HashMap<String, String> getUrlParameters(HttpExchange ex)
+	{
+		String parametersString = ex.getRequestURI().getQuery();
+		return HTTPUtils.parameterStringToHashMap(parametersString);
 	}
 
 	/**

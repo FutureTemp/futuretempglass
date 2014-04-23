@@ -5,8 +5,8 @@
 <title>Tasks</title>
 <link rel="stylesheet" type="text/css" href="/pages/css/common.css"></link>
 <link rel="stylesheet" type="text/css" href="/pages/css/tasks.css"></link>
-<link rel="stylesheet" type="text/css" href="/pages/css/bootstrap.min.css"
-	media="screen"></link>
+<link rel="stylesheet" type="text/css"
+	href="/pages/css/bootstrap.min.css" media="screen"></link>
 <script src="/pages/js/jquery.js"></script>
 <script src="/pages/js/common.js"></script>
 <script src="/pages/js/tasks.js"></script>
@@ -133,10 +133,13 @@
 									<li><a href="javascript:openCreateNewTaskModal();"><span
 											class="glyphicon glyphicon-plus"></span> New Task</a></li>
 									<li class="divider selectedTaskTools" hidden></li>
-									<li class="selectedTaskTools" hidden><a
+									<li class="completeTaskTool" hidden><a
+										href="javascript:completeSelectedTask();"><span
+											class="glyphicon glyphicon-ok"></span> Complete Task</a></li>
+									<li class="editTaskTool" hidden><a
 										href="javascript:editSelectedTask();"><span
 											class="glyphicon glyphicon-paperclip"></span> Edit Task</a></li>
-									<li class="selectedTaskTools" hidden><a
+									<li class="deleteTaskTool" hidden><a
 										href="javascript:deleteSelectedTask();"><span
 											class="glyphicon glyphicon-trash"></span> Delete Task</a></li>
 									<li class="divider"></li>
@@ -152,9 +155,13 @@
 						<div class="panel panel-default selectedTaskTools" hidden>
 							<div id="selectedTask" class="panel-body"></div>
 						</div>
-						<div class="selectedTaskTools" align="right" hidden>
-							<button type="button" id="editButton" class="btn btn-default">Edit</button>
-							<button type="button" id="deleteButton" class="btn btn-danger">Delete</button>
+						<div class="selectedTaskTools" align="right">
+							<button style="display: none;" type="button" id="completeButton"
+								class="btn btn-primary completeTaskTool">Complete</button>
+							<button style="display: none;" type="button" id="editButton"
+								class="btn btn-default editTaskTool">Edit</button>
+							<button style="display: none;" type="button" id="deleteButton"
+								class="btn btn-danger deleteTaskTool">Delete</button>
 						</div>
 					</div>
 				</div>
