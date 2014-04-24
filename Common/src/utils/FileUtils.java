@@ -195,7 +195,6 @@ public class FileUtils{
 			{
 				try
 				{
-					file.createNewFile();
 					result = file.createNewFile();
 				}
 				catch(IOException e)

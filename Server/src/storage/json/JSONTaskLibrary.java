@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JSONTaskLibrary extends TaskLibrary{
 
-	private static final String TASKS_PATH = "/jsonfiles/tasks.txt";
+	private static final String TASKS_PATH = "jsonfiles/tasks.txt";
 
 	private List<Task> tasks;
 
@@ -49,7 +49,7 @@ public class JSONTaskLibrary extends TaskLibrary{
 		}
 		catch(IOException e)
 		{
-			return new ArrayList<Task>();
+			tasks = new ArrayList<Task>();
 		}
 		if(tasks == null)
 		{
