@@ -81,9 +81,10 @@ var refreshTasks = function() {
 	var activeTaskId = $("#tasksList").find(".active").data("task-id");
 	var tasksInfo = JSON.parse(tasksRequest.responseText);
 	tasks = tasksInfo;
+	sortTasks(tasks);
 	var html = "";
-	for (var i = 0; i < tasksInfo.length; i++) {
-	    var task = new TaskListPanel(tasksInfo[i]);
+	for (var i = 0; i < tasks.length; i++) {
+	    var task = new TaskListPanel(tasks[i]);
 	    html += task.getHTML();
 	}
 	$("#tasksList").html(html);
@@ -92,6 +93,16 @@ var refreshTasks = function() {
 	}
     }
     tasksRequest.send();
+}
+
+var sortTasks = function(tasks) {
+    var compareTasks = function(a, b) {
+	if (a.complete ^ b.complete) {
+	    return a.complete ? 1 : -1;
+	}
+	return 0;
+    }
+    tasks.sort(compareTasks);
 }
 
 var submitTaskForm = function() {
