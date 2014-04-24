@@ -29,7 +29,11 @@ var getRequest = function(method, url) {
     if (xhr != null) {
 	xhr.onreadystatechange = function() {
 	    if (xhr.readyState == 4 && xhr.status == 200) {
-		xhr.onResponse();
+		if (xhr.responseText == "MUST LOGIN") {
+		    window.location = getBaseUrl();
+		} else {
+		    xhr.onResponse();
+		}
 	    }
 	}
     }
@@ -51,7 +55,7 @@ var logout = function() {
     logoutRequest.send();
 }
 
-var onLogoutPressed = function(){
+var onLogoutPressed = function() {
     logout();
     window.location = getBaseUrl();
 }
